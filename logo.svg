@@ -1,99 +1,17 @@
-/* Global */
-body {
-    margin: 0;
-    font-family: "Inter", Arial, sans-serif;
-    background: #0A0F1A;
-    color: #E8ECF3;
-}
+<svg width="240" height="60" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon -->
+  <g transform="translate(10,10)">
+    <rect x="0" y="0" width="40" height="40" rx="6" fill="#00C2FF" opacity="0.15"/>
+    <path d="M10 20 C18 8 28 32 36 20" stroke="#00C2FF" stroke-width="3" fill="none"/>
+    <path d="M10 28 C18 16 28 40 36 28" stroke="#4DF3FF" stroke-width="2" fill="none" opacity="0.8"/>
+  </g>
 
-/* Top bar */
-.topbar {
-    width: 100%;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    width: 160px;
-    opacity: 0.95;
-}
-
-/* Hero Section */
-.hero {
-    height: 75vh;
-    background: url('https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=1600&q=80')
-                center/cover no-repeat;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-}
-
-.hero-content {
-    position: relative;
-    text-align: center;
-    max-width: 700px;
-    padding: 20px;
-}
-
-.hero h1 {
-    font-size: 3.2rem;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    margin-bottom: 25px;
-    color: #C9D6E2;
-}
-
-/* CTA Button */
-.cta {
-    display: inline-block;
-    padding: 12px 28px;
-    background: #00C2FF;
-    color: #0A0F1A;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 6px;
-    transition: 0.2s ease;
-}
-
-.cta:hover {
-    background: #00A0D1;
-}
-
-/* Sections */
-.section {
-    max-width: 800px;
-    margin: 60px auto;
-    padding: 0 20px;
-    text-align: center;
-}
-
-.section h2 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-    color: #00C2FF;
-}
-
-.section p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-}
-
-/* Contact */
-.contact a {
-    color: #00C2FF;
-    font-size: 1.2rem;
-    text-decoration: none;
-}
+  <!-- Text -->
+  <text x="70" y="38"
+        font-family="Inter, Arial, sans-serif"
+        font-size="26"
+        fill="#E8ECF3"
+        letter-spacing="2">
+    FluxReveal
+  </text>
+</svg>
