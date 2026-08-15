@@ -1,1 +1,19 @@
+<svg width="220" height="60" viewBox="0 0 220 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect x="0" y="0" width="220" height="60" fill="#0A0F1A" rx="8" />
 
+  <!-- Icon: stylized flux lines -->
+  <g transform="translate(20, 15)">
+    <path d="M0 10 C20 -5 40 25 60 10" stroke="#00C2FF" stroke-width="3" fill="none" />
+    <path d="M0 20 C20 5 40 35 60 20" stroke="#4DF3FF" stroke-width="2" fill="none" opacity="0.8" />
+  </g>
+
+  <!-- Text -->
+  <text x="95" y="35"
+        font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, Arial"
+        font-size="20"
+        fill="#E8ECF3"
+        letter-spacing="2">
+    FluxReveal
+  </text>
+</svg>
