@@ -6,44 +6,59 @@ body {
     color: #E8ECF3;
 }
 
+/* Top bar */
+.topbar {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 160px;
+    opacity: 0.95;
+}
+
 /* Hero Section */
 .hero {
+    height: 75vh;
+    background: url('https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=1600&q=80')
+                center/cover no-repeat;
     position: relative;
-    height: 80vh;
-    background: url('https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
 }
 
-.hero .overlay {
+.hero::after {
+    content: "";
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.55);
 }
 
-.hero .content {
+.hero-content {
     position: relative;
-    z-index: 2;
+    text-align: center;
+    max-width: 700px;
+    padding: 20px;
 }
 
 .hero h1 {
-    font-size: 4rem;
-    margin: 0;
-    letter-spacing: 2px;
+    font-size: 3.2rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
 }
 
-.tagline {
-    font-size: 1.3rem;
-    margin-top: 10px;
-    color: #00C2FF;
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    color: #C9D6E2;
 }
 
 /* CTA Button */
 .cta {
     display: inline-block;
-    margin-top: 25px;
     padding: 12px 28px;
     background: #00C2FF;
     color: #0A0F1A;
