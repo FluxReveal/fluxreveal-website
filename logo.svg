@@ -1,10 +1,23 @@
-<svg width="240" height="60" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg">
-  <rect x="10" y="10" width="40" height="40" rx="8" fill="#00C2FF" opacity="0.22"/>
-  <path d="M20 25 C32 8 44 42 56 25" stroke="#00C2FF" stroke-width="3" fill="none"/>
-  <path d="M20 33 C32 16 44 50 56 33" stroke="#4DF3FF" stroke-width="2" fill="none" opacity="0.85"/>
-  <text x="80" y="38"
+<svg width="260" height="70" viewBox="0 0 260 70" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Tech Grid Background -->
+  <rect x="10" y="10" width="50" height="50" rx="8" fill="#0A1F44" opacity="0.55"/>
+  <path d="M20 20 H60 M20 30 H60 M20 40 H60 M20 50 H60"
+        stroke="#00C2FF" stroke-width="0.6" opacity="0.25"/>
+
+  <!-- F + R Monogram -->
+  <!-- F -->
+  <path d="M25 25 V55 M25 25 H45 M25 40 H40"
+        stroke="#00C2FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- R -->
+  <path d="M45 25 V55 M45 25 C60 25 60 40 45 40 M45 40 L60 55"
+        stroke="#4DF3FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Text -->
+  <text x="85" y="45"
         font-family="Inter, Arial, sans-serif"
-        font-size="26"
+        font-size="28"
         fill="#E8ECF3"
         letter-spacing="2">
     FluxReveal
