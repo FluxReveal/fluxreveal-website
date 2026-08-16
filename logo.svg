@@ -1,25 +1,31 @@
-<svg width="260" height="70" viewBox="0 0 260 70" xmlns="http://www.w3.org/2000/svg">
+<svg width="340" height="100" viewBox="0 0 340 100" xmlns="http://www.w3.org/2000/svg">
 
-  <!-- Tech Grid Background -->
-  <rect x="10" y="10" width="50" height="50" rx="8" fill="#0A1F44" opacity="0.55"/>
-  <path d="M20 20 H60 M20 30 H60 M20 40 H60 M20 50 H60"
-        stroke="#00C2FF" stroke-width="0.6" opacity="0.25"/>
+  <!-- Tech Frame -->
+  <rect x="10" y="10" width="80" height="80" rx="10" fill="#0A1F44" opacity="0.55"/>
+  <rect x="10" y="10" width="80" height="80" rx="10" stroke="#00C2FF" stroke-width="1.5" opacity="0.45"/>
 
-  <!-- F + R Monogram -->
-  <!-- F -->
-  <path d="M25 25 V55 M25 25 H45 M25 40 H40"
-        stroke="#00C2FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Angular Tech Waves (with gradient) -->
+  <defs>
+    <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00C2FF"/>
+      <stop offset="50%" stop-color="#4DF3FF"/>
+      <stop offset="100%" stop-color="#7AFFD9"/>
+    </linearGradient>
+  </defs>
 
-  <!-- R -->
-  <path d="M45 25 V55 M45 25 C60 25 60 40 45 40 M45 40 L60 55"
-        stroke="#4DF3FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <polyline points="25,45 40,25 55,65 70,45"
+            stroke="url(#waveGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+  <polyline points="25,60 40,40 55,80 70,60"
+            stroke="url(#waveGrad)" stroke-width="4" fill="none" opacity="0.9" stroke-linecap="round"/>
 
   <!-- Text -->
-  <text x="85" y="45"
-        font-family="Inter, Arial, sans-serif"
-        font-size="28"
+  <text x="110" y="65"
+        font-family="Inter, Arial"
+        font-size="40"
         fill="#E8ECF3"
-        letter-spacing="2">
+        letter-spacing="3">
     FluxReveal
   </text>
+
 </svg>
