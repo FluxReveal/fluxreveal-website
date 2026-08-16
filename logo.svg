@@ -1,12 +1,7 @@
 <svg width="240" height="60" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg">
-  <!-- Icon background -->
-  <rect x="10" y="10" width="40" height="40" rx="8" fill="#00C2FF" opacity="0.18"/>
-
-  <!-- Data flow lines -->
-  <path d="M20 25 C30 10 40 40 50 25" stroke="#00C2FF" stroke-width="3" fill="none"/>
-  <path d="M20 33 C30 18 40 48 50 33" stroke="#4DF3FF" stroke-width="2" fill="none" opacity="0.85"/>
-
-  <!-- Text -->
+  <rect x="10" y="10" width="40" height="40" rx="8" fill="#00C2FF" opacity="0.22"/>
+  <path d="M20 25 C32 8 44 42 56 25" stroke="#00C2FF" stroke-width="3" fill="none"/>
+  <path d="M20 33 C32 16 44 50 56 33" stroke="#4DF3FF" stroke-width="2" fill="none" opacity="0.85"/>
   <text x="80" y="38"
         font-family="Inter, Arial, sans-serif"
         font-size="26"
