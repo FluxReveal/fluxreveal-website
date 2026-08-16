@@ -2,58 +2,85 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>FluxReveal Hero Image Preview</title>
+<title>FluxReveal Hero B Preview</title>
 <style>
     body {
+        margin: 0;
         background: #0A0F1A;
-        color: #E8ECF3;
         font-family: Inter, Arial, sans-serif;
-        padding: 40px;
+        color: #E8ECF3;
     }
-    h1 {
-        font-size: 2.4rem;
-        margin-bottom: 10px;
+
+    .hero {
+        height: 80vh;
+        background: url('https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=2000&q=90')
+                    center/cover no-repeat;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    h2 {
-        margin-top: 50px;
-        color: #00C2FF;
-        font-size: 1.8rem;
+
+    /* Lighter overlay so image stays sharp */
+    .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.35); /* reduced from 0.55 */
     }
-    .hero-box {
-        margin-top: 20px;
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid #1F2937;
+
+    .hero-content {
+        position: relative;
+        text-align: center;
+        max-width: 800px;
+        padding: 20px;
     }
-    .hero-box img {
-        width: 100%;
-        display: block;
+
+    .hero h1 {
+        font-size: 3.2rem;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+        color: #FFFFFF;
+        text-shadow: 0 0 12px rgba(0,0,0,0.4);
+    }
+
+    .hero p {
+        font-size: 1.25rem;
+        margin-bottom: 25px;
+        color: #E8ECF3;
+        text-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    .cta {
+        display: inline-block;
+        padding: 14px 32px;
+        background: linear-gradient(90deg, #00C2FF, #4DF3FF);
+        color: #0A0F1A;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 6px;
+        transition: 0.2s ease;
+        box-shadow: 0 0 12px rgba(0,0,0,0.4);
+    }
+
+    .cta:hover {
+        background: linear-gradient(90deg, #4DF3FF, #7AFFD9);
     }
 </style>
 </head>
 
 <body>
 
-<h1>FluxReveal Hero Image Concepts</h1>
-<p>Below are the three hero image concepts shown visually so you can compare them easily.</p>
-
-<!-- Hero A -->
-<h2>Hero A — AI Network Grid (Corporate + Clean)</h2>
-<div class="hero-box">
-    <img src="https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=1600&q=80" alt="Hero A">
-</div>
-
-<!-- Hero B -->
-<h2>Hero B — System Integration (Enterprise‑look)</h2>
-<div class="hero-box">
-    <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=1600&q=80" alt="Hero B">
-</div>
-
-<!-- Hero C -->
-<h2>Hero C — AI Data Flow (Neon‑tech, modern)</h2>
-<div class="hero-box">
-    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80" alt="Hero C">
-</div>
+<section class="hero">
+    <div class="hero-content">
+        <h1>Connecting Systems. Enhancing Intelligence.</h1>
+        <p>
+            FluxReveal builds automation pipelines that unify systems, data, and AI —
+            enabling organizations to operate with clarity, speed, and precision.
+        </p>
+        <a href="mailto:info@fluxreveal.com" class="cta">Contact Us</a>
+    </div>
+</section>
 
 </body>
 </html>
