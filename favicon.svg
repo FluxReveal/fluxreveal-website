@@ -1,14 +1,26 @@
 <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" rx="12" fill="#0A1F44"/>
   <defs>
-    <linearGradient id="favGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#00C2FF"/>
-      <stop offset="50%" stop-color="#4DF3FF"/>
+    <linearGradient id="favGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF"/>
+      <stop offset="55%" stop-color="#00C2FF"/>
       <stop offset="100%" stop-color="#7AFFD9"/>
     </linearGradient>
   </defs>
-  <polyline points="14,28 26,18 38,38 50,28"
-            stroke="url(#favGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
-  <polyline points="14,40 26,30 38,50 50,40"
-            stroke="url(#favGrad)" stroke-width="4" fill="none" opacity="0.9" stroke-linecap="round"/>
+
+  <rect width="64" height="64" rx="14" fill="#060B14"/>
+
+  <polyline points="12,32 26,14 40,50 52,32"
+            stroke="url(#favGrad)"
+            stroke-width="6"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+
+  <polyline points="12,44 26,26 40,62 52,44"
+            stroke="url(#favGrad)"
+            stroke-width="4.5"
+            fill="none"
+            opacity="0.9"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
 </svg>
