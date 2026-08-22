@@ -127,6 +127,17 @@
       margin-bottom: 18px;
     }
 
+    .tsx-legend {
+      margin: -6px 0 18px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    .tsx-legend strong {
+      color: var(--accent-2);
+    }
+
     .trend-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -255,6 +266,7 @@
         <h1>Trending technologies</h1>
         <p class="subtitle">The strongest themes this week, with AI commentary and a draft ready for private X publishing.</p>
         <div class="status" id="statusText">Live refresh ready</div>
+        <p class="tsx-legend"><strong>TSX</strong> · TechSignalSix Trust Score · a transparent 0–100 signal under development.</p>
         <div id="trendGrid" class="trend-grid"></div>
         <div class="mini-label" style="margin-top: 24px;">AI commentary</div>
         <div id="aiCommentary" class="ai-box">Generating commentary…</div>
@@ -290,9 +302,26 @@
     };
 
     let currentData = sampleData;
+    let lastLiveSignature = null;
 
     function pickTopItems(items) {
       return items.slice(0, 5);
+    }
+
+    function getTrendSignature(data) {
+      return JSON.stringify({
+        week: data.week || "",
+        items: (data.items || []).map((item) => ({
+          title: item.title,
+          score: item.score,
+          change: item.change
+        }))
+      });
+    }
+
+    function getWeekLabel(week) {
+      const match = String(week || "").match(/W\d{1,2}/i);
+      return match ? match[0].toUpperCase() : "XX";
     }
 
     function buildTrendCard(item, index) {
@@ -300,7 +329,7 @@
         <div class="trend-card">
           <div class="trend-row">
             <div class="chip">#${index + 1}</div>
-            <div class="score">${item.score || "—"}</div>
+            <div class="score">TSX ${item.score || "—"}</div>
           </div>
           <h3>${item.title}</h3>
           <p>${item.summary || "No summary available yet."}</p>
@@ -315,7 +344,7 @@
 
     function buildAiCommentary(items) {
       const top = pickTopItems(items);
-      const headline = top.map((item) => `${item.title} (${item.score})`).join("; ");
+      const headline = top.map((item) => `${item.title} (TSX ${item.score})`).join("; ");
       const first = top[0] || {};
       const second = top[1] || {};
       const third = top[2] || {};
@@ -329,20 +358,22 @@
       ].join("\n\n");
     }
 
-    function buildXDraft(items) {
-      const top = pickTopItems(items);
+    function buildXDraft(data) {
+      const top = pickTopItems(data.items || []);
+      const week = data.week || "Unknown week";
       const lineA = "This week’s strongest tech signals point to a clear shift: AI is moving from tools to infrastructure.";
-      const lineB = top.map((item, index) => `${index + 1}. ${item.title} — TSX${item.score}`).join("\n");
+      const lineB = top.map((item, index) => `${index + 1}. ${item.title} — TSX ${item.score}`).join("\n");
       const lineC = "The real opportunity is not more AI experiments, but better orchestration, memory, and execution across systems.";
-      const lineD = "Source: TechSignalSix — follow technology, not the noise";
-      return `${lineA}\n\n${lineB}\n\n${lineC}\n\n${lineD}\n${SOURCE_URL}`;
+      const lineD = `Week: ${week}`;
+      const lineE = "Source: TechSignalSix — follow technology, not the noise";
+      return `${lineA}\n\n${lineB}\n\n${lineC}\n\n${lineD}\n${lineE}\n${SOURCE_URL}`;
     }
 
     function renderDashboard(data) {
       currentData = data;
       renderTrends(data.items || []);
       document.getElementById("aiCommentary").textContent = buildAiCommentary(data.items || []);
-      document.getElementById("xDraft").value = buildXDraft(data.items || []);
+      document.getElementById("xDraft").value = buildXDraft(data);
       document.getElementById("statusText").textContent = `Updated: ${new Date().toLocaleString("no-NO")} · ${data.items?.length || 0} signals`;
     }
 
@@ -369,9 +400,11 @@
         };
       }).filter((item) => item.title && item.score !== "—");
 
+      const weekMatch = html.match(/(20\d{2}-W\d{1,2})/i);
+
       return {
         source: SOURCE_URL,
-        week: "Live",
+        week: weekMatch ? weekMatch[1].toUpperCase() : "Live",
         items: items.length ? items : sampleData.items
       };
     }
@@ -382,8 +415,12 @@
         if (!response.ok) throw new Error("Fetch failed");
         const html = await response.text();
         const liveData = parseTechSignalHtml(html);
+        const signature = getTrendSignature(liveData);
         renderDashboard(liveData);
-        document.getElementById("statusText").textContent = `Live refresh complete: ${liveData.items.length} signals loaded`;
+        document.getElementById("statusText").textContent = signature === lastLiveSignature
+          ? `No new trends for Week ${getWeekLabel(liveData.week)}`
+          : `Live refresh complete: ${liveData.items.length} signals loaded`;
+        lastLiveSignature = signature;
       } catch (error) {
         renderDashboard(sampleData);
         document.getElementById("statusText").textContent = "Fallback mode: live fetch failed, sample data shown";
@@ -398,7 +435,7 @@
     document.getElementById("refreshBtn").addEventListener("click", refreshDashboard);
     document.getElementById("generateBtn").addEventListener("click", () => {
       document.getElementById("aiCommentary").textContent = buildAiCommentary(currentData.items || []);
-      document.getElementById("xDraft").value = buildXDraft(currentData.items || []);
+      document.getElementById("xDraft").value = buildXDraft(currentData);
     });
     document.getElementById("postBtn").addEventListener("click", openXComposer);
 
