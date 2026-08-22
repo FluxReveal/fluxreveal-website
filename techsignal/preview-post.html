@@ -380,14 +380,7 @@
     }
 
     function buildShortAiSummary(items) {
-      const top = pickTopItems(items);
-      const titles = top.slice(0, 3).map((item) => item.title).join(", ");
-      const summaries = top
-        .map((item) => item.summary)
-        .filter(Boolean)
-        .join(" ");
-      const summary = summaries.length > 180 ? `${summaries.slice(0, 177).trimEnd()}...` : summaries;
-      return `${titles} indicate a common shift: ${summary}`.trim();
+      return "AI is shifting from standalone tools to connected infrastructure, execution and data access.";
     }
 
     function buildPostAnalysis(items) {
