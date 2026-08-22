@@ -373,8 +373,17 @@
       ].join("\n\n");
     }
 
+    function displaySignalTitle(title) {
+      const normalized = String(title || "");
+      const aliases = {
+        "AI Coding Agents": "Coding Agent",
+        "Agent Interoperability Protocols": "Interoperability"
+      };
+      return aliases[normalized] || normalized;
+    }
+
     function shortenTitle(title, maxLength = 18) {
-      const normalized = String(title || "").replace(/\s*&\s*/g, " and ");
+      const normalized = displaySignalTitle(title).replace(/\s*&\s*/g, " and ");
       return normalized.length > maxLength
         ? `${normalized.slice(0, maxLength - 1).trimEnd()}…`
         : normalized;
@@ -384,10 +393,19 @@
       const top = pickTopItems(data.items || []);
       const week = data.week || "Unknown week";
       const lineA = `Tech signals · Week ${week}`;
-      const lineB = top.map((item, index) => `${index + 1}. ${shortenTitle(item.title)} · TSX ${item.score}`).join("\n");
-      const lineC = "Signal: AI is moving to infrastructure.";
+      const signalLines = top.map((item, index) => `${index + 1}. ${shortenTitle(item.title)} · TSX ${item.score}`);
+      const lineC = "Analysis: protocols, coding, inference, local AI and retrieval.";
       const lineD = SOURCE_URL;
-      return `${lineA}\n${lineB}\n${lineC}\n${lineD}`;
+      const fullDraft = `${lineA}\n${signalLines.join("\n")}\n${lineC}\n${lineD}`;
+      if (fullDraft.length <= 280) return fullDraft;
+
+      let compactLines = [];
+      for (const line of signalLines) {
+        const candidate = `${lineA}\n${[...compactLines, line, "....."].join("\n")}\n${lineC}\n${lineD}`;
+        if (candidate.length > 280) break;
+        compactLines.push(line);
+      }
+      return `${lineA}\n${compactLines.join("\n")}\n.....\n${lineC}\n${lineD}`;
     }
 
     function renderDashboard(data) {
