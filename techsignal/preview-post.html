@@ -212,6 +212,12 @@
       gap: 12px;
     }
 
+    .draft-count {
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-align: right;
+    }
+
     textarea {
       width: 100%;
       min-height: 260px;
@@ -278,6 +284,7 @@
           <h2>Private posting draft</h2>
         </div>
         <textarea id="xDraft" readonly></textarea>
+        <div id="draftCount" class="draft-count">0/280 tegn</div>
         <div>
           <div class="mini-label">Source</div>
           <a class="source-link" href="https://techsignal-six.vercel.app/#trending" target="_blank" rel="noreferrer">TechSignalSix — follow technology, not the noise</a>
@@ -366,22 +373,30 @@
       ].join("\n\n");
     }
 
+    function shortenTitle(title, maxLength = 18) {
+      const normalized = String(title || "").replace(/\s*&\s*/g, " and ");
+      return normalized.length > maxLength
+        ? `${normalized.slice(0, maxLength - 1).trimEnd()}…`
+        : normalized;
+    }
+
     function buildXDraft(data) {
       const top = pickTopItems(data.items || []);
       const week = data.week || "Unknown week";
-      const lineA = "This week’s strongest tech signals point to a clear shift: AI is moving from tools to infrastructure.";
-      const lineB = top.map((item, index) => `${index + 1}. ${item.title} — TSX ${item.score}`).join("\n");
-      const lineC = "The real opportunity is not more AI experiments, but better orchestration, memory, and execution across systems.";
-      const lineD = `Week: ${week}`;
-      const lineE = "Source: TechSignalSix — follow technology, not the noise";
-      return `${lineA}\n\n${lineB}\n\n${lineC}\n\n${lineD}\n${lineE}\n${SOURCE_URL}`;
+      const lineA = `Tech signals · Week ${week}`;
+      const lineB = top.map((item, index) => `${index + 1}. ${shortenTitle(item.title)} · TSX ${item.score}`).join("\n");
+      const lineC = "Signal: AI is moving to infrastructure.";
+      const lineD = SOURCE_URL;
+      return `${lineA}\n${lineB}\n${lineC}\n${lineD}`;
     }
 
     function renderDashboard(data) {
       currentData = data;
       renderTrends(data.items || []);
       document.getElementById("aiCommentary").textContent = buildAiCommentary(data.items || []);
-      document.getElementById("xDraft").value = buildXDraft(data);
+      const draft = buildXDraft(data);
+      document.getElementById("xDraft").value = draft;
+      document.getElementById("draftCount").textContent = `${draft.length}/280 tegn`;
       document.getElementById("statusText").textContent = `Updated: ${new Date().toLocaleString("no-NO")} · ${data.items?.length || 0} signals`;
     }
 
@@ -448,7 +463,9 @@
     document.getElementById("refreshBtn").addEventListener("click", refreshDashboard);
     document.getElementById("generateBtn").addEventListener("click", () => {
       document.getElementById("aiCommentary").textContent = buildAiCommentary(currentData.items || []);
-      document.getElementById("xDraft").value = buildXDraft(currentData);
+      const draft = buildXDraft(currentData);
+      document.getElementById("xDraft").value = draft;
+      document.getElementById("draftCount").textContent = `${draft.length}/280 tegn`;
     });
     document.getElementById("postBtn").addEventListener("click", openXComposer);
 
