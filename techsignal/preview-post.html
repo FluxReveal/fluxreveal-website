@@ -387,7 +387,22 @@
         .filter(Boolean)
         .join(" ");
       const summary = summaries.length > 220 ? `${summaries.slice(0, 217).trimEnd()}...` : summaries;
-      return `Kort oppsummert: ${titles}. ${summary}`.trim();
+      return `${titles}: ${summary}`.trim();
+    }
+
+    function buildPostAnalysis(items) {
+      const top = pickTopItems(items);
+      const first = top[0] || {};
+      const second = top[1] || {};
+      const third = top[2] || {};
+      const fourth = top[3] || {};
+      const fifth = top[4] || {};
+
+      return [
+        `The five signals point in the same direction: ${first.title || "interoperability"}, ${second.title || "coding agents"} and ${third.title || "inference"} connect AI capability with the systems that make it useful in practice.`,
+        `${fourth.title || "Local models"} adds a focus on where AI runs, while ${fifth.title || "retrieval"} highlights the importance of access to relevant data. Together, the signals describe a move from individual tools toward connected, usable systems.`,
+        `The practical takeaway is to evaluate AI by what it can reliably connect, execute and retrieve, not by novelty alone. TSX provides the weekly signal ranking; the underlying sources provide the context.`
+      ].join("\n\n");
     }
 
     function shortenTitle(title, maxLength = 18) {
@@ -410,7 +425,8 @@
         return `${index + 1}. ${item.title} · TSX ${item.score}\n${item.summary || ""}\n${url}`;
       }).join("\n\n");
       const summary = buildShortAiSummary(top);
-      return `${introduction}\n\n${signals}\n\n${summary}`;
+      const analysis = buildPostAnalysis(top);
+      return `${introduction}\n\n${summary}\n\n${signals}\n\n${analysis}`;
     }
 
     function renderDashboard(data) {
