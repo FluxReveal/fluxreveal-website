@@ -287,17 +287,11 @@
       <aside class="panel draft-box">
         <div>
           <div class="mini-label">Draft X post</div>
-          <h2>Main</h2>
-          <p class="draft-description">Kondensert analyse av ukens signaler.</p>
-        </div>
-        <textarea id="mainDraft" readonly></textarea>
-        <div id="mainDraftCount" class="draft-count">0/280 X-tegn</div>
-        <div>
-          <div class="mini-label">Follow-Up</div>
-          <p class="draft-description">De fem viktigste sakene med TSX-score.</p>
+          <h2>Combined post</h2>
+          <p class="draft-description">Innledning, fem signaler med direkte lenker og AI-commentary.</p>
         </div>
         <textarea id="xDraft" readonly></textarea>
-        <div id="draftCount" class="draft-count">0/280 X-tegn</div>
+        <div id="draftCount" class="draft-count">0/25 000 X-tegn</div>
         <div>
           <div class="mini-label">Source</div>
           <a class="source-link" href="https://techsignal-six.vercel.app/#trending" target="_blank" rel="noreferrer">TechSignalSix — follow technology, not the noise</a>
@@ -313,11 +307,11 @@
       source: SOURCE_URL,
       week: "2026-W32",
       items: [
-        { title: "Agent Interoperability Protocols", score: "75", change: "Accelerating", summary: "Open protocols like MCP are becoming the connection layer between AI systems, tools and companies." },
-        { title: "AI Coding Agents", score: "74", change: "Accelerating", summary: "Software teams are delegating whole coding tasks to agents, not just autocompleting lines." },
-        { title: "AI Inference Infrastructure", score: "72", change: "Stable", summary: "Serving engines decide whether AI features are profitable — same GPUs, several times the throughput." },
-        { title: "Small Language Models & On-Device AI", score: "67", change: "Growing", summary: "Models small enough to run on laptops and phones now handle real production tasks." },
-        { title: "Vector Search & Agent Memory", score: "66", change: "Stable", summary: "Past the hype, retrieval quality matters more than model choice for AI answers on your own data." }
+        { title: "Agent Interoperability Protocols", score: "75", change: "Accelerating", summary: "Open protocols like MCP are becoming the connection layer between AI systems, tools and companies.", url: "https://techsignal-six.vercel.app/themes/agent-interoperability/" },
+        { title: "AI Coding Agents", score: "74", change: "Accelerating", summary: "Software teams are delegating whole coding tasks to agents, not just autocompleting lines.", url: "https://techsignal-six.vercel.app/themes/ai-coding-agents/" },
+        { title: "AI Inference Infrastructure", score: "72", change: "Stable", summary: "Serving engines decide whether AI features are profitable — same GPUs, several times the throughput.", url: "https://techsignal-six.vercel.app/themes/ai-inference-infrastructure/" },
+        { title: "Small Language Models & On-Device AI", score: "67", change: "Growing", summary: "Models small enough to run on laptops and phones now handle real production tasks.", url: "https://techsignal-six.vercel.app/themes/small-language-models/" },
+        { title: "Vector Search & Agent Memory", score: "66", change: "Stable", summary: "Past the hype, retrieval quality matters more than model choice for AI answers on your own data.", url: "https://techsignal-six.vercel.app/themes/vector-databases-agent-memory/" }
       ]
     };
 
@@ -394,38 +388,28 @@
     }
 
     function getXCharacterCount(text) {
-      return text.replace(SOURCE_URL, "x".repeat(23)).length;
+      return text.replace(/https?:\/\/\S+/g, "x".repeat(23)).length;
     }
 
-    function buildMainDraft(data) {
+    function buildCombinedDraft(data) {
       const top = pickTopItems(data.items || []);
       const week = data.week || "Unknown week";
-      const first = shortenTitle(top[0]?.title, 24);
-      const second = shortenTitle(top[1]?.title, 24);
-      const third = shortenTitle(top[2]?.title, 24);
-      return `Week ${week}: ${first}, ${second} and ${third} show the shift from separate AI tools to connected infrastructure. The practical signal is better protocols, coding, inference and retrieval. ${SOURCE_URL}`;
-    }
-
-    function buildXDraft(data) {
-      const top = pickTopItems(data.items || []);
-      const week = data.week || "Unknown week";
-      const lineA = `Tech signals · Week ${week}`;
-      const lineB = top.map((item, index) => `${index + 1}. ${shortenTitle(item.title)} · TSX ${item.score}`).join("\n");
-      const lineC = "Signal: AI is moving to infrastructure.";
-      const lineD = SOURCE_URL;
-      return `${lineA}\n${lineB}\n${lineC}\n${lineD}`;
+      const introduction = `Week ${week}: This week's signals show AI moving from separate tools toward connected infrastructure, with protocols, coding, inference, local models and retrieval at the center.`;
+      const signals = top.map((item, index) => {
+        const url = item.url || SOURCE_URL;
+        return `${index + 1}. ${item.title} · TSX ${item.score}\n${item.summary || ""}\n${url}`;
+      }).join("\n\n");
+      const commentary = buildAiCommentary(top);
+      return `${introduction}\n\n${signals}\n\nAI commentary\n${commentary}`;
     }
 
     function renderDashboard(data) {
       currentData = data;
       renderTrends(data.items || []);
       document.getElementById("aiCommentary").textContent = buildAiCommentary(data.items || []);
-      const mainDraft = buildMainDraft(data);
-      const draft = buildXDraft(data);
-      document.getElementById("mainDraft").value = mainDraft;
-      document.getElementById("mainDraftCount").textContent = `${getXCharacterCount(mainDraft)}/280 X-tegn`;
+      const draft = buildCombinedDraft(data);
       document.getElementById("xDraft").value = draft;
-      document.getElementById("draftCount").textContent = `${getXCharacterCount(draft)}/280 X-tegn`;
+      document.getElementById("draftCount").textContent = `${getXCharacterCount(draft)}/25 000 X-tegn`;
       document.getElementById("statusText").textContent = `Updated: ${new Date().toLocaleString("no-NO")} · ${data.items?.length || 0} signals`;
     }
 
@@ -492,12 +476,9 @@
     document.getElementById("refreshBtn").addEventListener("click", refreshDashboard);
     document.getElementById("generateBtn").addEventListener("click", () => {
       document.getElementById("aiCommentary").textContent = buildAiCommentary(currentData.items || []);
-      const mainDraft = buildMainDraft(currentData);
-      const draft = buildXDraft(currentData);
-      document.getElementById("mainDraft").value = mainDraft;
-      document.getElementById("mainDraftCount").textContent = `${getXCharacterCount(mainDraft)}/280 X-tegn`;
+      const draft = buildCombinedDraft(currentData);
       document.getElementById("xDraft").value = draft;
-      document.getElementById("draftCount").textContent = `${getXCharacterCount(draft)}/280 X-tegn`;
+      document.getElementById("draftCount").textContent = `${getXCharacterCount(draft)}/25 000 X-tegn`;
     });
     document.getElementById("postBtn").addEventListener("click", openXComposer);
 
