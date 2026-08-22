@@ -218,6 +218,12 @@
       text-align: right;
     }
 
+    .draft-description {
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin: -4px 0 0;
+    }
+
     textarea {
       width: 100%;
       min-height: 260px;
@@ -281,10 +287,17 @@
       <aside class="panel draft-box">
         <div>
           <div class="mini-label">Draft X post</div>
-          <h2>Private posting draft</h2>
+          <h2>Main</h2>
+          <p class="draft-description">Kondensert analyse av ukens signaler.</p>
+        </div>
+        <textarea id="mainDraft" readonly></textarea>
+        <div id="mainDraftCount" class="draft-count">0/280 X-tegn</div>
+        <div>
+          <div class="mini-label">Follow-Up</div>
+          <p class="draft-description">De fem viktigste sakene med TSX-score.</p>
         </div>
         <textarea id="xDraft" readonly></textarea>
-        <div id="draftCount" class="draft-count">0/280 tegn</div>
+        <div id="draftCount" class="draft-count">0/280 X-tegn</div>
         <div>
           <div class="mini-label">Source</div>
           <a class="source-link" href="https://techsignal-six.vercel.app/#trending" target="_blank" rel="noreferrer">TechSignalSix — follow technology, not the noise</a>
@@ -373,48 +386,46 @@
       ].join("\n\n");
     }
 
-    function displaySignalTitle(title) {
-      const normalized = String(title || "");
-      const aliases = {
-        "AI Coding Agents": "Coding Agent",
-        "Agent Interoperability Protocols": "Interoperability"
-      };
-      return aliases[normalized] || normalized;
-    }
-
     function shortenTitle(title, maxLength = 18) {
-      const normalized = displaySignalTitle(title).replace(/\s*&\s*/g, " and ");
+      const normalized = String(title || "").replace(/\s*&\s*/g, " and ");
       return normalized.length > maxLength
         ? `${normalized.slice(0, maxLength - 1).trimEnd()}…`
         : normalized;
+    }
+
+    function getXCharacterCount(text) {
+      return text.replace(SOURCE_URL, "x".repeat(23)).length;
+    }
+
+    function buildMainDraft(data) {
+      const top = pickTopItems(data.items || []);
+      const week = data.week || "Unknown week";
+      const first = shortenTitle(top[0]?.title, 24);
+      const second = shortenTitle(top[1]?.title, 24);
+      const third = shortenTitle(top[2]?.title, 24);
+      return `Week ${week}: ${first}, ${second} and ${third} show the shift from separate AI tools to connected infrastructure. The practical signal is better protocols, coding, inference and retrieval. ${SOURCE_URL}`;
     }
 
     function buildXDraft(data) {
       const top = pickTopItems(data.items || []);
       const week = data.week || "Unknown week";
       const lineA = `Tech signals · Week ${week}`;
-      const signalLines = top.map((item, index) => `${index + 1}. ${shortenTitle(item.title)} · TSX ${item.score}`);
-      const lineC = "Analysis: protocols, coding, inference, local AI and retrieval.";
+      const lineB = top.map((item, index) => `${index + 1}. ${shortenTitle(item.title)} · TSX ${item.score}`).join("\n");
+      const lineC = "Signal: AI is moving to infrastructure.";
       const lineD = SOURCE_URL;
-      const fullDraft = `${lineA}\n${signalLines.join("\n")}\n${lineC}\n${lineD}`;
-      if (fullDraft.length <= 280) return fullDraft;
-
-      let compactLines = [];
-      for (const line of signalLines) {
-        const candidate = `${lineA}\n${[...compactLines, line, "....."].join("\n")}\n${lineC}\n${lineD}`;
-        if (candidate.length > 280) break;
-        compactLines.push(line);
-      }
-      return `${lineA}\n${compactLines.join("\n")}\n.....\n${lineC}\n${lineD}`;
+      return `${lineA}\n${lineB}\n${lineC}\n${lineD}`;
     }
 
     function renderDashboard(data) {
       currentData = data;
       renderTrends(data.items || []);
       document.getElementById("aiCommentary").textContent = buildAiCommentary(data.items || []);
+      const mainDraft = buildMainDraft(data);
       const draft = buildXDraft(data);
+      document.getElementById("mainDraft").value = mainDraft;
+      document.getElementById("mainDraftCount").textContent = `${getXCharacterCount(mainDraft)}/280 X-tegn`;
       document.getElementById("xDraft").value = draft;
-      document.getElementById("draftCount").textContent = `${draft.length}/280 tegn`;
+      document.getElementById("draftCount").textContent = `${getXCharacterCount(draft)}/280 X-tegn`;
       document.getElementById("statusText").textContent = `Updated: ${new Date().toLocaleString("no-NO")} · ${data.items?.length || 0} signals`;
     }
 
@@ -481,9 +492,12 @@
     document.getElementById("refreshBtn").addEventListener("click", refreshDashboard);
     document.getElementById("generateBtn").addEventListener("click", () => {
       document.getElementById("aiCommentary").textContent = buildAiCommentary(currentData.items || []);
+      const mainDraft = buildMainDraft(currentData);
       const draft = buildXDraft(currentData);
+      document.getElementById("mainDraft").value = mainDraft;
+      document.getElementById("mainDraftCount").textContent = `${getXCharacterCount(mainDraft)}/280 X-tegn`;
       document.getElementById("xDraft").value = draft;
-      document.getElementById("draftCount").textContent = `${draft.length}/280 tegn`;
+      document.getElementById("draftCount").textContent = `${getXCharacterCount(draft)}/280 X-tegn`;
     });
     document.getElementById("postBtn").addEventListener("click", openXComposer);
 
