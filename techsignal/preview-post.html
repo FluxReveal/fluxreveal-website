@@ -1,366 +1,409 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FluxReveal — X Post Preview</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FluxReveal · Tech Signal Dashboard</title>
   <style>
     :root {
-      --bg: #060B14;
-      --card: #0D1525;
-      --border: #1A2438;
-      --text: #E8ECF3;
-      --muted: #A0AEC0;
-      --accent: #00E5FF;
-      --accent2: #7AFFD9;
+      --bg: #06111d;
+      --panel: #0d1b2a;
+      --border: rgba(148, 163, 184, 0.22);
+      --text: #ebf1f8;
+      --muted: #9bb0c5;
+      --accent: #5eead4;
+      --accent-2: #7dd3fc;
+      --warning: #fbbf24;
+      --shadow: rgba(10, 16, 28, 0.45);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
 
     body {
-      font-family: Inter, system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      margin: 0;
       min-height: 100vh;
-      padding: 40px 20px;
-      line-height: 1.5;
+      font-family: Inter, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(94, 234, 212, 0.16), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(192, 132, 252, 0.15), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      padding: 32px 20px 60px;
     }
 
-    .container { max-width: 620px; margin: 0 auto; }
+    .shell { max-width: 1200px; margin: 0 auto; }
 
-    h1 {
-      font-size: 1.5rem;
-      margin-bottom: 8px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand span {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
 
-    .subtitle {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 28px;
-    }
-
-    .x-post {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 24px;
-    }
-
-    .x-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #00E5FF, #7AFFD9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: #060B14;
-      font-size: 1.1rem;
-    }
-
-    .user-info strong { display: block; font-size: 1rem; }
-    .user-info span { color: var(--muted); font-size: 0.9rem; }
-
-    .post-content {
-      font-size: 1.15rem;
-      white-space: pre-wrap;
-      margin-bottom: 16px;
-      line-height: 1.45;
-    }
-
-    .post-meta {
-      color: var(--muted);
-      font-size: 0.9rem;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-    }
-
     .actions {
       display: flex;
-      gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 8px;
+      gap: 12px;
     }
 
     button {
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s ease;
-    }
-
-    .btn-refresh {
-      background: #1A2438;
-      color: var(--text);
+      appearance: none;
       border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s ease;
     }
-    .btn-refresh:hover { background: #243044; }
 
-    .btn-fetch {
-      background: #132033;
-      color: var(--accent);
-      border: 1px solid #00C2FF55;
-    }
-    .btn-fetch:hover { background: #1a2d44; }
-
-    .btn-post {
-      background: linear-gradient(135deg, #00E5FF, #00C2FF 50%, #7AFFD9);
-      color: #060B14;
-    }
-    .btn-post:hover {
-      filter: brightness(1.08);
+    button:hover {
       transform: translateY(-1px);
+      border-color: rgba(125, 211, 252, 0.5);
     }
-    .btn-post:disabled,
-    .btn-fetch:disabled,
-    .btn-refresh:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-      transform: none;
+
+    .primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06111d;
+      border: none;
+      box-shadow: 0 12px 30px rgba(94, 234, 212, 0.25);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.5fr 0.9fr;
+      gap: 22px;
+    }
+
+    .panel {
+      background: rgba(15, 26, 39, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 18px 45px var(--shadow);
+      padding: 22px;
+    }
+
+    .panel h1, .panel h2 {
+      margin: 0 0 8px;
+      line-height: 1.2;
+    }
+
+    .panel h1 {
+      font-size: clamp(1.8rem, 2.3vw, 2.7rem);
+    }
+
+    .subtitle {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 0.96rem;
     }
 
     .status {
-      margin-top: 16px;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      display: none;
-    }
-    .status.info {
-      display: block;
-      background: #0D1525;
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-    .status.success {
-      display: block;
-      background: rgba(0, 229, 255, 0.1);
-      border: 1px solid var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      background: rgba(94, 234, 212, 0.12);
+      border: 1px solid rgba(94, 234, 212, 0.3);
       color: var(--accent);
-    }
-    .status.error {
-      display: block;
-      background: rgba(255, 80, 80, 0.1);
-      border: 1px solid #ff5050;
-      color: #ff8a8a;
+      margin-bottom: 18px;
     }
 
-    footer {
-      margin-top: 40px;
-      text-align: center;
+    .trend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .trend-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 14px 12px;
+    }
+
+    .trend-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .score {
+      background: rgba(125, 211, 252, 0.12);
+      padding: 5px 8px;
+      border-radius: 8px;
+      font-weight: 700;
+      color: var(--accent-2);
+      font-size: 0.9rem;
+    }
+
+    .trend-card h3 {
+      font-size: 1.02rem;
+      margin: 0 0 8px;
+      line-height: 1.35;
+    }
+
+    .trend-card p {
       color: var(--muted);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(248, 250, 252, 0.12);
+      background: rgba(255,255,255,0.02);
+      color: var(--warning);
+      font-size: 0.72rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .ai-box {
+      margin-top: 18px;
+      background: rgba(94, 234, 212, 0.05);
+      border: 1px solid rgba(94, 234, 212, 0.2);
+      border-radius: 16px;
+      padding: 16px;
+      color: var(--text);
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .draft-box {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 260px;
+      resize: vertical;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(1, 10, 16, 0.35);
+      color: var(--text);
+      padding: 14px 16px;
+      font: inherit;
+      line-height: 1.55;
+    }
+
+    .source-link {
+      color: var(--accent-2);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .source-link:hover {
+      text-decoration: underline;
+    }
+
+    .mini-label {
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
+    }
+
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>X Post Preview</h1>
-    <p class="subtitle">Forhåndsvisning av ukens top signals + value-add teaser</p>
-
-    <div class="x-post" id="postCard">
-      <div class="x-header">
-        <div class="avatar">TS</div>
-        <div class="user-info">
-          <strong>TechSignal HQ</strong>
-          <span>@TechSignalHQ · Just now</span>
-        </div>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><span>FluxReveal</span> · Tech Signal</div>
+      <div class="actions">
+        <button id="refreshBtn">Refresh data</button>
+        <button id="generateBtn">AI commentary</button>
+        <button id="postBtn" class="primary">Publish to X</button>
       </div>
+    </header>
 
-      <div class="post-content" id="postContent">Laster preview...</div>
-      <div class="post-meta" id="postMeta">—</div>
-    </div>
+    <main class="layout">
+      <section class="panel">
+        <h1>Trending technologies</h1>
+        <p class="subtitle">The strongest themes this week, with AI commentary and a draft ready for private X publishing.</p>
+        <div class="status" id="statusText">Live refresh ready</div>
+        <div id="trendGrid" class="trend-grid"></div>
+        <div class="mini-label" style="margin-top: 24px;">AI commentary</div>
+        <div id="aiCommentary" class="ai-box">Generating commentary…</div>
+      </section>
 
-    <div class="actions">
-      <button class="btn-fetch" id="fetchBtn" onclick="fetchFromTechSignal()">↓ Hent fra TechSignal</button>
-      <button class="btn-refresh" id="refreshBtn" onclick="refreshPreview()">↻ Refresh</button>
-      <button class="btn-post" id="postBtn" onclick="postToX()">Post to X</button>
-    </div>
-
-    <div class="status info" id="status">
-      Trykk «Hent fra TechSignal» for å hente live data fra techsignal-six.vercel.app
-    </div>
-
-    <footer>FluxReveal · Internal preview tool</footer>
+      <aside class="panel draft-box">
+        <div>
+          <div class="mini-label">Draft X post</div>
+          <h2>Private posting draft</h2>
+        </div>
+        <textarea id="xDraft" readonly></textarea>
+        <div>
+          <div class="mini-label">Source</div>
+          <a class="source-link" href="https://techsignal-six.vercel.app/#trending" target="_blank" rel="noreferrer">Tech Signal — follow technology, not the noise</a>
+        </div>
+      </aside>
+    </main>
   </div>
 
   <script>
-    // Fallback sample (brukes hvis fetch feiler)
+    const SOURCE_URL = "https://techsignal-six.vercel.app/#trending";
+
     const sampleData = {
-      theme: "AI Agents & Autonomous Workflows",
+      source: SOURCE_URL,
       week: "2026-W32",
-      generated_at: new Date().toISOString(),
-      source: "sample",
-      stories: [
-        { title: "Agent Interoperability Protocols", url: "https://techsignal-six.vercel.app/themes/agent-interoperability/", summary: "Open protocols like MCP are becoming the connection layer." },
-        { title: "AI Coding Agents", url: "https://techsignal-six.vercel.app/themes/ai-coding-agents/", summary: "Teams are delegating whole coding tasks to agents." },
-        { title: "AI Inference Infrastructure", url: "https://techsignal-six.vercel.app/themes/ai-inference-infrastructure/", summary: "Serving engines decide whether AI features are profitable." },
-        { title: "Small Language Models & On-Device AI", url: "https://techsignal-six.vercel.app/themes/small-language-models/", summary: "Models small enough to run on laptops now handle real tasks." },
-        { title: "Vector Search & Agent Memory", url: "https://techsignal-six.vercel.app/themes/vector-databases-agent-memory/", summary: "Retrieval quality is what limits AI answers on your own data." }
+      items: [
+        { title: "Agent Interoperability Protocols", score: "75", change: "Accelerating", summary: "Open protocols like MCP are becoming the connection layer between AI systems, tools and companies." },
+        { title: "AI Coding Agents", score: "74", change: "Accelerating", summary: "Software teams are delegating whole coding tasks to agents, not just autocompleting lines." },
+        { title: "AI Inference Infrastructure", score: "72", change: "Stable", summary: "Serving engines decide whether AI features are profitable — same GPUs, several times the throughput." },
+        { title: "Small Language Models & On-Device AI", score: "67", change: "Growing", summary: "Models small enough to run on laptops and phones now handle real production tasks." },
+        { title: "Vector Search & Agent Memory", score: "66", change: "Stable", summary: "Past the hype, retrieval quality matters more than model choice for AI answers on your own data." }
       ]
     };
 
     let currentData = sampleData;
 
-    function createTeaser(data) {
-      const theme = data.theme || "This week's key signals";
-      const week = data.week ? ` (${data.week})` : "";
-      return `This week's signal${week}: ${theme}\n\nTop signals worth your attention:`;
+    function pickTopItems(items) {
+      return items.slice(0, 5);
     }
 
-    function buildPostText(data) {
-      const teaser = createTeaser(data);
-      const lines = (data.stories || []).slice(0, 5).map((s, i) => `${i + 1}. ${s.title}`);
-      const footer = `\n\nFull context → techsignal-six.vercel.app`;
-      return `${teaser}\n\n${lines.join("\n")}${footer}`;
+    function buildTrendCard(item, index) {
+      return `
+        <div class="trend-card">
+          <div class="trend-row">
+            <div class="chip">#${index + 1}</div>
+            <div class="score">${item.score || "—"}</div>
+          </div>
+          <h3>${item.title}</h3>
+          <p>${item.summary || "No summary available yet."}</p>
+        </div>
+      `;
     }
 
-    function renderPreview(data) {
+    function renderTrends(items) {
+      const top = pickTopItems(items);
+      document.getElementById("trendGrid").innerHTML = top.map(buildTrendCard).join("");
+    }
+
+    function buildAiCommentary(items) {
+      const top = pickTopItems(items);
+      const headline = top.map((item) => `${item.title} (${item.score})`).join("; ");
+      const first = top[0] || {};
+      const second = top[1] || {};
+      const third = top[2] || {};
+
+      return [
+        `This week’s strongest pattern is not just more AI adoption — it is the shift from isolated tools to infrastructure and execution layers.`,
+        `The signal cluster is led by ${headline}.`,
+        `What matters most: ${first.title || "AI infrastructure"} and ${second.title || "agent orchestration"} point to a market that is moving from experimentation to integration, while ${third.title || "inference"} shows that performance and efficiency are becoming a competitive advantage.`,
+        `For operators, the practical takeaway is simple: the next value is not in adding another AI feature, but in connecting systems, workflows and agents in a way that actually scales.`,
+        `This is why the trend matters: the winners will be the teams that turn AI from a tool into a repeatable operating layer.`
+      ].join("\n\n");
+    }
+
+    function buildXDraft(items) {
+      const top = pickTopItems(items);
+      const lineA = "This week’s strongest tech signals point to a clear shift: AI is moving from tools to infrastructure.";
+      const lineB = top.map((item, index) => `${index + 1}. ${item.title} — score ${item.score}`).join("\n");
+      const lineC = "The real opportunity is not more AI experiments, but better orchestration, memory, and execution across systems.";
+      const lineD = "Source: Tech Signal — follow technology, not the noise";
+      return `${lineA}\n\n${lineB}\n\n${lineC}\n\n${lineD}\n${SOURCE_URL}`;
+    }
+
+    function renderDashboard(data) {
       currentData = data;
-      document.getElementById("postContent").textContent = buildPostText(data);
-      const date = new Date(data.generated_at || Date.now());
-      const source = data.source === "live" ? "Live from TechSignal" : "Sample data";
-      document.getElementById("postMeta").textContent =
-        `${date.toLocaleString("no-NO")} · ${source}`;
+      renderTrends(data.items || []);
+      document.getElementById("aiCommentary").textContent = buildAiCommentary(data.items || []);
+      document.getElementById("xDraft").value = buildXDraft(data.items || []);
+      document.getElementById("statusText").textContent = `Updated: ${new Date().toLocaleString("no-NO")} · ${data.items?.length || 0} signals`;
     }
 
-    function showStatus(msg, type) {
-      const el = document.getElementById("status");
-      el.textContent = msg;
-      el.className = `status ${type}`;
-    }
-
-    function setLoading(isLoading) {
-      document.getElementById("fetchBtn").disabled = isLoading;
-      document.getElementById("refreshBtn").disabled = isLoading;
-      document.getElementById("postBtn").disabled = isLoading;
-    }
-
-    // Hent og parse HTML fra TechSignal
-    async function fetchFromTechSignal() {
-      setLoading(true);
-      showStatus("Henter data fra techsignal-six.vercel.app ...", "info");
-
-      try {
-        const res = await fetch("https://techsignal-six.vercel.app/", {
-          method: "GET",
-          mode: "cors",
-          cache: "no-store"
-        });
-
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-        const html = await res.text();
-        const data = parseTechSignalHtml(html);
-
-        if (!data.stories || data.stories.length === 0) {
-          throw new Error("Fant ingen themes i HTML");
-        }
-
-        renderPreview(data);
-        showStatus(`Hentet ${data.stories.length} signals fra TechSignal (${data.week || "ukjent uke"})`, "success");
-      } catch (err) {
-        console.error(err);
-        renderPreview({ ...sampleData, generated_at: new Date().toISOString() });
-        showStatus(`Kunne ikke hente live data (${err.message}). Viser sample i stedet.`, "error");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    // Enkel HTML-parser for top themes
     function parseTechSignalHtml(html) {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
+      const articles = Array.from(doc.querySelectorAll("article")).filter((article) => article.querySelector("h3"));
 
-      // Prøv å finne uke
-      let week = "";
-      const weekMatch = html.match(/Weekly radar\s*·\s*(20\d{2}-W\d{1,2})/i)
-                     || html.match(/(20\d{2}-W\d{1,2})/);
-      if (weekMatch) week = weekMatch[1];
+      const items = articles.map((article) => {
+        const title = article.querySelector("h3")?.textContent?.trim() || "";
+        const link = article.querySelector("a[href*='/themes/']")?.getAttribute("href") || "";
+        const text = (article.textContent || "").replace(/\s+/g, " ").trim();
+        const scoreMatch = text.match(/(\d+)\s*traction/i);
+        const score = scoreMatch ? scoreMatch[1] : "—";
+        const summaryText = Array.from(article.querySelectorAll("p"))
+          .map((p) => p.textContent.trim())
+          .find((p) => p && !/traction|open signal|see the evidence/i.test(p)) || "";
 
-      // Prøv å finne editorial / theme-setning
-      let theme = "This week's key technology signals";
-      const editorial = doc.querySelector("p")?.textContent || "";
-      // Fallback: bruk første sterke signal-setning hvis vi finner den
-      const signalText = html.match(/This week'?s signal[\s\S]{0,200}?([A-Z][^<\n]{20,120})/i);
-      if (signalText) theme = signalText[1].trim();
-
-      // Hent theme-lenker (typisk /themes/...)
-      const links = [...doc.querySelectorAll('a[href*="/themes/"]')];
-      const seen = new Set();
-      const stories = [];
-
-      for (const a of links) {
-        const href = a.getAttribute("href") || "";
-        const title = (a.textContent || "").trim();
-        if (!title || title.length < 4) continue;
-        if (seen.has(href)) continue;
-        // Hopp over generiske lenker
-        if (/search all themes|open signal|see the evidence/i.test(title)) continue;
-
-        seen.add(href);
-        stories.push({
-          title,
-          url: href.startsWith("http") ? href : `https://techsignal-six.vercel.app${href}`,
-          summary: ""
-        });
-
-        if (stories.length >= 5) break;
-      }
-
-      // Hvis parseren fant lite, bruk hardkodede top 5 fra kjent struktur
-      if (stories.length < 3) {
         return {
-          ...sampleData,
-          week: week || sampleData.week,
-          generated_at: new Date().toISOString(),
-          source: "live-fallback"
+          title,
+          score,
+          summary: summaryText,
+          url: link.startsWith("http") ? link : `https://techsignal-six.vercel.app${link}`
         };
-      }
+      }).filter((item) => item.title && item.score !== "—");
 
       return {
-        theme,
-        week,
-        generated_at: new Date().toISOString(),
-        source: "live",
-        stories
+        source: SOURCE_URL,
+        week: "Live",
+        items: items.length ? items : sampleData.items
       };
     }
 
-    function refreshPreview() {
-      renderPreview({
-        ...currentData,
-        generated_at: new Date().toISOString()
-      });
-      showStatus("Preview oppdatert", "success");
+    async function refreshDashboard() {
+      try {
+        const response = await fetch("https://techsignal-six.vercel.app/", { cache: "no-store" });
+        if (!response.ok) throw new Error("Fetch failed");
+        const html = await response.text();
+        const liveData = parseTechSignalHtml(html);
+        renderDashboard(liveData);
+        document.getElementById("statusText").textContent = `Live refresh complete: ${liveData.items.length} signals loaded`;
+      } catch (error) {
+        renderDashboard(sampleData);
+        document.getElementById("statusText").textContent = "Fallback mode: live fetch failed, sample data shown";
+      }
     }
 
-    function postToX() {
-      const btn = document.getElementById("postBtn");
-      btn.disabled = true;
-      showStatus("Posting er deaktivert i preview. Ekte publisering skjer via GitHub Actions.", "info");
-      setTimeout(() => { btn.disabled = false; }, 1800);
+    function openXComposer() {
+      const draft = document.getElementById("xDraft").value;
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(draft)}`, "_blank", "noopener,noreferrer");
     }
 
-    // Start med sample
-    renderPreview(sampleData);
+    document.getElementById("refreshBtn").addEventListener("click", refreshDashboard);
+    document.getElementById("generateBtn").addEventListener("click", () => {
+      document.getElementById("aiCommentary").textContent = buildAiCommentary(currentData.items || []);
+      document.getElementById("xDraft").value = buildXDraft(currentData.items || []);
+    });
+    document.getElementById("postBtn").addEventListener("click", openXComposer);
+
+    renderDashboard(sampleData);
+    refreshDashboard();
   </script>
 </body>
 </html>
