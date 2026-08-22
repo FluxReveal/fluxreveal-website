@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FluxReveal · Tech Signal Dashboard</title>
+  <title>TechSignalSix · Dashboard</title>
   <style>
     :root {
       --bg: #06111d;
@@ -242,7 +242,7 @@
 <body>
   <div class="shell">
     <header class="topbar">
-      <div class="brand"><span>FluxReveal</span> · Tech Signal</div>
+      <div class="brand"><span>TechSignalSix</span> · Dashboard</div>
       <div class="actions">
         <button id="refreshBtn">Refresh data</button>
         <button id="generateBtn">AI commentary</button>
@@ -268,7 +268,7 @@
         <textarea id="xDraft" readonly></textarea>
         <div>
           <div class="mini-label">Source</div>
-          <a class="source-link" href="https://techsignal-six.vercel.app/#trending" target="_blank" rel="noreferrer">Tech Signal — follow technology, not the noise</a>
+          <a class="source-link" href="https://techsignal-six.vercel.app/#trending" target="_blank" rel="noreferrer">TechSignalSix — follow technology, not the noise</a>
         </div>
       </aside>
     </main>
@@ -332,9 +332,9 @@
     function buildXDraft(items) {
       const top = pickTopItems(items);
       const lineA = "This week’s strongest tech signals point to a clear shift: AI is moving from tools to infrastructure.";
-      const lineB = top.map((item, index) => `${index + 1}. ${item.title} — score ${item.score}`).join("\n");
+      const lineB = top.map((item, index) => `${index + 1}. ${item.title} — TSX${item.score}`).join("\n");
       const lineC = "The real opportunity is not more AI experiments, but better orchestration, memory, and execution across systems.";
-      const lineD = "Source: Tech Signal — follow technology, not the noise";
+      const lineD = "Source: TechSignalSix — follow technology, not the noise";
       return `${lineA}\n\n${lineB}\n\n${lineC}\n\n${lineD}\n${SOURCE_URL}`;
     }
 
