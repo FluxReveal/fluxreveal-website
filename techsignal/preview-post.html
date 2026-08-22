@@ -394,13 +394,13 @@
     function buildCombinedDraft(data) {
       const top = pickTopItems(data.items || []);
       const week = data.week || "Unknown week";
-      const introduction = `Week ${week}: This week's signals show AI moving from separate tools toward connected infrastructure, with protocols, coding, inference, local models and retrieval at the center.`;
+      const introduction = `Week ${week}\nThis week's signals with high TSX show:`;
       const signals = top.map((item, index) => {
         const url = item.url || SOURCE_URL;
         return `${index + 1}. ${item.title} · TSX ${item.score}\n${item.summary || ""}\n${url}`;
       }).join("\n\n");
       const commentary = buildAiCommentary(top);
-      return `${introduction}\n\n${signals}\n\nAI commentary\n${commentary}`;
+      return `${introduction}\n\n${signals}\n\n${commentary}`;
     }
 
     function renderDashboard(data) {
