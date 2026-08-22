@@ -280,7 +280,6 @@
         <div class="status" id="statusText">Live refresh ready</div>
         <p class="tsx-legend"><strong>TSX</strong> · TechSignalSix Trust Score · a transparent 0–100 signal under development.</p>
         <div id="trendGrid" class="trend-grid"></div>
-        <div class="mini-label" style="margin-top: 24px;">AI commentary</div>
         <div id="aiCommentary" class="ai-box">Generating commentary…</div>
       </section>
 
@@ -288,7 +287,7 @@
         <div>
           <div class="mini-label">Draft X post</div>
           <h2>Combined post</h2>
-          <p class="draft-description">Innledning, fem signaler med direkte lenker og AI-commentary.</p>
+          <p class="draft-description">Innledning, fem signaler med direkte lenker og samlet analyse.</p>
         </div>
         <textarea id="xDraft" readonly></textarea>
         <div id="draftCount" class="draft-count">0/25 000 X-tegn</div>
@@ -394,7 +393,7 @@
     function buildCombinedDraft(data) {
       const top = pickTopItems(data.items || []);
       const week = data.week || "Unknown week";
-      const introduction = `Week ${week}\nThis week's signals with high TSX show:`;
+      const introduction = `Week ${getWeekLabel(week)}\nThis week's signals with high TSX show:`;
       const signals = top.map((item, index) => {
         const url = item.url || SOURCE_URL;
         return `${index + 1}. ${item.title} · TSX ${item.score}\n${item.summary || ""}\n${url}`;
