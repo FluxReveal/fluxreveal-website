@@ -324,6 +324,14 @@
       return match ? match[0].toUpperCase() : "XX";
     }
 
+    function formatRefreshStatus(message, week, refreshedAt) {
+      const timestamp = refreshedAt.toLocaleString("no-NO", {
+        dateStyle: "short",
+        timeStyle: "medium"
+      });
+      return `${message} · Week ${getWeekLabel(week)} · Last refresh: ${timestamp}`;
+    }
+
     function buildTrendCard(item, index) {
       return `
         <div class="trend-card">
@@ -416,10 +424,15 @@
         const html = await response.text();
         const liveData = parseTechSignalHtml(html);
         const signature = getTrendSignature(liveData);
+        const refreshedAt = new Date();
         renderDashboard(liveData);
-        document.getElementById("statusText").textContent = signature === lastLiveSignature
-          ? `No new trends for Week ${getWeekLabel(liveData.week)}`
-          : `Live refresh complete: ${liveData.items.length} signals loaded`;
+        document.getElementById("statusText").textContent = formatRefreshStatus(
+          signature === lastLiveSignature
+            ? "No new trends"
+            : `Live refresh complete: ${liveData.items.length} signals loaded`,
+          liveData.week,
+          refreshedAt
+        );
         lastLiveSignature = signature;
       } catch (error) {
         renderDashboard(sampleData);
