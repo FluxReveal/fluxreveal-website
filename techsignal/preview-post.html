@@ -286,7 +286,7 @@
       <aside class="panel draft-box">
         <div>
           <div class="mini-label">Draft X post</div>
-          <h2>Combined post</h2>
+          <h2>Long post</h2>
           <p class="draft-description">Innledning, fem signaler med direkte lenker og samlet analyse.</p>
         </div>
         <textarea id="xDraft" readonly></textarea>
@@ -300,9 +300,9 @@
 
       <aside class="panel draft-box">
         <div>
-          <div class="mini-label">Long thread starter</div>
-          <h2>280-character post</h2>
-          <p class="draft-description">Korte titler, lenker til alle 5 trends, og AI-innsikt om felles mønster.</p>
+          <div class="mini-label">Compact X post</div>
+          <h2>Short post</h2>
+          <p class="draft-description">5 fulle trendtitler, lenker, og så mye AI-kommentar som mulig innenfor 280 tegn.</p>
         </div>
         <textarea id="xDraftLong" readonly></textarea>
         <div id="draftCountLong" class="draft-count">0/280 X-tegn</div>
@@ -462,18 +462,22 @@
       const top = pickTopItems(data.items || []);
       const currentWeek = getCurrentWeekNumber();
       
-      // Hent første setning av AI commentary
-      const commentary = buildAiCommentary(top).split('\n\n')[0];
-      const shortCommentary = commentary.substring(0, 120);
-      
-      // Bygg korte linjer med tittel og URL
+      // Bygg signalene med FULLE titler og URLs
       const signals = top.map((item) => {
         const url = item.url || SOURCE_URL;
-        const shortTitle = shortenTitle(item.title, 12);
-        return `${shortTitle}\n${url}`;
+        return `${item.title}\n${url}`;
       }).join("\n\n");
       
-      return `Week ${currentWeek}\n\n${shortCommentary}…\n\n${signals}`;
+      // Beregn hvor mange tegn som er igjen for AI commentary
+      const intro = `Week ${currentWeek}\n\n`;
+      const beforeCommentary = intro + signals + "\n\n";
+      const remainingChars = 280 - beforeCommentary.length;
+      
+      // Hent full AI commentary og trunkér til tilgjengelig plass
+      const fullCommentary = buildAiCommentary(top);
+      const commentary = fullCommentary.substring(0, Math.max(remainingChars, 0));
+      
+      return beforeCommentary + commentary;
     }
 
     function renderDashboard(data) {
