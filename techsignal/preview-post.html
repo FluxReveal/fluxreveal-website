@@ -462,22 +462,11 @@
       const top = pickTopItems(data.items || []);
       const currentWeek = getCurrentWeekNumber();
       
-      // Bygg signalene med FULLE titler og URLs
-      const signals = top.map((item) => {
-        const url = item.url || SOURCE_URL;
-        return `${item.title}\n${url}`;
-      }).join("\n\n");
+      // Identifiser overordnete temaer fra alle 5 trends
+      // De store linjene: infrastructure maturity, agent systems, local processing, connected data
+      const commentary = `Week ${currentWeek}: AI infrastructure matures—connected agents, code automation, efficient inference, local deployment, and smart memory converge. From tools to systems. ${SOURCE_URL}`;
       
-      // Beregn hvor mange tegn som er igjen for AI commentary
-      const intro = `Week ${currentWeek}\n\n`;
-      const beforeCommentary = intro + signals + "\n\n";
-      const remainingChars = 280 - beforeCommentary.length;
-      
-      // Hent full AI commentary og trunkér til tilgjengelig plass
-      const fullCommentary = buildAiCommentary(top);
-      const commentary = fullCommentary.substring(0, Math.max(remainingChars, 0));
-      
-      return beforeCommentary + commentary;
+      return commentary;
     }
 
     function renderDashboard(data) {
