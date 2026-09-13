@@ -332,6 +332,29 @@
       });
     }
 
+    function getCurrentWeekNumber() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      const date = now.getDate();
+      const day = now.getDay();
+      
+      // ISO 8601 week calculation
+      const target = new Date(year, month, date);
+      const dayNeedsToBeChanged = day === 0 ? 6 : day - 1;
+      target.setDate(target.getDate() - dayNeedsToBeChanged + 3);
+      
+      const firstThursday = target.valueOf();
+      target.setMonth(0, 4);
+      target.setHours(0, 0, 0, 0);
+      
+      const yearStart = target.valueOf();
+      target.setTime(firstThursday);
+      
+      const weekNumber = Math.floor((target - yearStart) / (24 * 3600 * 1000 * 7)) + 1;
+      return weekNumber < 10 ? `0${weekNumber}` : `${weekNumber}`;
+    }
+
     function getWeekLabel(week) {
       const match = String(week || "").match(/W\d{1,2}/i);
       return match ? match[0].toUpperCase() : "XX";
@@ -342,7 +365,8 @@
         dateStyle: "short",
         timeStyle: "medium"
       });
-      return `${message} · Week ${getWeekLabel(week)} · Last refresh: ${timestamp}`;
+      const currentWeek = getCurrentWeekNumber();
+      return `${message} · Week ${currentWeek} · Last refresh: ${timestamp}`;
     }
 
     function buildTrendCard(item, index) {
@@ -411,8 +435,8 @@
 
     function buildCombinedDraft(data) {
       const top = pickTopItems(data.items || []);
-      const week = data.week || "Unknown week";
-      const introduction = `Week ${getWeekLabel(week)}`;
+      const currentWeek = getCurrentWeekNumber();
+      const introduction = `Week ${currentWeek}`;
       const signals = top.map((item, index) => {
         const url = item.url || SOURCE_URL;
         return `${index + 1}. ${item.title} · TSX ${item.score}\n${item.summary || ""}\n${url}`;
