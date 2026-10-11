@@ -286,7 +286,7 @@
       <aside class="panel draft-box">
         <div>
           <div class="mini-label">Draft X post</div>
-          <h2>Combined post</h2>
+          <h2>Long post</h2>
           <p class="draft-description">Innledning, fem signaler med direkte lenker og samlet analyse.</p>
         </div>
         <textarea id="xDraft" readonly></textarea>
@@ -300,9 +300,9 @@
 
       <aside class="panel draft-box">
         <div>
-          <div class="mini-label">Long thread starter</div>
-          <h2>280-character post</h2>
-          <p class="draft-description">Korte titler, lenker til alle 5 trends, og AI-innsikt om felles mønster.</p>
+          <div class="mini-label">Compact X post</div>
+          <h2>Short post</h2>
+          <p class="draft-description">5 fulle trendtitler, lenker, og så mye AI-kommentar som mulig innenfor 280 tegn.</p>
         </div>
         <textarea id="xDraftLong" readonly></textarea>
         <div id="draftCountLong" class="draft-count">0/280 X-tegn</div>
@@ -312,7 +312,7 @@
   </div>
 
   <script>
-    const SOURCE_URL = "https://techsignal-six.vercel.app/#trending";
+    const SOURCE_URL = "https://techsignalsix.com/#trending";
 
     const sampleData = {
       source: SOURCE_URL,
@@ -462,18 +462,11 @@
       const top = pickTopItems(data.items || []);
       const currentWeek = getCurrentWeekNumber();
       
-      // Hent første setning av AI commentary
-      const commentary = buildAiCommentary(top).split('\n\n')[0];
-      const shortCommentary = commentary.substring(0, 120);
+      // Identifiser overordnete temaer fra alle 5 trends
+      // De store linjene: infrastructure maturity, agent systems, local processing, connected data
+      const commentary = `Week ${currentWeek}: AI infrastructure matures—connected agents, code automation, efficient inference, local deployment, and smart memory converge. From tools to systems. ${SOURCE_URL}`;
       
-      // Bygg korte linjer med tittel og URL
-      const signals = top.map((item) => {
-        const url = item.url || SOURCE_URL;
-        const shortTitle = shortenTitle(item.title, 12);
-        return `${shortTitle}\n${url}`;
-      }).join("\n\n");
-      
-      return `Week ${currentWeek}\n\n${shortCommentary}…\n\n${signals}`;
+      return commentary;
     }
 
     function renderDashboard(data) {
