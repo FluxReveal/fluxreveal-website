@@ -1,0 +1,49 @@
+{
+  "generated_at": "2026-10-12T19:55:28.095674+00:00",
+  "week": "2026-W41",
+  "source": "https://techsignalsix.com",
+  "posts": [
+    {
+      "day": "Monday",
+      "label": "Hovedpublisering",
+      "text": "Weekly Radar · 2026-W41\n\nAgent Interoperability Protocols: 75 (Growing)\nAI Coding Agents: 74 (Stable)\nSmall Language Models & On-Device AI: 66 (Growing)\nVector Search & Agent Memory: 66 (Stable)\n\nMeasurement has caught up with the launch estimates, and the gap is the story. Coding agents are the only theme where adoption is visibly compounding — installs of the Claude Code CLI rose 51% in two weeks, while every other tracked theme moved less than…\n\nFull evidence → https://techsignalsix.com",
+      "url": "https://techsignalsix.com"
+    },
+    {
+      "day": "Tuesday",
+      "label": "Daglig drypp",
+      "text": "Agent Interoperability Protocols — Traction 75 (Growing)\n\nTraction held steady at 75; momentum stayed Growing. Combined GitHub stars across the MCP servers, TypeScript SDK and A2A repos grew modestly (+1.8% to 130,800). Combined npm+PyPI \n\nEvidence → https://techsignalsix.com/themes/agent-interoperability/",
+      "url": "https://techsignalsix.com/themes/agent-interoperability/"
+    },
+    {
+      "day": "Wednesday",
+      "label": "Daglig drypp",
+      "text": "AI Coding Agents — Traction 74 (Stable)\n\nSoftware teams are delegating whole coding tasks to agents, not just autocompleting lines. Traction eased to 74 as momentum downgraded from Accelerating to Stable. GitHub stars kep\n\nEvidence → https://techsignalsix.com/themes/ai-coding-agents/",
+      "url": "https://techsignalsix.com/themes/ai-coding-agents/"
+    },
+    {
+      "day": "Thursday",
+      "label": "Daglig drypp",
+      "text": "Small Language Models & On-Device AI — Traction 66 (Growing)\n\nModels small enough to run on laptops and phones now handle real production tasks. Traction eased to 66 as momentum cooled from Growing to Stable. Combined Ollama npm+PyPI download\n\nEvidence → https://techsignalsix.com/themes/small-language-models/",
+      "url": "https://techsignalsix.com/themes/small-language-models/"
+    },
+    {
+      "day": "Friday",
+      "label": "Daglig drypp",
+      "text": "Vector Search & Agent Memory — Traction 66 (Stable)\n\nPast the hype, retrieval quality — not model choice — is what limits AI answers on your own data. Traction held steady at 66; momentum stayed Stable. Combined GitHub stars across p\n\nEvidence → https://techsignalsix.com/themes/vector-databases-agent-memory/",
+      "url": "https://techsignalsix.com/themes/vector-databases-agent-memory/"
+    },
+    {
+      "day": "Saturday",
+      "label": "Daglig drypp",
+      "text": "AI Inference Infrastructure — Traction 63 (Declining)\n\nServing engines decide whether AI features are profitable — same GPUs, several times the throughput. Traction slipped to 63 as momentum downgraded to Declining. vLLM's PyPI downloa\n\nEvidence → https://techsignalsix.com/themes/ai-inference-infrastructure/",
+      "url": "https://techsignalsix.com/themes/ai-inference-infrastructure/"
+    },
+    {
+      "day": "Sunday",
+      "label": "Daglig drypp",
+      "text": "Memory-Safe Systems Programming — Traction 63 (Stable)\n\nGovernments and flagship codebases are making memory-safe languages the default for new systems code. Traction unchanged at 63; momentum stayed Stable. Combined GitHub stars for ru\n\nEvidence → https://techsignalsix.com/themes/memory-safe-systems/",
+      "url": "https://techsignalsix.com/themes/memory-safe-systems/"
+    }
+  ]
+}

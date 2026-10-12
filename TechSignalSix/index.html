@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechSignalSix → X Publisher</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #121a2b;
+      --accent: #22d3ee;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: #1e293b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header {
+      padding: 1.5rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: #0f172a;
+    }
+    header h1 {
+      margin: 0 0 0.25rem;
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+    header p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    .meta {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.25rem;
+      display: grid;
+      gap: 1rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+    }
+    .card.monday {
+      border-color: #0891b2;
+      box-shadow: 0 0 0 1px #0891b233;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.6rem;
+    }
+    .day {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .label {
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    pre.post {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #0f172a;
+      border-radius: 8px;
+      padding: 0.85rem;
+      margin: 0 0 0.8rem;
+      font-size: 0.92rem;
+      line-height: 1.45;
+      max-height: 320px;
+      overflow: auto;
+    }
+    button.publish {
+      background: #1d9bf0;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 0.55rem 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    button.publish:hover { background: #1a8cd8; }
+    button.publish:active { transform: scale(0.98); }
+    .empty {
+      color: var(--muted);
+      text-align: center;
+      padding: 2rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>TechSignalSix → X Publisher</h1>
+    <p>Ferdige poster for uken. Trykk «Publish to X» for å åpne X med teksten ferdig fylt inn.</p>
+    <div class="meta" id="meta">Laster…</div>
+  </header>
+  <main id="posts"></main>
+  <footer>
+    Data hentes fra posts.json (generert av GitHub Action). Oppdateres automatisk.
+  </footer>
+
+  <script>
+    async function load() {
+      const container = document.getElementById("posts");
+      const meta = document.getElementById("meta");
+      try {
+        const res = await fetch("posts.json?t=" + Date.now());
+        if (!res.ok) throw new Error("Kunne ikke laste posts.json");
+        const data = await res.json();
+
+        meta.textContent = `Uke: ${data.week || "—"} · Generert: ${new Date(data.generated_at).toLocaleString("nb-NO")} · ${data.posts?.length || 0} poster`;
+
+        if (!data.posts || data.posts.length === 0) {
+          container.innerHTML = '<div class="empty">Ingen poster funnet. Kjør GitHub Action eller generer posts.json.</div>';
+          return;
+        }
+
+        container.innerHTML = data.posts.map((p, i) => {
+          const isMonday = p.day === "Monday";
+          const encoded = encodeURIComponent(p.text);
+          const intent = `https://x.com/intent/post?text=${encoded}`;
+          return `
+            <article class="card ${isMonday ? "monday" : ""}">
+              <div class="card-header">
+                <span class="day">${p.day}</span>
+                <span class="label">${p.label || ""}</span>
+              </div>
+              <pre class="post">${escapeHtml(p.text)}</pre>
+              <a href="${intent}" target="_blank" rel="noopener">
+                <button class="publish">Publish to X</button>
+              </a>
+            </article>
+          `;
+        }).join("");
+      } catch (err) {
+        meta.textContent = "Feil ved lasting";
+        container.innerHTML = `<div class="empty">Kunne ikke laste posts.json<br><small>${err.message}</small></div>`;
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&")
+        .replace(/</g, "<")
+        .replace(/>/g, ">")
+        .replace(/"/g, """);
+    }
+
+    load();
+  </script>
+</body>
+</html>
