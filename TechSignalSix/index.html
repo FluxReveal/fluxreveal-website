@@ -127,33 +127,34 @@
         if (!res.ok) throw new Error("Kunne ikke laste posts.json");
         const data = await res.json();
 
-        meta.textContent = `Uke: ${data.week || "—"} · Generert: ${new Date(data.generated_at).toLocaleString("nb-NO")} · ${data.posts?.length || 0} poster`;
+        meta.textContent = "Uke: " + (data.week || "—") + " · Generert: " + new Date(data.generated_at).toLocaleString("nb-NO") + " · " + (data.posts ? data.posts.length : 0) + " poster";
 
         if (!data.posts || data.posts.length === 0) {
           container.innerHTML = '<div class="empty">Ingen poster funnet. Kjør GitHub Action eller generer posts.json.</div>';
           return;
         }
 
-        container.innerHTML = data.posts.map((p, i) => {
-          const isMonday = p.day === "Monday";
-          const encoded = encodeURIComponent(p.text);
-          const intent = `https://x.com/intent/post?text=${encoded}`;
-          return `
-            <article class="card ${isMonday ? "monday" : ""}">
-              <div class="card-header">
-                <span class="day">${p.day}</span>
-                <span class="label">${p.label || ""}</span>
-              </div>
-              <pre class="post">${escapeHtml(p.text)}</pre>
-              <a href="${intent}" target="_blank" rel="noopener">
-                <button class="publish">Publish to X</button>
-              </a>
-            </article>
-          `;
-        }).join("");
+        var html = "";
+        for (var i = 0; i < data.posts.length; i++) {
+          var p = data.posts[i];
+          var isMonday = p.day === "Monday";
+          var encoded = encodeURIComponent(p.text);
+          var intent = "https://x.com/intent/post?text=" + encoded;
+          html += '<article class="card' + (isMonday ? " monday" : "") + '">';
+          html += '<div class="card-header">';
+          html += '<span class="day">' + escapeHtml(p.day) + '</span>';
+          html += '<span class="label">' + escapeHtml(p.label || "") + '</span>';
+          html += '</div>';
+          html += '<pre class="post">' + escapeHtml(p.text) + '</pre>';
+          html += '<a href="' + intent + '" target="_blank" rel="noopener">';
+          html += '<button class="publish">Publish to X</button>';
+          html += '</a>';
+          html += '</article>';
+        }
+        container.innerHTML = html;
       } catch (err) {
         meta.textContent = "Feil ved lasting";
-        container.innerHTML = `<div class="empty">Kunne ikke laste posts.json<br><small>${err.message}</small></div>`;
+        container.innerHTML = '<div class="empty">Kunne ikke laste posts.json<br><small>' + escapeHtml(err.message) + '</small></div>';
       }
     }
 
@@ -168,4 +169,4 @@
     load();
   </script>
 </body>
-</html> 
+</html>
