@@ -180,10 +180,10 @@ def main():
         "posts": posts,
     }
 
-    with open("posts.json", "w", encoding="utf-8") as f:
+    with open("TechSignalSix/posts.json", "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
 
-    print(f"Wrote posts.json with {len(posts)} posts")
+    print(f"Wrote TechSignalSix/posts.json with {len(posts)} posts")
     print("Monday preview:")
     print(posts[0]["text"][:400])
     print("…")
