@@ -5,20 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TechSignalSix – Weekly Publishing Plan</title>
 <style>
-  :root { --bg: #0f172a; --card: #1e293b; --accent: #3b82f6; --text: #e2e8f0; --muted: #94a3b8; --green: #22c55e; --red: #ef4444; }
+  :root { --bg: #0f172a; --card: #1e293b; --accent: #3b82f6; --text: #e2e8f0; --muted: #94a3b8; --green: #22c55e; --red: #ef4444; --pin: #fbbf24; }
   * { box-sizing: border-box; }
-  body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 1.5rem; line-height: 1.5; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: linear-gradient(180deg, #0f172a 0%, #111827 100%); color: var(--text); margin: 0; padding: 1.5rem; line-height: 1.6; }
   .container { max-width: 960px; margin: 0 auto; }
-  h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
+  h1 { font-size: 1.9rem; margin-bottom: 0.25rem; letter-spacing: -0.03em; }
   .meta { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.9rem; }
-  .post { background: var(--card); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; border: 1px solid #334155; }
-  .post h2 { margin: 0 0 0.5rem; font-size: 1.15rem; color: #93c5fd; }
-  .post pre { background: #0f172a; padding: 1rem; border-radius: 8px; white-space: pre-wrap; font-size: 0.95rem; margin: 0.75rem 0; overflow-x: auto; line-height: 1.45; }
-  .btn { display: inline-block; background: #1d9bf0; color: white; text-decoration: none; padding: 0.65rem 1.3rem; border-radius: 999px; font-weight: 600; font-size: 0.95rem; }
+  .post { background: var(--card); border-radius: 14px; padding: 1.35rem; margin-bottom: 1.25rem; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25); }
+  .post.featured { border-color: rgba(251, 191, 36, 0.6); background: linear-gradient(180deg, rgba(30, 41, 59, 0.96), rgba(17, 24, 39, 0.96)); }
+  .post h2 { margin: 0 0 0.5rem; font-size: 1.2rem; color: #93c5fd; }
+  .post pre { background: #0f172a; padding: 1rem 1.1rem; border-radius: 10px; white-space: pre-wrap; font-size: 0.96rem; margin: 0.75rem 0 1rem; overflow-x: auto; line-height: 1.55; color: #dbeafe; border: 1px solid rgba(148, 163, 184, 0.18); }
+  .pin-tag { display: inline-block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; color: #111827; background: var(--pin); padding: 0.28rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
+  .btn { display: inline-block; background: #1d9bf0; color: white; text-decoration: none; padding: 0.7rem 1.35rem; border-radius: 999px; font-weight: 700; font-size: 0.95rem; }
   .btn:hover { background: #1a8cd8; }
   .error { background: #7f1d1d; padding: 1rem; border-radius: 8px; }
-  .day { font-size: 0.8rem; color: #a5b4fc; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem; }
-  .score-bar { height: 8px; background: #334155; border-radius: 4px; margin: 0.4rem 0 0.8rem; overflow: hidden; }
+  .day { font-size: 0.75rem; color: #a5b4fc; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.45rem; font-weight: 700; }
+  .score-bar { height: 9px; background: #334155; border-radius: 999px; margin: 0.45rem 0 0.85rem; overflow: hidden; }
   .score-fill { height: 100%; background: var(--accent); }
   .score-fill.down { background: var(--red); }
   .score-fill.up { background: var(--green); }
@@ -41,52 +43,80 @@ function buildIntent(text) {
   return `https://x.com/intent/tweet?${params.toString()}`;
 }
 
+function getAudienceText(audience = {}) {
+  const bits = [];
+  if (audience?.developers === 'High') bits.push('Developers');
+  if (audience?.managers === 'High') bits.push('Managers');
+  if (audience?.founders === 'High') bits.push('Founders');
+  if (audience?.operators === 'High') bits.push('Operators');
+  return bits.length ? bits.join(' + ') : 'Everyone';
+}
+
 function generatePosts(data) {
   const posts = [];
   const week = data.week || 'current week';
   const ws = data.weeklySignal || {};
   const signals = data.trendingSignals || [];
 
-  // Monday – Full weekly overview (longer)
-  const summary = ws.summary || '';
-  const mondayText = 
-`Weekly Tech Signal · ${week}
+  const summary = ws.summary || 'This week’s signal set shows a mix of slowing momentum in some themes and continued attention around AI infrastructure, developer tooling, and agent ecosystems.';
+  const headline = ws.headline || 'This week’s signals';
 
-${ws.headline || 'This week’s signals'}
+  const mondayText = `Weekly Tech Signal · ${week}
+
+${headline}
 
 ${summary}
 
-Key moves:
-• AI Coding Agents: 74 → 68 (Declining)
-• Agent Interoperability (MCP): 75 → 72 (Declining)
-• Post-Quantum Cryptography also turned Declining
+This week’s picture is mixed: some themes cooled from the highs we saw earlier, while a smaller set of areas kept attracting real attention. The big takeaway is simple: the market is still moving, but the strongest opportunities are now becoming more selective and more specific.
 
-Downloads cooled across most themes. Stars kept rising in places — attention vs actual usage.
+What stood out:
+• AI coding agents: still influential, but momentum softened versus the previous period
+• Agent interoperability and MCP: important, but adoption and signal quality are becoming more uneven
+• Post-quantum cryptography: a notable theme to watch as security conversations continue to evolve
+• Attention remains strong in places, but download and usage signals suggest a broader gap between excitement and sustained traction
+
+The most valuable takeaway this week is not “everything is up.” It is that the most important shifts are becoming clearer — and the best operators are paying attention to where attention is turning into actual product behavior and usage.
+
+We’ll break down the strongest moves day by day and connect the headlines to what matters most for teams building, shipping, and learning in AI.
 
 Full radar + evidence → techsignalsix.com`;
 
   posts.push({
     day: 'Monday',
-    title: 'Weekly Overview (pin this)',
+    title: 'Weekly Overview (Pinned intro)',
     text: mondayText.trim(),
-    score: null
+    score: null,
+    featured: true
   });
 
-  // Individual signals – longer and more useful
   const days = ['Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   signals.slice(0, 4).forEach((s, i) => {
     const delta = (s.score || 0) - (s.previousScore || s.score || 0);
     const deltaStr = delta > 0 ? `+${delta}` : delta < 0 ? `${delta}` : '0';
     const direction = delta < 0 ? 'down' : delta > 0 ? 'up' : '';
 
-    const text = 
-`${s.title}
+    const whyItMatters = s.whyItMatters || 'This signal matters because it points to a meaningful shift in developer attention, product demand, or ecosystem behavior.';
+    const action = s.recommendedAction || 'Track it closely, experiment early, and compare it against your own product and customer behavior.';
+    const audienceText = getAudienceText(s.audience);
+
+    const text = `${s.title}
 Score: ${s.score} (${deltaStr} this week) · Momentum: ${s.momentum}
 
-${s.summary || ''}
+${s.summary || 'This theme continued to attract attention and is worth tracking closely.'}
 
-Recommended action: ${s.recommendedAction || 'Learn'}
-Audience: ${s.audience?.developers === 'High' ? 'Developers' : ''}${s.audience?.managers === 'High' ? (s.audience?.developers === 'High' ? ' + Managers' : 'Managers') : ''}
+Why it matters:
+${whyItMatters}
+
+Recommended action:
+${action}
+
+Who should care:
+${audienceText}
+
+What to watch next:
+• Whether this trend continues to build on signal quality rather than just attention
+• Whether product adoption or downloads start to follow the wave of interest
+• Whether the ecosystem is moving from hype to durable usage
 
 Full breakdown + evidence:
 ${s.absoluteUrl || 'https://techsignalsix.com'}`;
@@ -98,7 +128,8 @@ ${s.absoluteUrl || 'https://techsignalsix.com'}`;
       score: s.score,
       previous: s.previousScore,
       momentum: s.momentum,
-      direction
+      direction,
+      featured: false
     });
   });
 
@@ -117,14 +148,15 @@ async function load() {
 
     const posts = generatePosts(data);
     content.innerHTML = posts.map(p => {
-      const bar = p.score 
+      const bar = p.score
         ? `<div class="metrics">Score: ${p.score} (prev ${p.previous || '?'}) · ${p.momentum}</div>
            <div class="score-bar"><div class="score-fill ${p.direction}" style="width: ${Math.min(p.score, 100)}%"></div></div>`
         : '';
 
       return `
-      <div class="post">
+      <div class="post ${p.featured ? 'featured' : ''}">
         <div class="day">${p.day}</div>
+        ${p.featured ? '<div class="pin-tag">Pinned</div>' : ''}
         <h2>${p.title}</h2>
         ${bar}
         <pre>${p.text}</pre>
