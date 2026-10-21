@@ -5,20 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TechSignalSix – Weekly Publishing Plan</title>
 <style>
-  :root { --bg: #0f172a; --card: #1e293b; --accent: #3b82f6; --text: #e2e8f0; --muted: #94a3b8; }
+  :root { --bg: #0f172a; --card: #1e293b; --accent: #3b82f6; --text: #e2e8f0; --muted: #94a3b8; --green: #22c55e; --red: #ef4444; }
   * { box-sizing: border-box; }
   body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 1.5rem; line-height: 1.5; }
-  .container { max-width: 900px; margin: 0 auto; }
+  .container { max-width: 960px; margin: 0 auto; }
   h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
   .meta { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.9rem; }
-  .post { background: var(--card); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; border: 1px solid #334155; }
-  .post h2 { margin: 0 0 0.5rem; font-size: 1.1rem; color: #93c5fd; }
-  .post pre { background: #0f172a; padding: 0.75rem; border-radius: 8px; white-space: pre-wrap; font-size: 0.95rem; margin: 0.75rem 0; overflow-x: auto; }
-  .btn { display: inline-block; background: #1d9bf0; color: white; text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 999px; font-weight: 600; font-size: 0.95rem; }
+  .post { background: var(--card); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; border: 1px solid #334155; }
+  .post h2 { margin: 0 0 0.5rem; font-size: 1.15rem; color: #93c5fd; }
+  .post pre { background: #0f172a; padding: 1rem; border-radius: 8px; white-space: pre-wrap; font-size: 0.95rem; margin: 0.75rem 0; overflow-x: auto; line-height: 1.45; }
+  .btn { display: inline-block; background: #1d9bf0; color: white; text-decoration: none; padding: 0.65rem 1.3rem; border-radius: 999px; font-weight: 600; font-size: 0.95rem; }
   .btn:hover { background: #1a8cd8; }
   .error { background: #7f1d1d; padding: 1rem; border-radius: 8px; }
-  .loading { color: var(--muted); }
-  .day { font-size: 0.8rem; color: #a5b4fc; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+  .day { font-size: 0.8rem; color: #a5b4fc; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem; }
+  .score-bar { height: 8px; background: #334155; border-radius: 4px; margin: 0.4rem 0 0.8rem; overflow: hidden; }
+  .score-fill { height: 100%; background: var(--accent); }
+  .score-fill.down { background: var(--red); }
+  .score-fill.up { background: var(--green); }
+  .metrics { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
 </style>
 </head>
 <body>
@@ -30,18 +34,10 @@
 
 <script>
 const API = 'https://techsignalsix.com/api/signals.json';
-const ACCOUNT = 'TechSignalSix'; // via-parameter
-
-function truncate(str, max = 240) {
-  if (str.length <= max) return str;
-  return str.slice(0, max - 1) + '…';
-}
+const ACCOUNT = 'TechSignalSix';
 
 function buildIntent(text) {
-  const params = new URLSearchParams({
-    text: text,
-    via: ACCOUNT
-  });
+  const params = new URLSearchParams({ text, via: ACCOUNT });
   return `https://x.com/intent/tweet?${params.toString()}`;
 }
 
@@ -51,35 +47,58 @@ function generatePosts(data) {
   const ws = data.weeklySignal || {};
   const signals = data.trendingSignals || [];
 
-  // Monday – Weekly summary
-  const summaryText = truncate(
-    `${ws.headline || 'Weekly Tech Signal'}\n\n` +
-    (ws.summary || '').split('\n')[0] + '\n\n' +
-    `Full radar → techsignalsix.com`
-  );
+  // Monday – Full weekly overview (longer)
+  const summary = ws.summary || '';
+  const mondayText = 
+`Weekly Tech Signal · ${week}
+
+${ws.headline || 'This week’s signals'}
+
+${summary}
+
+Key moves:
+• AI Coding Agents: 74 → 68 (Declining)
+• Agent Interoperability (MCP): 75 → 72 (Declining)
+• Post-Quantum Cryptography also turned Declining
+
+Downloads cooled across most themes. Stars kept rising in places — attention vs actual usage.
+
+Full radar + evidence → techsignalsix.com`;
+
   posts.push({
     day: 'Monday',
     title: 'Weekly Overview (pin this)',
-    text: summaryText,
-    link: 'https://techsignalsix.com'
+    text: mondayText.trim(),
+    score: null
   });
 
-  // Individual signals (Tue–Fri)
+  // Individual signals – longer and more useful
   const days = ['Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   signals.slice(0, 4).forEach((s, i) => {
-    const delta = s.score - (s.previousScore || s.score);
-    const deltaStr = delta > 0 ? `+${delta}` : `${delta}`;
-    const text = truncate(
-      `${s.title} (${s.score}${deltaStr ? ' ' + deltaStr : ''})\n` +
-      `Momentum: ${s.momentum}\n\n` +
-      (s.summary || '').slice(0, 140) + '\n\n' +
-      `https://techsignalsix.com${s.url || ''}`
-    );
+    const delta = (s.score || 0) - (s.previousScore || s.score || 0);
+    const deltaStr = delta > 0 ? `+${delta}` : delta < 0 ? `${delta}` : '0';
+    const direction = delta < 0 ? 'down' : delta > 0 ? 'up' : '';
+
+    const text = 
+`${s.title}
+Score: ${s.score} (${deltaStr} this week) · Momentum: ${s.momentum}
+
+${s.summary || ''}
+
+Recommended action: ${s.recommendedAction || 'Learn'}
+Audience: ${s.audience?.developers === 'High' ? 'Developers' : ''}${s.audience?.managers === 'High' ? (s.audience?.developers === 'High' ? ' + Managers' : 'Managers') : ''}
+
+Full breakdown + evidence:
+${s.absoluteUrl || 'https://techsignalsix.com'}`;
+
     posts.push({
       day: days[i] || 'Later',
       title: s.title,
-      text,
-      link: s.absoluteUrl || `https://techsignalsix.com${s.url}`
+      text: text.trim(),
+      score: s.score,
+      previous: s.previousScore,
+      momentum: s.momentum,
+      direction
     });
   });
 
@@ -97,16 +116,23 @@ async function load() {
     meta.textContent = `Week ${data.week || '?'} · Published ${data.publishedDate || '?'} · Generated ${new Date(data.generatedAt).toLocaleString()}`;
 
     const posts = generatePosts(data);
-    content.innerHTML = posts.map(p => `
+    content.innerHTML = posts.map(p => {
+      const bar = p.score 
+        ? `<div class="metrics">Score: ${p.score} (prev ${p.previous || '?'}) · ${p.momentum}</div>
+           <div class="score-bar"><div class="score-fill ${p.direction}" style="width: ${Math.min(p.score, 100)}%"></div></div>`
+        : '';
+
+      return `
       <div class="post">
         <div class="day">${p.day}</div>
         <h2>${p.title}</h2>
+        ${bar}
         <pre>${p.text}</pre>
         <a class="btn" href="${buildIntent(p.text)}" target="_blank" rel="noopener">Open in X</a>
-      </div>
-    `).join('');
+      </div>`;
+    }).join('');
   } catch (err) {
-    content.innerHTML = `<div class="error">Could not load signals.json (${err.message}). Check CORS or try again later.</div>`;
+    content.innerHTML = `<div class="error">Could not load signals.json (${err.message}).</div>`;
     meta.textContent = 'Error loading data';
   }
 }
