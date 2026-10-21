@@ -1,172 +1,117 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TechSignalSix → X Publisher</title>
-  <style>
-    :root {
-      --bg: #0b1220;
-      --card: #121a2b;
-      --accent: #22d3ee;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --border: #1e293b;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
-    header {
-      padding: 1.5rem 1.25rem;
-      border-bottom: 1px solid var(--border);
-      background: #0f172a;
-    }
-    header h1 {
-      margin: 0 0 0.25rem;
-      font-size: 1.4rem;
-      color: var(--accent);
-    }
-    header p { margin: 0; color: var(--muted); font-size: 0.95rem; }
-    .meta {
-      margin-top: 0.5rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 1.25rem;
-      display: grid;
-      gap: 1rem;
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem 1.1rem;
-    }
-    .card.monday {
-      border-color: #0891b2;
-      box-shadow: 0 0 0 1px #0891b233;
-    }
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 0.6rem;
-    }
-    .day {
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-    .label {
-      font-size: 0.8rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    pre.post {
-      white-space: pre-wrap;
-      word-break: break-word;
-      background: #0f172a;
-      border-radius: 8px;
-      padding: 0.85rem;
-      margin: 0 0 0.8rem;
-      font-size: 0.92rem;
-      line-height: 1.45;
-      max-height: 320px;
-      overflow: auto;
-    }
-    button.publish {
-      background: #1d9bf0;
-      color: white;
-      border: none;
-      border-radius: 999px;
-      padding: 0.55rem 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 0.95rem;
-    }
-    button.publish:hover { background: #1a8cd8; }
-    button.publish:active { transform: scale(0.98); }
-    .empty {
-      color: var(--muted);
-      text-align: center;
-      padding: 2rem;
-    }
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechSignalSix – Weekly Publishing Plan</title>
+<style>
+  :root { --bg: #0f172a; --card: #1e293b; --accent: #3b82f6; --text: #e2e8f0; --muted: #94a3b8; }
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 1.5rem; line-height: 1.5; }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
+  .meta { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.9rem; }
+  .post { background: var(--card); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; border: 1px solid #334155; }
+  .post h2 { margin: 0 0 0.5rem; font-size: 1.1rem; color: #93c5fd; }
+  .post pre { background: #0f172a; padding: 0.75rem; border-radius: 8px; white-space: pre-wrap; font-size: 0.95rem; margin: 0.75rem 0; overflow-x: auto; }
+  .btn { display: inline-block; background: #1d9bf0; color: white; text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 999px; font-weight: 600; font-size: 0.95rem; }
+  .btn:hover { background: #1a8cd8; }
+  .error { background: #7f1d1d; padding: 1rem; border-radius: 8px; }
+  .loading { color: var(--muted); }
+  .day { font-size: 0.8rem; color: #a5b4fc; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+</style>
 </head>
 <body>
-  <header>
-    <h1>TechSignalSix → X Publisher</h1>
-    <p>Ferdige poster for uken. Trykk «Publish to X» for å åpne X med teksten ferdig fylt inn.</p>
-    <div class="meta" id="meta">Laster…</div>
-  </header>
-  <main id="posts"></main>
-  <footer>
-    Data hentes fra posts.json (generert av GitHub Action). Oppdateres automatisk.
-  </footer>
+<div class="container">
+  <h1>TechSignalSix – Weekly Plan</h1>
+  <div class="meta" id="meta">Loading signals…</div>
+  <div id="content"></div>
+</div>
 
-  <script>
-    async function load() {
-      const container = document.getElementById("posts");
-      const meta = document.getElementById("meta");
-      try {
-        const res = await fetch("posts.json?t=" + Date.now());
-        if (!res.ok) throw new Error("Kunne ikke laste posts.json");
-        const data = await res.json();
+<script>
+const API = 'https://techsignalsix.com/api/signals.json';
+const ACCOUNT = 'TechSignalSix'; // via-parameter
 
-        meta.textContent = "Uke: " + (data.week || "—") + " · Generert: " + new Date(data.generated_at).toLocaleString("nb-NO") + " · " + (data.posts ? data.posts.length : 0) + " poster";
+function truncate(str, max = 240) {
+  if (str.length <= max) return str;
+  return str.slice(0, max - 1) + '…';
+}
 
-        if (!data.posts || data.posts.length === 0) {
-          container.innerHTML = '<div class="empty">Ingen poster funnet. Kjør GitHub Action eller generer posts.json.</div>';
-          return;
-        }
+function buildIntent(text) {
+  const params = new URLSearchParams({
+    text: text,
+    via: ACCOUNT
+  });
+  return `https://x.com/intent/tweet?${params.toString()}`;
+}
 
-        var html = "";
-        for (var i = 0; i < data.posts.length; i++) {
-          var p = data.posts[i];
-          var isMonday = p.day === "Monday";
-          var encoded = encodeURIComponent(p.text);
-          var intent = "https://x.com/intent/post?text=" + encoded;
-          html += '<article class="card' + (isMonday ? " monday" : "") + '">';
-          html += '<div class="card-header">';
-          html += '<span class="day">' + escapeHtml(p.day) + '</span>';
-          html += '<span class="label">' + escapeHtml(p.label || "") + '</span>';
-          html += '</div>';
-          html += '<pre class="post">' + escapeHtml(p.text) + '</pre>';
-          html += '<a href="' + intent + '" target="_blank" rel="noopener">';
-          html += '<button class="publish">Publish to X</button>';
-          html += '</a>';
-          html += '</article>';
-        }
-        container.innerHTML = html;
-      } catch (err) {
-        meta.textContent = "Feil ved lasting";
-        container.innerHTML = '<div class="empty">Kunne ikke laste posts.json<br><small>' + escapeHtml(err.message) + '</small></div>';
-      }
-    }
+function generatePosts(data) {
+  const posts = [];
+  const week = data.week || 'current week';
+  const ws = data.weeklySignal || {};
+  const signals = data.trendingSignals || [];
 
-    function escapeHtml(str) {
-      return String(str)
-        .replace(/&/g, "&")
-        .replace(/</g, "<")
-        .replace(/>/g, ">")
-        .replace(/"/g, """);
-    }
+  // Monday – Weekly summary
+  const summaryText = truncate(
+    `${ws.headline || 'Weekly Tech Signal'}\n\n` +
+    (ws.summary || '').split('\n')[0] + '\n\n' +
+    `Full radar → techsignalsix.com`
+  );
+  posts.push({
+    day: 'Monday',
+    title: 'Weekly Overview (pin this)',
+    text: summaryText,
+    link: 'https://techsignalsix.com'
+  });
 
-    load();
-  </script>
+  // Individual signals (Tue–Fri)
+  const days = ['Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  signals.slice(0, 4).forEach((s, i) => {
+    const delta = s.score - (s.previousScore || s.score);
+    const deltaStr = delta > 0 ? `+${delta}` : `${delta}`;
+    const text = truncate(
+      `${s.title} (${s.score}${deltaStr ? ' ' + deltaStr : ''})\n` +
+      `Momentum: ${s.momentum}\n\n` +
+      (s.summary || '').slice(0, 140) + '\n\n' +
+      `https://techsignalsix.com${s.url || ''}`
+    );
+    posts.push({
+      day: days[i] || 'Later',
+      title: s.title,
+      text,
+      link: s.absoluteUrl || `https://techsignalsix.com${s.url}`
+    });
+  });
+
+  return posts;
+}
+
+async function load() {
+  const content = document.getElementById('content');
+  const meta = document.getElementById('meta');
+  try {
+    const res = await fetch(API);
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+
+    meta.textContent = `Week ${data.week || '?'} · Published ${data.publishedDate || '?'} · Generated ${new Date(data.generatedAt).toLocaleString()}`;
+
+    const posts = generatePosts(data);
+    content.innerHTML = posts.map(p => `
+      <div class="post">
+        <div class="day">${p.day}</div>
+        <h2>${p.title}</h2>
+        <pre>${p.text}</pre>
+        <a class="btn" href="${buildIntent(p.text)}" target="_blank" rel="noopener">Open in X</a>
+      </div>
+    `).join('');
+  } catch (err) {
+    content.innerHTML = `<div class="error">Could not load signals.json (${err.message}). Check CORS or try again later.</div>`;
+    meta.textContent = 'Error loading data';
+  }
+}
+
+load();
+</script>
 </body>
 </html>
