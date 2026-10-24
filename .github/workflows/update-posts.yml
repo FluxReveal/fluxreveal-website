@@ -1,9 +1,10 @@
 name: Update X posts from TechSignalSix
 
 on:
-  schedule:
-    # Kjør hver mandag kl. 06:00 UTC (08:00 CEST)
-    - cron: "0 6 * * 1"
+  # Deaktivert 24. okt 2026: scrape.py ble fjernet 21. okt, så den planlagte kjøringen ville feile.
+  # schedule:
+  #   # Kjør hver mandag kl. 06:00 UTC (08:00 CEST)
+  #   - cron: "0 6 * * 1"
   workflow_dispatch: # Manuell kjøring fra GitHub
 
 permissions:
