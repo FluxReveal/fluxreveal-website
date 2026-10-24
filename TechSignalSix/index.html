@@ -141,6 +141,13 @@ function getAudienceText(audience = {}) {
   return bits.length ? bits.join(' + ') : 'Everyone';
 }
 
+// Fixed footer appended to every daily draft (Monday–Friday)
+const DRAFT_ABOUT = 'Weekly radar of what developers actually adopt — not what gets hyped.';
+const DRAFT_HASHTAG = '#SixTraction';
+function withFooter(text) {
+  return `${text}\n\n${DRAFT_ABOUT}\n${DRAFT_HASHTAG}`;
+}
+
 function generatePosts(data) {
   const posts = [];
   const week = data.week || 'current week';
@@ -182,7 +189,7 @@ function generatePosts(data) {
   posts.push({
     day: 'Monday',
     title: 'Weekly Overview (Pinned intro)',
-    text: mondayText.trim(),
+    text: withFooter(mondayText.trim()),
     featured: true
   });
 
@@ -215,7 +222,7 @@ ${s.absoluteUrl || 'https://techsignalsix.com'}`;
     posts.push({
       day: days[i] || 'Later',
       title: s.title,
-      text: text.trim(),
+      text: withFooter(text.trim()),
       featured: false
     });
   });
