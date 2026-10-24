@@ -20,11 +20,9 @@
   .btn:hover { background: #1a8cd8; }
   .error { background: #7f1d1d; padding: 1rem; border-radius: 8px; }
   .day { font-size: 0.7rem; color: #a5b4fc; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem; font-weight: 700; }
-  .score-bar { height: 8px; background: #334155; border-radius: 999px; margin: 0.35rem 0 0.7rem; overflow: hidden; }
-  .score-fill { height: 100%; background: var(--accent); }
-  .score-fill.down { background: var(--red); }
-  .score-fill.up { background: var(--green); }
   .metrics { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.4rem; }
+  .counter { display: inline-block; margin-left: 0.75rem; font-size: 0.8rem; color: var(--muted); }
+  .counter.over { color: #fecaca; background: rgba(239, 68, 68, 0.25); padding: 0.15rem 0.5rem; border-radius: 999px; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -43,6 +41,17 @@ function buildIntent(text) {
   return `https://x.com/intent/tweet?${params.toString()}`;
 }
 
+// X counts every URL as 23 characters
+function xLength(text) {
+  return text.replace(/https?:\/\/\S+/g, 'x'.repeat(23)).length;
+}
+
+function counterHtml(text) {
+  const n = xLength(text);
+  const over = n > 280;
+  return `<span class="counter ${over ? 'over' : ''}">${n} / 280${over ? ' · over limit' : ''}</span>`;
+}
+
 function getAudienceText(audience = {}) {
   const bits = [];
   if (audience?.developers === 'High') bits.push('Developers');
@@ -58,51 +67,58 @@ function generatePosts(data) {
   const ws = data.weeklySignal || {};
   const signals = data.trendingSignals || [];
 
-  const summary = ws.summary || 'This week’s signal set shows a mix of slowing momentum in some themes and continued attention around AI infrastructure, developer tooling, and agent ecosystems.';
-  const headline = ws.headline || 'This week’s signals';
+  const summary = ws.summary || '';
+  const headline = ws.headline || '';
 
-  const mondayText = `Weekly Tech Signal · ${week}
+  // Key themes: from weeklySignal.keyThemes (by id), else top 3 trending signals
+  const keyThemeLines = (Array.isArray(ws.keyThemes) && ws.keyThemes.length)
+    ? ws.keyThemes.map(k => {
+        const s = signals.find(x => x.id === k.id) || {};
+        const title = s.title || k.title || k.id;
+        return k.note ? `• ${title}: ${k.note}` : `• ${title}`;
+      })
+    : signals.slice(0, 3).map(s => `• ${s.title}: ${s.summary}`);
 
-${headline}
+  const mondayText = [
+    `Weekly Tech Signal · ${week}`,
+    headline,
+    ws.commentary || summary,
+    keyThemeLines.length ? `Key themes:\n${keyThemeLines.join('\n')}` : '',
+    ws.takeaway || '',
+    'Full radar → https://techsignalsix.com'
+  ].filter(Boolean).join('\n\n');
 
-${summary}
-
-This week’s signals were a mix of cooling momentum and continued attention in a few important areas. The main story: AI is still moving fast, but the strongest opportunities are becoming more selective and more specific.
-
-Key themes:
-• AI coding agents: strong influence, but momentum eased from prior highs
-• MCP / agent interoperability: important, though adoption is becoming more uneven
-• Post-quantum cryptography: still a theme to watch as security interest persists
-• Attention remains high, but product usage is still lagging in some areas
-
-The big takeaway: the market is not broad and evenly bullish — it is becoming clearer which themes are genuinely compounding and which are still mostly noise.
-
-Full radar + evidence → techsignalsix.com`;
+  // Optional X teaser written separately for X
+  const xTeaser = ws.social && ws.social.xTeaser;
+  if (xTeaser) {
+    posts.push({
+      day: 'X teaser',
+      title: 'X teaser',
+      text: String(xTeaser).trim(),
+      featured: true
+    });
+  }
 
   posts.push({
     day: 'Monday',
     title: 'Weekly Overview (Pinned intro)',
     text: mondayText.trim(),
-    score: null,
     featured: true
   });
 
   const days = ['Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   signals.slice(0, 4).forEach((s, i) => {
-    const delta = (s.score || 0) - (s.previousScore || s.score || 0);
-    const deltaStr = delta > 0 ? `+${delta}` : delta < 0 ? `${delta}` : '0';
-    const direction = delta < 0 ? 'down' : delta > 0 ? 'up' : '';
-
-    const whyItMatters = s.whyItMatters || 'This signal matters because it points to a meaningful shift in developer attention, product demand, or ecosystem behavior.';
+    const whyItMatters = s.whyItMatters || s.summary || '';
     const action = s.recommendedAction || 'Track it closely, experiment early, and compare it against your own product and customer behavior.';
     const audienceText = getAudienceText(s.audience);
 
-    const text = `${s.title}
-Score: ${s.score} (${deltaStr} this week) · Momentum: ${s.momentum}
+    // Show the summary separately only when there is a distinct whyItMatters text
+    const summaryBlock = (s.whyItMatters && s.summary) ? `${s.summary}\n\n` : '';
 
-${s.summary || 'This theme continued to attract attention and is worth tracking closely.'}
+    const text = `#${s.rank} · ${s.title}
+Maturity: ${s.maturity || '?'}
 
-Why it matters: ${whyItMatters}
+${summaryBlock}Why it matters: ${whyItMatters}
 
 Recommended action: ${action}
 
@@ -120,10 +136,6 @@ ${s.absoluteUrl || 'https://techsignalsix.com'}`;
       day: days[i] || 'Later',
       title: s.title,
       text: text.trim(),
-      score: s.score,
-      previous: s.previousScore,
-      momentum: s.momentum,
-      direction,
       featured: false
     });
   });
@@ -143,19 +155,14 @@ async function load() {
 
     const posts = generatePosts(data);
     content.innerHTML = posts.map(p => {
-      const bar = p.score
-        ? `<div class="metrics">Score: ${p.score} (prev ${p.previous || '?'}) · ${p.momentum}</div>
-           <div class="score-bar"><div class="score-fill ${p.direction}" style="width: ${Math.min(p.score, 100)}%"></div></div>`
-        : '';
-
       return `
       <div class="post ${p.featured ? 'featured' : ''}">
         <div class="day">${p.day}</div>
-        ${p.featured ? '<div class="pin-tag">Pinned</div>' : ''}
+        ${p.featured && p.day !== 'X teaser' ? '<div class="pin-tag">Pinned</div>' : ''}
         <h2>${p.title}</h2>
-        ${bar}
         <pre>${p.text}</pre>
         <a class="btn" href="${buildIntent(p.text)}" target="_blank" rel="noopener">Open in X</a>
+        ${counterHtml(p.text)}
       </div>`;
     }).join('');
   } catch (err) {
