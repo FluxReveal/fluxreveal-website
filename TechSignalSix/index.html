@@ -23,18 +23,98 @@
   .metrics { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.4rem; }
   .counter { display: inline-block; margin-left: 0.75rem; font-size: 0.8rem; color: var(--muted); }
   .counter.over { color: #fecaca; background: rgba(239, 68, 68, 0.25); padding: 0.15rem 0.5rem; border-radius: 999px; font-weight: 700; }
+  /* Pinned weekly post (hard-coded, see PINNED_POST in script) */
+  .pinned-section { margin-bottom: 1.75rem; }
+  .pinned-section .section-label { font-size: 0.72rem; color: #22d3ee; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 0.5rem; }
+  .post.pinned { border-color: rgba(34, 211, 238, 0.55); background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.96)); box-shadow: 0 8px 24px rgba(34, 211, 238, 0.08); }
+  .post.pinned h2 { color: #ffffff; }
+  .pinned-tag { display: inline-block; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; color: #0f172a; background: #22d3ee; padding: 0.22rem 0.5rem; border-radius: 999px; margin-bottom: 0.5rem; }
+  .post.pinned pre { color: #ffffff; border-color: rgba(34, 211, 238, 0.25); }
+  .post.pinned pre .pinned-about { display: block; font-size: 0.8rem; color: var(--muted); }
+  button.btn { border: none; cursor: pointer; font-family: inherit; line-height: inherit; margin-right: 0.4rem; }
 </style>
 </head>
 <body>
 <div class="container">
   <h1>TechSignalSix – Weekly Plan</h1>
   <div class="meta" id="meta">Loading signals…</div>
+  <div id="pinned" class="pinned-section"></div>
   <div id="content"></div>
 </div>
 
 <script>
 const API = 'https://techsignalsix.com/api/signals.json';
 const ACCOUNT = 'TechSignalSix';
+
+// ===================== PINNED POST (weekly, hard-coded) =====================
+// HOW TO UPDATE (once per week, by editing this file):
+//  1. Set `week` and `publishedDate` to the new week from signals.json.
+//  2. Replace the five `top` entries with the five highest-ranked themes
+//     (by rank) from trendingSignals: one short, punchy line each.
+//     Rule: no score numbers, score changes or momentum direction.
+//  3. Rewrite `why` (one short paragraph tying the week together).
+//  4. `about` is generic and can stay the same for several weeks.
+//  Do not use em-dashes in the post text.
+const PINNED_POST = {
+  week: '2026-W42',
+  publishedDate: '2026-10-18',
+  heading: 'TechSignalSix Top 5 · Week 42, 2026',
+  top: [
+    { rank: 1, title: 'Agent Interoperability Protocols', line: 'Open protocols like MCP are becoming the wiring between AI systems, tools and companies. The plumbing is the product now.' },
+    { rank: 2, title: 'AI Coding Agents', line: 'Teams now hand whole coding tasks to agents. Autocomplete was just the warm-up.' },
+    { rank: 3, title: 'Vector Search & Agent Memory', line: 'Your AI is only as smart as its retrieval. On your own data, the model is rarely the bottleneck.' },
+    { rank: 4, title: 'Small Language Models & On-Device AI', line: 'Models that fit on a laptop or phone now handle real production work. Not every job needs a data center.' },
+    { rank: 5, title: 'Memory-Safe Systems Programming', line: 'Governments and flagship codebases are making memory-safe languages the default for new systems code. "We have always used C" is not a strategy.' }
+  ],
+  why: 'Why this matters: AI is growing up. Agents need open protocols to reach tools, solid retrieval to know your data and smaller models to run where the work happens. AI coding agents are the clearest signal on the radar this week, and underneath it all, new systems code is moving to memory-safe foundations.',
+  about: 'About TechSignalSix: a weekly radar of tech themes across AI, software, infrastructure, automation and digital transformation. Signals are based on adoption data such as GitHub activity and package downloads.\nFollow technology. Not the noise.\nhttps://techsignalsix.com\nMethodology: https://techsignalsix.com/methodology/'
+};
+
+function pinnedParts(p = PINNED_POST) {
+  const main = [
+    p.heading,
+    p.top.map(t => `#${t.rank} ${t.title}: ${t.line}`).join('\n\n'),
+    p.why
+  ].filter(Boolean).join('\n\n');
+  return { main, about: p.about || '' };
+}
+
+function buildPinnedText(p = PINNED_POST) {
+  const { main, about } = pinnedParts(p);
+  return [main, about].filter(Boolean).join('\n\n');
+}
+
+function escPinned(str) {
+  return String(str).replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"');
+}
+
+function renderPinned() {
+  const el = document.getElementById('pinned');
+  if (!el) return;
+  const text = buildPinnedText();
+  const { main, about } = pinnedParts();
+  el.innerHTML = `
+    <div class="section-label">Pinned post · Week ${escPinned(PINNED_POST.week)} · Published ${escPinned(PINNED_POST.publishedDate)}</div>
+    <div class="post pinned">
+      <div class="pinned-tag">Pinned post</div>
+      <h2>Weekly pinned post for @${ACCOUNT}</h2>
+      <pre>${escPinned(main)}${about ? `\n\n<span class="pinned-about">${escPinned(about)}</span>` : ''}</pre>
+      <button type="button" class="btn" id="pinned-copy">Copy</button>
+      <a class="btn" href="${buildIntent(text)}" target="_blank" rel="noopener">Open in X</a>
+      ${counterHtml(text)}
+    </div>`;
+  const btn = document.getElementById('pinned-copy');
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      btn.textContent = 'Copied!';
+    } catch (e) {
+      btn.textContent = 'Copy failed';
+    }
+    setTimeout(() => { btn.textContent = 'Copy'; }, 1800);
+  });
+}
+// =================== END PINNED POST ===================
 
 function buildIntent(text) {
   const params = new URLSearchParams({ text, via: ACCOUNT });
@@ -171,6 +251,7 @@ async function load() {
   }
 }
 
+renderPinned();
 load();
 </script>
 </body>
