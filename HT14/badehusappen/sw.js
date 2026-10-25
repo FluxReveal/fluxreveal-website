@@ -4,7 +4,7 @@
  * bruker lagret kopi bare når man er uten nett. Da blir oppdateringer
  * aldri hengende fast i hurtigbufferen.
  */
-const CACHE = "badehusappen-2026-10-25e";   // endres ved oppdatering, så gamle kopier ryddes
+const CACHE = "badehusappen-2026-10-25f";   // endres ved oppdatering, så gamle kopier ryddes
 self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", e => e.waitUntil(
   caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))

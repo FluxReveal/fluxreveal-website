@@ -16,7 +16,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Badehusappen">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="stylesheet" href="css/app.css?v=5">
+<link rel="stylesheet" href="css/app.css?v=6">
 </head>
 <body>
 <header class="top">
@@ -63,23 +63,17 @@
 
   <section id="view-mer" class="view" hidden aria-labelledby="merTitle">
     <h1 id="merTitle">Mer</h1>
-    <h2>Sameiet HT14</h2>
     <p class="links">
-      <a class="ghost linkbtn" href="../">⌂ Hjem – årshjul og hva er nytt</a>
-      <a class="ghost linkbtn" href="../dokumentasjon/">📖 Dokumentasjon</a>
-      <a class="ghost linkbtn" href="../dokumentasjon/regler.html">⚖️ Bookingreglene</a>
+      <a class="ghost linkbtn" href="../dokumentasjon/regler.html">⚖️ Regler for bruk</a>
+      <a class="ghost linkbtn" href="../dokumentasjon/teknisk.html">📖 Dokumentasjon</a>
     </p>
-    <h2>Om prøveversjonen</h2>
+    <h2>Om utkastet</h2>
     <p>Her kan du prøve hvordan Badehusappen skal fungere. Det er ingen innlogging ennå – du velger bare hvilket hus du booker for. Bookingene lagres bare i nettleseren på denne enheten, så naboene ser dem ikke. Reglene er Thomas sitt forslag, som vi tar på sameiemøtet.</p>
     <p>Dagen er delt i tre: <b>formiddag 10–14</b>, <b>ettermiddag 14–17</b> og <b>kveld 17–24</b>. Du kan booke én eller flere – heldag er alle tre, og det er det vanligste valget. Badehuset åpner kl. 10. Også denne inndelingen er en del av forslaget til sameiemøtet.</p>
+    <p>Vil du begynne på nytt? Dette sletter prøvebookingene på denne enheten.</p>
+    <p><button type="button" class="danger" id="resetBtn">Nullstill prøvedata</button></p>
     <h2>Legg Badehusappen på Hjem-skjermen</h2>
     <p><b>iPhone:</b> åpne siden i Safari → Del-knappen → «Legg til på Hjem-skjerm».<br><b>Android:</b> Chrome → menyen ⋮ → «Legg til på startskjermen» eller «Installer app».</p>
-    <h2>Administrator</h2>
-    <p>Adminsiden (brukere, regler, korrigering) kommer når innloggingen er på plass.</p>
-    <h2>Prøvedata</h2>
-    <p>Vil du begynne på nytt? Dette sletter bookingene på denne enheten.</p>
-    <p><button type="button" class="danger" id="resetBtn">Nullstill prøvedata</button></p>
-    <p class="muted">Les mer i <a href="../dokumentasjon/brukermanual.html">brukermanualen</a> og <a href="../dokumentasjon/om-losningen.html">Slik fungerer Badehusappen</a>.</p>
   </section>
 </main>
 
@@ -97,8 +91,8 @@
 </dialog>
 <div id="toast" role="status" aria-live="polite"></div>
 
-<script src="js/rules-engine.js?v=5"></script>
-<script src="js/store.js?v=5"></script>
-<script src="js/app.js?v=5"></script>
+<script src="js/rules-engine.js?v=6"></script>
+<script src="js/store.js?v=6"></script>
+<script src="js/app.js?v=6"></script>
 </body>
 </html>
