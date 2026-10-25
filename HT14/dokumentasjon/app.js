@@ -22,8 +22,8 @@
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setNav(false); });
 
   /* ---------- Menypunkt for nye sider ----------
-     Sider som er generert før «Forslag til vedtekter» kom til, mangler
-     menypunktet i HTML-en. Legg det til her (gjør ingenting når det finnes). */
+     Reserve: dersom en side mangler «Forslag til vedtekter» i
+     menyen, legges punktet til her. Alle sider har det nå statisk, så dette gjør normalt ingenting. */
   var navList = document.querySelector(".nav");
   if (navList && !navList.querySelector('a[href="vedtekter.html"]')) {
     var after = navList.querySelector('a[href="beslutninger.html"]');
