@@ -38,11 +38,11 @@
 <li><a href="brukermanual.html"><span class="num">6</span>Brukermanual – beboer</a></li>
 <li><a href="adminmanual.html"><span class="num">7</span>Brukermanual – administrator</a></li>
 <li class="nav-label">Styring</li>
-<li><a href="beslutninger.html"><span class="num">8</span>Åpne beslutninger</a></li>
+<li><a href="beslutninger.html"><span class="num">8</span>Beslutninger</a></li>
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
-    Planlagt løsning · v0.2 utkast · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
+    Planlagt løsning · v0.3 · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
   </div>
 </nav>
 <main class="main" id="innhold">
@@ -52,10 +52,10 @@
   <div class="eyebrow">Teknisk · Arkitektur</div>
   <h1>HLD – High Level Design</h1>
   <p>Overordnet arkitektur for Badehus Booking System: hvilke deler løsningen består av, hvordan data flyter, og hvorfor den er bygget slik.</p>
-  <div class="meta"><span class="chip draft">Utkast v0.2 · 25.10.2026</span><span class="chip">Anbefalt arkitektur – ikke endelig godkjent</span></div>
+  <div class="meta"><span class="chip draft">v0.3 · 25.10.2026</span><span class="chip ok">Arkitektur vedtatt 25.10.2026</span></div>
 </section>
 
-<div class="callout forslag"><p><span class="badge-forslag">Forslag – ikke vedtatt</span> Arkitekturen på denne siden er <b>anbefalt</b> (GitHub Pages + én Cloudflare Worker + privat data-repo + GitHub Actions), men er ikke endelig godkjent av oppdragsgiver.</p></div>
+<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> Arkitekturen på denne siden (GitHub Pages + én Cloudflare Worker + privat data-repo + GitHub Actions) er godkjent av Thomas Gude Svensrud. GitHub- og Cloudflare-kontoene eies av Thomas via FluxReveal-kontoene hans.</p></div>
 
 <h2 id="mal-og-foringer">Mål og føringer</h2>
 <div class="grid c2">
@@ -118,7 +118,7 @@
       <text x="135" y="28" text-anchor="middle" font-weight="800" fill="#6d28d9">Privat GitHub-repo</text>
       <text x="135" y="46" text-anchor="middle" fill="#64748b" font-size="11">f.eks. badehus-data · Git er «databasen»</text>
       <g font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12" fill="#1e1b4b">
-        <text x="24" y="76">users.json</text><text x="24" y="98">rules.json</text><text x="24" y="120">bookings/&lt;år&gt;.json</text><text x="24" y="142">audit/&lt;år&gt;.jsonl</text><text x="24" y="164">archive/&lt;år&gt;.csv</text>
+        <text x="24" y="76">users.json</text><text x="24" y="98">rules.json</text><text x="24" y="120">bookings/<år>.json</text><text x="24" y="142">audit/<år>.jsonl</text><text x="24" y="164">archive/<år>.csv</text>
       </g>
       <text x="135" y="194" text-anchor="middle" fill="#334155" font-size="12">hver endring = én commit = revisjonsspor</text>
     </g>
@@ -128,7 +128,7 @@
       <text x="135" y="28" text-anchor="middle" font-weight="800" fill="#15803d">GitHub Actions (nattlig cron)</text>
       <text x="135" y="50" text-anchor="middle" fill="#0f172a" font-size="11.5">fryser status: COMPLETED /</text>
       <text x="135" y="66" text-anchor="middle" fill="#0f172a" font-size="11.5">NOT_CONFIRMED</text>
-      <text x="135" y="82" text-anchor="middle" fill="#0f172a" font-size="11.5">lager archive/&lt;år&gt;.csv + backup</text>
+      <text x="135" y="82" text-anchor="middle" fill="#0f172a" font-size="11.5">lager archive/<år>.csv + backup</text>
     </g>
     <!-- arrows -->
     <path d="M190 80 H265" stroke="#475569" stroke-width="2" marker-end="url(#h1)"/><text x="228" y="72" text-anchor="middle" fill="#475569" font-size="11">laster side</text>
@@ -147,8 +147,8 @@
 <tbody>
 <tr><td><b>Frontend</b></td><td>Statisk HTML, CSS, JavaScript på GitHub Pages</td><td>Brukergrensesnitt: innlogging, månedskalender, detaljvisning, booking, avbestilling, innsjekk, bekreftelse, historikk, statistikk, adminsider. Beregner visningsstatus fra klokka (Europe/Oslo).</td><td>0 kr</td></tr>
 <tr><td><b>Skrive-/auth-ledd</b></td><td>Én Cloudflare Worker (gratis plan)</td><td>Verifiserer passord (hash, f.eks. PBKDF2 via WebCrypto), utsteder kortlevd sesjonstoken, validerer alle regler <b>server-side</b> mot <code>rules.json</code>, committer endringer til data-repo via GitHub API. Optimistisk låsing via fil-SHA.</td><td>0 kr</td></tr>
-<tr><td><b>Data</b></td><td>Privat GitHub-repo med JSON/JSONL/CSV</td><td><code>users.json</code> (uten klartekstpassord), <code>bookings/&lt;år&gt;.json</code>, <code>audit/&lt;år&gt;.jsonl</code>, <code>rules.json</code>. Git-historikken er revisjonssporet.</td><td>0 kr</td></tr>
-<tr><td><b>Planlagte jobber</b></td><td>GitHub Actions (cron, nattlig)</td><td>Skriver endelig status (COMPLETED / NOT_CONFIRMED) til Git, genererer <code>archive/&lt;år&gt;.csv</code> og backup.</td><td>0 kr</td></tr>
+<tr><td><b>Data</b></td><td>Privat GitHub-repo med JSON/JSONL/CSV</td><td><code>users.json</code> (uten klartekstpassord), <code>bookings/<år>.json</code>, <code>audit/<år>.jsonl</code>, <code>rules.json</code>. Git-historikken er revisjonssporet.</td><td>0 kr</td></tr>
+<tr><td><b>Planlagte jobber</b></td><td>GitHub Actions (cron, nattlig)</td><td>Skriver endelig status (COMPLETED / NOT_CONFIRMED) til Git, genererer <code>archive/<år>.csv</code> og backup.</td><td>0 kr</td></tr>
 <tr><td><b>Regler</b></td><td><code>rules.json</code></td><td>All regelkonfigurasjon (sommermåneder, kvoter, vindu, 7-dagersgrense, perioder). Endres uten kodeendring.</td><td>–</td></tr>
 </tbody></table></div>
 
@@ -186,11 +186,11 @@ flowchart LR
   <li>GitHub Actions-cron kjører i UTC og kan bli forsinket. Den brukes derfor <b>kun</b> til å skrive endelig status i Git – ikke til å bestemme hva brukerne ser i øyeblikket.</li>
   <li>Automatisk utsjekk ved periodens slutt: 08–14 → 14:00, 14–00 → 00:00.</li>
 </ul>
-<div class="callout forslag"><p><span class="badge-forslag">Forslag – ikke vedtatt</span> 00:00 tolkes som slutten av dagen (24:00) i Europe/Oslo, inkludert sommertid. Se spørsmål 10.</p></div>
+<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> 00:00 betyr slutten av dagen (24:00) i Europe/Oslo, inkludert sommertid. Se avklaring 10.</p></div>
 
 <h2 id="sikkerhet">Sikkerhet</h2>
 <div class="table-wrap"><table>
-<thead><tr><th>Trussel / behov</th><th>Tiltak i anbefalt arkitektur</th></tr></thead>
+<thead><tr><th>Trussel / behov</th><th>Tiltak i vedtatt arkitektur</th></tr></thead>
 <tbody>
 <tr><td>Uvedkommende leser bookingdata</td><td>Data ligger i privat repo; kun Workeren har token. Pages-output inneholder ingen data.</td></tr>
 <tr><td>Passord på avveie</td><td>Kun hash lagres (f.eks. PBKDF2 via WebCrypto). Ingen klartekstpassord i <code>users.json</code>.</td></tr>
@@ -198,7 +198,7 @@ flowchart LR
 <tr><td>Stjålet innlogging</td><td>Kortlevd sesjonstoken.</td></tr>
 <tr><td>Dobbeltbooking ved samtidige forespørsler</td><td>Optimistisk låsing via fil-SHA i GitHub API.</td></tr>
 <tr><td>Selvregistrering / ukjente brukere</td><td>Ingen selvregistrering. Administrator oppretter brukere og setter/resetter passord.</td></tr>
-<tr><td>Skjulte endringer</td><td>Hver endring er en commit, og logges i <code>audit/&lt;år&gt;.jsonl</code> med hvem, når, fra, til og kommentar. Alle adminhandlinger logges.</td></tr>
+<tr><td>Skjulte endringer</td><td>Hver endring er en commit, og logges i <code>audit/<år>.jsonl</code> med hvem, når, fra, til og kommentar. Alle adminhandlinger logges.</td></tr>
 <tr><td>Token med for vide rettigheter</td><td>Fine-grained token, lagret som Worker-secret (aldri i kode).</td></tr>
 </tbody></table></div>
 
@@ -208,7 +208,7 @@ flowchart LR
   <li>Innsyn: alle innloggede beboere kan se all historikk (krav om åpenhet).</li>
   <li>Kravet «ingen data slettes permanent» står i spenning mot retten til sletting.</li>
 </ul>
-<div class="callout forslag"><p><span class="badge-forslag">Forslag – ikke vedtatt</span> «Ingen sletting» gjelder bookinger. Utflyttede brukere deaktiveres og kan anonymiseres (navn → «Tidligere beboer Hus A»); husstanden beholdes. Se spørsmål 9.</p></div>
+<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> «Ingen sletting» gjelder bookinger. Utflyttede brukere deaktiveres og kan anonymiseres (navn → «Tidligere beboer Hus A»); husstanden beholdes. Se avklaring 9.</p></div>
 
 <h2 id="kostnad">Kostnad</h2>
 <div class="grid c4">
@@ -219,7 +219,7 @@ flowchart LR
 </div>
 
 <h2 id="arkitekturvalg">Arkitekturvalg</h2>
-<h3 id="valgt-anbefalt">Valgt (anbefalt)</h3>
+<h3 id="valgt-vedtatt-25-10-2026">Valgt (vedtatt 25.10.2026)</h3>
 <div class="table-wrap"><table>
 <thead><tr><th>Beslutning</th><th>Begrunnelse</th></tr></thead>
 <tbody>
@@ -242,11 +242,11 @@ flowchart LR
   <li>Avhengig av gratisplanene til GitHub og Cloudflare.</li>
   <li>Actions-cron kan være forsinket (håndtert ved at status beregnes fra klokka).</li>
   <li>Token i Worker må fornyes/roteres – se <a href="adminmanual.html">administratormanualen</a>.</li>
-  <li>Ti åpne spørsmål påvirker regelmotoren – se <a href="beslutninger.html">Åpne beslutninger</a>.</li>
+  <li>To beslutninger gjenstår (adresse/domene og om reglene må godkjennes av styret/sameiermøtet) – se <a href="beslutninger.html">Beslutninger</a>.</li>
 </ul>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="beskrivelse.html"><small>← Forrige</small>Overordnet beskrivelse</a><a class="next" href="lld.html"><small>Neste →</small>LLD – Low Level Design</a></nav>
-      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.2 utkast · 25.10.2026). Systemet er ikke bygget ennå. Punkter merket <span class="badge-forslag">Forslag – ikke vedtatt</span> er ikke besluttet. Alle navn er eksempler.</p>
+      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.3 · 25.10.2026). Systemet er ikke bygget ennå. Arkitektur og regelavklaringer er <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Detaljer merket <span class="badge-forslag">Forslag – detaljdesign</span> er utdypinger som kan justeres ved bygging. Alle navn er eksempler.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
   </div>

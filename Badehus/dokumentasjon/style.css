@@ -241,3 +241,9 @@ details[open] summary{margin-bottom:8px}
 
 /* Mermaid-diagrammer ligger i <pre>; nullstill kodeblokk-stil */
 pre.mermaid{background:transparent;color:var(--ink);box-shadow:none;padding:0;margin:0;border-radius:0;overflow:visible;font-family:inherit}
+
+/* Vedtatte beslutninger (v0.3) */
+.badge-vedtatt{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.02em;padding:2px 8px;border-radius:99px;background:#dcfce7;color:#166534;border:1px solid #86efac;vertical-align:middle;white-space:nowrap}
+.callout.vedtatt{background:var(--ok-bg);border-color:#bbf7d0}
+.callout.vedtatt::before{content:"✓";background:var(--ok)}
+.chip.ok{background:var(--ok-bg);color:var(--ok);border-color:#bbf7d0}

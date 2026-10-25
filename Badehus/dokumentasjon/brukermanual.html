@@ -37,11 +37,11 @@
 <li><a href="brukermanual.html" aria-current="page"><span class="num">6</span>Brukermanual – beboer</a></li>
 <li><a href="adminmanual.html"><span class="num">7</span>Brukermanual – administrator</a></li>
 <li class="nav-label">Styring</li>
-<li><a href="beslutninger.html"><span class="num">8</span>Åpne beslutninger</a></li>
+<li><a href="beslutninger.html"><span class="num">8</span>Beslutninger</a></li>
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
-    Planlagt løsning · v0.2 utkast · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
+    Planlagt løsning · v0.3 · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
   </div>
 </nav>
 <main class="main" id="innhold">
@@ -51,7 +51,7 @@
   <div class="eyebrow">Manual · For beboere</div>
   <h1>Brukermanual – beboer</h1>
   <p>Steg-for-steg-veiledning for deg som skal bruke badehuset. Skjermbildene er skisser av den planlagte løsningen – det endelige utseendet kan bli litt annerledes.</p>
-  <div class="meta"><span class="chip draft">Utkast v0.2 · 25.10.2026</span><span class="chip">Mobil og PC</span><span class="chip">Ca. 5 minutter å lese</span></div>
+  <div class="meta"><span class="chip draft">v0.3 · 25.10.2026</span><span class="chip ok">Beslutninger vedtatt 25.10.2026</span><span class="chip">Mobil og PC</span><span class="chip">Ca. 5 minutter å lese</span></div>
 </section>
 
 <div class="callout info"><p><b>Du trenger:</b> en mobil, et nettbrett eller en PC med nettleser, og brukernavn og passord fra styret. Det finnes ingen app å installere og ingen selvregistrering.</p></div>
@@ -65,7 +65,7 @@
   <li><b>Trykk «Logg inn»</b>Du kommer rett til kalenderen.</li>
   <li><b>Glemt passord?</b>Kontakt styret – en administrator setter et nytt passord for deg.</li>
 </ol>
-<div class="callout forslag"><p><span class="badge-forslag">Forslag – ikke vedtatt</span> Første gang du logger inn med et passord satt av styret, blir du bedt om å velge ditt eget passord.</p></div>
+<div class="callout forslag"><p><span class="badge-forslag">Forslag – detaljdesign</span> Første gang du logger inn med et passord satt av styret, blir du bedt om å velge ditt eget passord.</p></div>
 </div>
 <div class="device">
   <div class="mock-bar"><span>🏠 Badehus</span><span style="font-weight:400;font-size:.78rem">Halden Terrasse 14</span></div>
@@ -169,7 +169,7 @@
 <tr><td>Mer enn 7 dager før</td><td>Bookingen fjernes fra kvoten.</td></tr>
 <tr><td>7 dager eller mindre før</td><td>Perioden frigjøres, men teller fortsatt mot sommerkvoten (status «sent avbestilt»).</td></tr>
 </tbody></table></div>
-<div class="callout forslag"><p><span class="badge-forslag">Forslag – ikke vedtatt</span> Alle i samme husstand kan avbestille husstandens bookinger.</p></div>
+<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> Alle i samme husstand kan avbestille husstandens bookinger.</p></div>
 </div>
 <div class="device">
   <div class="mock-bar"><span>✕</span><span>Avbestille?</span><span></span></div>
@@ -213,7 +213,7 @@
 <ol class="steps">
   <li><b>Åpne bookingen</b>(den har et gult merke).</li>
   <li><b>Trykk «Vi brukte badehuset»</b></li>
-  <li><b>Ferdig</b>Bekreftelsen lagres i historikken med tidspunkt og hvem som bekreftet.</li>
+  <li><b>Ferdig</b>Bookingen får status <span class="st st-COMPLETED">COMPLETED</span> (brukt), og bekreftelsen lagres i historikken med tidspunkt og hvem som bekreftet.</li>
 </ol>
 </div>
 <div class="device">
@@ -250,7 +250,7 @@
 <tr><td><span class="st st-NOT_CONFIRMED">NOT_CONFIRMED</span></td><td>Ikke bekreftet – ingen sjekket inn</td></tr>
 <tr><td><span class="st st-CANCELLED">CANCELLED</span></td><td>Avbestilt i god tid</td></tr>
 <tr><td><span class="st st-CANCELLED_LATE">CANCELLED_LATE</span></td><td>Sent avbestilt</td></tr>
-<tr><td><span class="st st-ADMIN_CORRECTED">ADMIN_CORRECTED</span></td><td>Korrigert av styret <span class="badge-forslag">Å8: kan bli et merke i stedet for status</span></td></tr>
+<tr><td><span class="st st-ADMIN_CORRECTED">ADMIN_CORRECTED</span></td><td>Korrigert av styret – vises som et merke på bookingen, ikke som egen status <span class="badge-vedtatt">Å8 vedtatt</span></td></tr>
 </tbody></table></div>
 
 <h2 id="9-statistikk">9. Statistikk</h2>
@@ -272,7 +272,7 @@
         <rect x="230" y="70" width="50" height="60" rx="6" fill="#7c3aed"/><text x="255" y="64" fill="#0f172a" font-weight="700">4</text><text x="255" y="146" fill="#6d28d9">D</text>
       </g>
     </svg>
-    <div style="font-size:.74rem;color:var(--muted)">Ikke bekreftet vises separat <span class="badge-forslag">Forslag – ikke vedtatt</span></div>
+    <div style="font-size:.74rem;color:var(--muted)">Ikke bekreftet vises separat <span class="badge-vedtatt">Vedtatt 25.10.2026</span></div>
   </div>
 </div>
 </div>
@@ -280,13 +280,13 @@
 <h2 id="ofte-stilte-sporsmal">Ofte stilte spørsmål</h2>
 <details><summary>Kan jeg booke for en annen husstand?</summary><p>Nei. Du booker alltid for din egen husstand. Kun administratorer kan overstyre.</p></details>
 <details><summary>Hvorfor kan jeg ikke booke to lørdager i juli?</summary><p>Om sommeren (juni–august) kan hver husstand ha maks én fredag, én lørdag og én søndag per måned, for å fordele de populære dagene rettferdig. Når det er under 7 dager til datoen, oppheves begrensningen.</p></details>
-<details><summary>Vi rakk ikke å sjekke inn – teller det likevel?</summary><p>Bookingen blir «ikke bekreftet». Trykk «Vi brukte badehuset» på bookingen for å bekrefte. Styret kan også korrigere.</p></details>
+<details><summary>Vi rakk ikke å sjekke inn – teller det likevel?</summary><p>Bookingen blir «ikke bekreftet». Trykk «Vi brukte badehuset» på bookingen for å bekrefte – da blir den registrert som brukt (COMPLETED). Styret kan også korrigere.</p></details>
 <details><summary>Får jeg varsel på e-post eller SMS?</summary><p>Nei, ikke i første versjon. Det er en mulig forbedring i versjon 2.</p></details>
 <details><summary>Kan noen slette min booking i det stille?</summary><p>Nei. Ingen bookinger slettes permanent, og alle endringer logges med hvem, når og hvorfor – synlig i historikken.</p></details>
 <details><summary>Hvem kontakter jeg ved problemer?</summary><p>Styret – styreleder eller nestleder er administratorer.</p></details>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="regler.html"><small>← Forrige</small>Bookingregler</a><a class="next" href="adminmanual.html"><small>Neste →</small>Brukermanual – administrator</a></nav>
-      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.2 utkast · 25.10.2026). Systemet er ikke bygget ennå. Punkter merket <span class="badge-forslag">Forslag – ikke vedtatt</span> er ikke besluttet. Alle navn er eksempler.</p>
+      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.3 · 25.10.2026). Systemet er ikke bygget ennå. Arkitektur og regelavklaringer er <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Detaljer merket <span class="badge-forslag">Forslag – detaljdesign</span> er utdypinger som kan justeres ved bygging. Alle navn er eksempler.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
   </div>

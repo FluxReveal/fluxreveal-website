@@ -37,11 +37,11 @@
 <li><a href="brukermanual.html"><span class="num">6</span>Brukermanual – beboer</a></li>
 <li><a href="adminmanual.html"><span class="num">7</span>Brukermanual – administrator</a></li>
 <li class="nav-label">Styring</li>
-<li><a href="beslutninger.html"><span class="num">8</span>Åpne beslutninger</a></li>
+<li><a href="beslutninger.html"><span class="num">8</span>Beslutninger</a></li>
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
-    Planlagt løsning · v0.2 utkast · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
+    Planlagt løsning · v0.3 · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
   </div>
 </nav>
 <main class="main" id="innhold">
@@ -51,7 +51,7 @@
   <div class="eyebrow">For alle beboere · ingen teknikk</div>
   <h1>Overordnet beskrivelse</h1>
   <p>Hva er Badehus Booking System, hvorfor trenger vi det, og hvordan blir det å bruke det i hverdagen?</p>
-  <div class="meta"><span class="chip draft">Utkast v0.2 · 25.10.2026</span><span class="chip">Planlagt løsning</span></div>
+  <div class="meta"><span class="chip draft">v0.3 · 25.10.2026</span><span class="chip ok">Beslutninger vedtatt 25.10.2026</span><span class="chip">Planlagt løsning</span></div>
 </section>
 
 <h2 id="hva-er-det">Hva er det?</h2>
@@ -153,18 +153,18 @@
     <g transform="translate(0 156)"><text x="0" y="22" font-weight="700" fill="#7c3aed">Hus D</text><rect x="70" y="6" width="300" height="24" rx="6" fill="#7c3aed"/><text x="380" y="23" fill="#334155">10 perioder</text></g>
   </g>
 </svg>
-<figcaption>Husstandene foreslås vist i fast rekkefølge A–D (ikke sortert etter mest bruk), i tråd med målet om åpenhet uten rangering. Tallene er fiktive.</figcaption>
+<figcaption>Husstandene vises i fast rekkefølge A–D (ikke sortert etter mest bruk), i tråd med målet om åpenhet uten rangering. Tallene er fiktive.</figcaption>
 </figure>
-<div class="callout forslag"><p><span class="badge-forslag">Forslag – ikke vedtatt</span> Hvordan «ikke bekreftet» og «sent avbestilt» skal vises i statistikken er ikke bestemt. Forslaget er at ikke bekreftede bookinger vises separat (ikke regnet som bruk før de er bekreftet), og at sent avbestilte teller i kvoten men ikke som bruk. Se <a href="beslutninger.html">Åpne beslutninger</a>, spørsmål 7.</p></div>
+<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> Ikke bekreftede bookinger vises separat (regnes ikke som bruk før de er bekreftet), og sent avbestilte teller i kvoten, men ikke som bruk. Se <a href="beslutninger.html">Beslutninger</a>, avklaring 7.</p></div>
 
 <h2 id="trygghet-og-personvern">Trygghet og personvern</h2>
 <ul>
   <li>Ingen kan registrere seg selv – styret oppretter brukere og setter passord.</li>
-  <li>Bookingdata er personopplysninger og skal derfor <b>ikke</b> ligge åpent på internett. Den anbefalte løsningen lagrer dataene i et privat lager (se <a href="hld.html">HLD</a>).</li>
+  <li>Bookingdata er personopplysninger og skal derfor <b>ikke</b> ligge åpent på internett. Den vedtatte løsningen lagrer dataene i et privat lager (se <a href="hld.html">HLD</a>).</li>
   <li>Passord lagres aldri i klartekst.</li>
   <li>Ingen bookinger slettes permanent; alle endringer kan spores.</li>
 </ul>
-<div class="callout forslag"><p><span class="badge-forslag">Forslag – ikke vedtatt</span> Når noen flytter, foreslås det at brukeren deaktiveres og kan anonymiseres (f.eks. navnet byttes til «Tidligere beboer Hus A»), mens husstanden beholdes i historikken. Se spørsmål 9.</p></div>
+<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> Når noen flytter, deaktiveres brukeren og kan anonymiseres (f.eks. navnet byttes til «Tidligere beboer Hus A»), mens husstanden beholdes i historikken. Se avklaring 9.</p></div>
 
 <h2 id="hva-er-ikke-med-i-forste-versjon">Hva er ikke med i første versjon?</h2>
 <ul>
@@ -173,7 +173,7 @@
 </ul>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="index.html"><small>← Forrige</small>Oversikt</a><a class="next" href="hld.html"><small>Neste →</small>HLD – High Level Design</a></nav>
-      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.2 utkast · 25.10.2026). Systemet er ikke bygget ennå. Punkter merket <span class="badge-forslag">Forslag – ikke vedtatt</span> er ikke besluttet. Alle navn er eksempler.</p>
+      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.3 · 25.10.2026). Systemet er ikke bygget ennå. Arkitektur og regelavklaringer er <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Detaljer merket <span class="badge-forslag">Forslag – detaljdesign</span> er utdypinger som kan justeres ved bygging. Alle navn er eksempler.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
   </div>
