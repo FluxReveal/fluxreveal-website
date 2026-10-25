@@ -54,7 +54,7 @@ const ACCOUNT = 'TechSignalSix';
 //     Rule: no score numbers, score changes or momentum direction.
 //  3. Rewrite `why` (one short paragraph tying the week together).
 //  4. `about` is generic and can stay the same for several weeks.
-//  5. Also update DAILY_POSTS below (Monday–Friday spotlights) for the same week.
+//  5. Also update DAILY_POSTS below (Monday–Friday = top 5, Saturday = light post) for the same week.
 //  Do not use em-dashes in the post text.
 const PINNED_POST = {
   week: '2026-W43',
@@ -135,30 +135,39 @@ function counterHtml(text) {
   return `<span class="counter ${over ? 'over' : ''}">${n} / 280${over ? ' · over limit' : ''}</span>`;
 }
 
-// Fixed footer appended to every daily draft (Monday–Friday)
+// Fixed footer appended to every daily draft (Monday–Saturday)
 const DRAFT_ABOUT = 'Weekly radar of what developers actually adopt — not what gets hyped.';
 const DRAFT_HASHTAG = '#SixTraction';
 function withFooter(text) {
   return `${text}\n\n${DRAFT_ABOUT}\n${DRAFT_HASHTAG}`;
 }
 
-// ===================== DAILY SPOTLIGHTS (weekly, hard-coded) =====================
-// One spotlight per day, written per week (same week as PINNED_POST).
-// Each post: "Spotlight: <title>", a short "Why it matters", the theme link, then the fixed footer.
+// ===================== DAILY POSTS (weekly, hard-coded) =====================
+// Same week as PINNED_POST. Monday–Friday = top 5 by Six Traction rank (#1 Monday … #5 Friday).
+// Saturday = one light, on-brand post built only from facts in signals.json.
+// Each post: lead (rank + theme), a short "Why it matters", the theme link, then the fixed footer.
+// Rules: English, no score changes / rises / falls / week-over-week movement, no invented facts.
 // Must stay under 280 characters as X counts them (URL = 23). The counter flags overruns.
-// Avoid repeating the themes in the pinned top 5 (at least on Monday).
 // The theme link is taken from signals.json (absoluteUrl) when available.
 const DAILY_POSTS = [
-  { day: 'Monday', id: 'vector-databases-agent-memory', title: 'Vector Search & Agent Memory',
-    why: 'Why it matters: on your own data, retrieval quality, not model choice, caps AI answer quality. Hybrid search is the new baseline.' },
-  { day: 'Tuesday', id: 'webassembly', title: 'WebAssembly Beyond the Browser',
-    why: 'Why it matters: Wasm safely runs untrusted code, like plugins or AI-written code, where containers are too slow or too risky.' },
-  { day: 'Wednesday', id: 'dotnet-aspire', title: 'Aspire & Cloud-Native .NET',
-    why: 'Why it matters: one code-first model to run and deploy multi-service apps, with observability built in from day one.' },
-  { day: 'Thursday', id: 'post-quantum-security', title: 'Post-Quantum Cryptography',
-    why: 'Why it matters: data captured today can be decrypted later. Start with an inventory of where you use public-key crypto.' },
-  { day: 'Friday', id: 'ai-inference-infrastructure', title: 'AI Inference Infrastructure',
-    why: 'Why it matters: once AI ships, inference is most of the bill. The serving engine can multiply output from the same GPUs.' }
+  { day: 'Monday', id: 'agent-interoperability', title: 'Agent Interoperability Protocols',
+    lead: '#1: Agent Interoperability Protocols. Open protocols like MCP wire AI agents to tools and data.',
+    why: 'Why it matters: one shared standard, not a custom integration per tool.' },
+  { day: 'Tuesday', id: 'ai-coding-agents', title: 'AI Coding Agents',
+    lead: '#2: AI Coding Agents. Agents now plan, edit, test and open the pull request.',
+    why: 'Why it matters: the developer job shifts from writing code to reviewing it.' },
+  { day: 'Wednesday', id: 'ai-inference-infrastructure', title: 'AI Inference Infrastructure',
+    lead: '#3: AI Inference Infrastructure. Same GPUs, several times the throughput.',
+    why: 'Why it matters: the serving engine decides if an AI feature is profitable.' },
+  { day: 'Thursday', id: 'small-language-models', title: 'Small Language Models & On-Device AI',
+    lead: '#4: Small Language Models & On-Device AI. Laptop- and phone-sized models doing real production work.',
+    why: 'Why it matters: not every AI job needs a data center.' },
+  { day: 'Friday', id: 'memory-safe-systems', title: 'Memory-Safe Systems Programming',
+    lead: '#5: Memory-Safe Systems Programming. Memory-safe languages are the new default for systems code.',
+    why: 'Why it matters: governments and major codebases back the shift.' },
+  { day: 'Saturday', id: 'agent-interoperability', title: 'Weekend photo finish',
+    lead: 'Weekend photo finish: #1 Agent Interoperability Protocols and #2 AI Coding Agents share one score: 76.',
+    why: 'Why it matters: agents and their wiring lead side by side.' }
 ];
 
 function themeUrl(id, signals = []) {
@@ -171,7 +180,7 @@ function generatePosts(data = {}) {
   return DAILY_POSTS.map(d => ({
     day: d.day,
     title: d.title,
-    text: withFooter(`Spotlight: ${d.title}\n\n${d.why}\n\n${themeUrl(d.id, signals)}`)
+    text: withFooter(`${d.lead}\n\n${d.why}\n\n${themeUrl(d.id, signals)}`)
   }));
 }
 // =================== END DAILY SPOTLIGHTS ===================
