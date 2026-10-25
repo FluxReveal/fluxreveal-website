@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Brukermanual – beboer – Badehus Booking System</title>
-<meta name="description" content="Brukermanual for naboene: logge inn, kalender, booke, avbestille, sjekke inn, bekrefte bruk og statistikk.">
+<title>Brukermanual – beboer – Badehusappen</title>
+<meta name="description" content="Brukermanual for naboene: første innlogging, lagre passordet på iPhone og Android, Badehusappen på Hjem-skjermen, booke fra mobilkalenderen, avbestille, sjekke inn og statistikk.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
@@ -14,11 +14,11 @@
 <a href="#innhold" class="chip" style="position:absolute;left:-9999px" onfocus="this.style.left='8px'">Hopp til innhold</a>
 <header class="topbar">
   <button class="hamburger" aria-label="Åpne meny" aria-expanded="false" aria-controls="sidemeny"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-  <b>Badehus · Dokumentasjon</b>
+  <b>Badehusappen · Dokumentasjon</b>
 </header>
 <div class="scrim"></div>
 <nav class="sidebar" id="sidemeny" aria-label="Hovedmeny">
-  <a class="brand" href="index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Badehus Booking</b><small>Sameiet Halden Terrasse 14</small></span></a>
+  <a class="brand" href="index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Badehusappen</b><small>Sameiet Halden Terrasse 14</small></span></a>
   <div class="search" role="search"><svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9cc3d1" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
     <input id="sok" type="search" placeholder="Søk i dokumentasjonen  ( / )" aria-label="Søk i dokumentasjonen" autocomplete="off">
     <ul id="sok-resultat" class="search-results" aria-live="polite"></ul>
@@ -44,7 +44,7 @@
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
-    Planlagt løsning · v0.4 · 25.10.2026<br>Laget av Thomas på oppdrag fra sameiet – ingenting er godkjent ennå.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
+    Laget av Thomas for oss i HT14.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
   </div>
 </nav>
 <main class="main" id="innhold">
@@ -53,50 +53,113 @@
 <section class="hero">
   <div class="eyebrow">Manual · For alle naboene</div>
   <h1>Brukermanual – beboer</h1>
-  <p>Slik bruker du bookingløsningen, steg for steg. Bildene er skisser – den ferdige løsningen kan se litt annerledes ut.</p>
-  <div class="meta"><span class="chip draft">v0.4 · 25.10.2026</span><span class="chip regel">Ingenting er godkjent av sameiet ennå</span><span class="chip">Mobil og PC</span><span class="chip">Ca. 5 minutter å lese</span></div>
+  <p>Slik bruker du Badehusappen, steg for steg. Du logger inn én gang, lar mobilen huske passordet, og legger Badehusappen på Hjem-skjermen – så er du i gang. Bildene er skisser, så den ferdige Badehusappen kan se litt annerledes ut.</p>
+  <div class="meta"><span class="chip">⏱ Ca. 9 min lesetid</span><span class="chip">Mobil og PC</span></div>
 </section>
 
-<div class="callout status"><p><b>Status:</b> Thomas Gude Svensrud lager dette på oppdrag fra sameiet. <b>Ingenting er godkjent av sameiet ennå.</b> Det eneste sameiet må godkjenne, er vedtektene (§ 10) og reglene for bruk av badehuset (vedlegg 1). Tekniske og praktiske valg trenger ikke godkjenning. <a href="beslutninger.html">Les mer om hva som trenger godkjenning</a>.</p></div>
-<div class="callout info"><p><b>Du trenger:</b> en mobil, et nettbrett eller en PC, og brukernavn og passord fra en administrator. Ingen app å laste ned, og du trenger ikke registrere deg.</p></div>
+<div class="callout info"><p><b>Du trenger:</b> en mobil, et nettbrett eller en PC, e-postadressen din og et startpassord fra en administrator. Du trenger ikke laste ned noe fra App Store eller Google Play, og du trenger ikke registrere deg.</p></div>
 
-<h2 id="1-logge-inn">1. Logge inn</h2>
+<h2 id="1-logge-inn-forste-gang">1. Logge inn første gang</h2>
 <div class="two">
 <div>
 <ol class="steps">
-  <li><b>Åpne nettsiden</b>Adressen er <b>fluxreveal.com/HT14/</b>. Tips: legg den til på hjemskjermen på mobilen.</li>
-  <li><b>Skriv brukernavn og passord</b>Du får dem av en av administratorene.</li>
-  <li><b>Trykk «Logg inn»</b>Du kommer rett til kalenderen.</li>
-  <li><b>Glemt passord?</b>Si fra til en administrator, så får du et nytt.</li>
+  <li><b>Åpne Badehusappen</b>Gå til <b>fluxreveal.com/HT14/</b> og trykk «Åpne Badehusappen».</li>
+  <li><b>Skriv e-post og startpassord</b>Startpassordet får du av en av administratorene.</li>
+  <li><b>Trykk «Logg inn»</b></li>
+  <li><b>Velg ditt eget passord</b>Første gang blir du bedt om å lage et nytt passord. Mobilen foreslår gjerne et sterkt passord – det er helt greit å bruke det.</li>
+  <li><b>Lagre passordet</b>Når mobilen spør «Lagre passord?», trykker du <b>Lagre</b> (se punkt 2).</li>
+  <li><b>Ferdig!</b>Du kommer rett til kalenderen og holder deg innlogget i omtrent ett år på den mobilen.</li>
 </ol>
-<div class="callout forslag"><p><span class="badge-forslag">Forslag – detaljdesign</span> Første gang du logger inn, blir du bedt om å velge ditt eget passord.</p></div>
+<p>Glemt passordet? Si fra til en administrator, så får du et nytt startpassord.</p>
 </div>
 <div class="device">
-  <div class="mock-bar"><span>🏠 Badehus</span><span style="font-weight:400;font-size:.78rem">Halden Terrasse 14</span></div>
+  <div class="mock-bar"><span>🏠 Badehusappen</span><span style="font-weight:400;font-size:.78rem">Halden Terrasse 14</span></div>
   <div class="mock-body">
-    <div style="text-align:center;margin:10px 0 16px"><div style="font-size:1.15rem;font-weight:800">Logg inn</div><div style="color:var(--muted);font-size:.8rem">Badehus Booking System</div></div>
-    <div class="mock-label">Brukernavn</div><div class="mock-field">per.hansen</div>
-    <div class="mock-label">Passord</div><div class="mock-field">••••••••••</div>
+    <div style="text-align:center;margin:10px 0 16px"><div style="font-size:1.15rem;font-weight:800">Logg inn</div><div style="color:var(--muted);font-size:.8rem">Badehusappen</div></div>
+    <div class="mock-label">E-post</div><div class="mock-field">per.hansen@example.com</div>
+    <div class="mock-label">Passord</div><div class="mock-field">•••••••••• <span style="float:right;color:var(--brand)">🔑</span></div>
     <div class="mock-btn">Logg inn</div>
     <p style="text-align:center;font-size:.76rem;color:var(--muted);margin-top:12px">Glemt passord? Si fra til en administrator.</p>
   </div>
 </div>
 </div>
 
-<h2 id="2-kalenderen">2. Kalenderen</h2>
-<p>Kalenderen er en vanlig månedskalender. Hvert hus har sin faste farge:</p>
-<div class="legend"><span class="hus a">Hus A – blå</span><span class="hus b">Hus B – grønn</span><span class="hus c">Hus C – oransje</span><span class="hus d">Hus D – lilla</span><span class="badge">Hvit = ledig</span></div>
-<figure><div style="font-weight:700;margin-bottom:6px">Juli 2027</div><table class="cal" aria-label="Kalender juli 2027"><thead><tr><th>Man</th><th>Tir</th><th>Ons</th><th>Tor</th><th>Fre</th><th>Lør</th><th>Søn</th></tr></thead><tbody><tr><td class="out"></td><td class="out"></td><td class="out"></td><td class=""><span class="d">1</span></td><td class="wk"><span class="d">2</span><span class="p a" title="Hus A">Hus A</span></td><td class="wk"><span class="d">3</span><span class="p b" title="Hus B">Hus B</span></td><td class="wk"><span class="d">4</span></td></tr><tr><td class=""><span class="d">5</span></td><td class=""><span class="d">6</span></td><td class=""><span class="d">7</span></td><td class="today"><span class="d">8</span></td><td class="wk"><span class="d">9</span></td><td class="wk"><span class="d">10</span><span class="p a half" title="08–14 A">08–14 A</span></td><td class="wk"><span class="d">11</span></td></tr><tr><td class=""><span class="d">12</span><span class="p b half" title="14–00 B">14–00 B</span></td><td class=""><span class="d">13</span></td><td class=""><span class="d">14</span></td><td class=""><span class="d">15</span></td><td class="wk"><span class="d">16</span></td><td class="wk"><span class="d">17</span><span class="p d" title="Hus D">Hus D</span></td><td class="wk"><span class="d">18</span><span class="p c" title="Hus C">Hus C</span></td></tr><tr><td class=""><span class="d">19</span></td><td class=""><span class="d">20</span></td><td class=""><span class="d">21</span></td><td class=""><span class="d">22</span></td><td class="wk"><span class="d">23</span></td><td class="wk"><span class="d">24</span><span class="p c" title="Hus C">Hus C</span></td><td class="wk"><span class="d">25</span></td></tr><tr><td class=""><span class="d">26</span></td><td class=""><span class="d">27</span></td><td class=""><span class="d">28</span></td><td class=""><span class="d">29</span></td><td class="wk"><span class="d">30</span></td><td class="wk"><span class="d">31</span></td><td class="out"></td></tr></tbody></table><figcaption>Månedskalenderen: hver husstand har sin faste farge. Trykk på en dato for detaljer.</figcaption></figure>
-<ul>
-  <li>Bla mellom måneder med pilene øverst.</li>
-  <li>Et halvt felt betyr at bare formiddag eller ettermiddag/kveld er booket.</li>
-  <li>Dagens dato har en tydelig ramme.</li>
-</ul>
+<h2 id="2-la-mobilen-huske-passordet">2. La mobilen huske passordet</h2>
+<p>Badehusappen er laget slik at mobilen kjenner igjen innloggingen. Lagrer du passordet én gang, fyller mobilen det inn for deg med Face ID eller fingeravtrykk neste gang.</p>
+<div class="grid c2">
+  <div class="card"><h4>🍎 iPhone og iPad</h4>
+    <ol style="margin:0">
+      <li>Når du har logget inn eller valgt nytt passord, spør iPhone «Vil du lagre dette passordet?». Trykk <b>Lagre passord</b>.</li>
+      <li>Neste gang trykker du i e-postfeltet. Over tastaturet står e-posten din med en nøkkel – trykk på den, og godkjenn med <b>Face ID</b> eller <b>Touch ID</b>.</li>
+      <li>Kom ikke spørsmålet? Sjekk <i>Innstillinger → Generelt → Autoutfyll og passord</i> (eller appen <i>Passord</i>) og at «Autoutfyll passord» er slått på.</li>
+    </ol>
+  </div>
+  <div class="card"><h4>🤖 Android</h4>
+    <ol style="margin:0">
+      <li>Etter innlogging spør Chrome eller Google Passordmanager «Lagre passordet?». Trykk <b>Lagre</b>.</li>
+      <li>Neste gang trykker du i e-postfeltet og velger kontoen din. Bekreft med <b>fingeravtrykk</b> eller ansiktsgjenkjenning.</li>
+      <li>Kom ikke spørsmålet? Sjekk <i>Innstillinger → Google → Autofyll → Google Passordmanager</i> og at «Tilby å lagre passord» er på.</li>
+    </ol>
+  </div>
+</div>
+<p>Bruker du en annen passordhåndterer (for eksempel 1Password eller Bitwarden), virker den også.</p>
 
-<h2 id="3-se-detaljer-for-en-dag">3. Se detaljer for en dag</h2>
+<h2 id="3-legg-badehusappen-pa-hjem-skjermen">3. Legg Badehusappen på Hjem-skjermen</h2>
+<p>Da får du et eget ikon, og Badehusappen åpner rett i kalenderen – uten adressefelt, akkurat som en vanlig app.</p>
+<div class="grid c2">
+  <div class="card"><h4>🍎 iPhone (Safari)</h4>
+    <ol style="margin:0">
+      <li>Åpne Badehusappen i <b>Safari</b> og logg inn.</li>
+      <li>Trykk på <b>Del</b>-knappen (firkant med pil opp) nederst.</li>
+      <li>Bla ned og trykk <b>Legg til på Hjem-skjerm</b>.</li>
+      <li>Navnet «Badehusappen» er fylt inn. Trykk <b>Legg til</b>.</li>
+    </ol>
+  </div>
+  <div class="card"><h4>🤖 Android (Chrome)</h4>
+    <ol style="margin:0">
+      <li>Åpne Badehusappen i <b>Chrome</b> og logg inn.</li>
+      <li>Trykk på menyen <b>⋮</b> øverst til høyre.</li>
+      <li>Trykk <b>Legg til på startskjermen</b> (eller <b>Installer app</b>).</li>
+      <li>Trykk <b>Legg til</b>. Ikonet havner på startskjermen.</li>
+    </ol>
+  </div>
+</div>
+<p class="note">Er du allerede innlogget, åpner ikonet rett i kalenderen. Du holder deg innlogget så lenge du bruker Badehusappen innimellom – fristen er omtrent ett år og fornyes hver gang du bruker den.</p>
+
+<h2 id="4-kalenderen-pa-mobilen">4. Kalenderen på mobilen</h2>
 <div class="two">
 <div>
-<p>Trykk på en dato. Da ser du begge periodene for dagen, hvem som har booket, status og endringshistorikk.</p>
+<p>Kalenderen viser <b>én uke om gangen</b> – det er lettest å bruke på mobil. Hver dag er en stor knapp, og hvert hus har sin faste farge:</p>
+<div class="legend"><span class="hus a">Hus A – blå</span><span class="hus b">Hus B – grønn</span><span class="hus c">Hus C – oransje</span><span class="hus d">Hus D – lilla</span><span class="badge">Hvit = ledig</span></div>
+<ul>
+  <li>Sveip eller bruk pilene for neste og forrige uke.</li>
+  <li>Et halvt felt betyr at bare formiddag eller kveld er booket.</li>
+  <li>Dagens dato har en tydelig ramme.</li>
+  <li>Vil du se hele måneden? Trykk <b>Måned</b> øverst. Badehusappen husker valget ditt.</li>
+</ul>
+</div>
+<div class="device">
+  <div class="mock-bar"><span>‹</span><span>Uke 28 · juli 2027</span><span>›</span></div>
+  <div class="mock-body">
+    <div style="display:flex;gap:6px;margin-bottom:10px;font-size:.76rem"><span class="mock-btn" style="margin:0;padding:4px 10px">Uke</span><span class="mock-btn ghost" style="margin:0;padding:4px 10px">Måned</span></div>
+    <div class="slot free"><span><b>Man 12.</b> · formiddag ledig</span><span class="hus b">Kveld B</span></div>
+    <div class="slot free"><span><b>Tir 13.</b></span><span style="color:var(--muted)">Ledig</span></div>
+    <div class="slot free"><span><b>Ons 14.</b> · kveld ledig</span><span class="hus c">Form. C</span></div>
+    <div class="slot free"><span><b>Tor 15.</b></span><span style="color:var(--muted)">Ledig</span></div>
+    <div class="slot b"><span><b>Fre 16.</b></span><span class="hus b">Heldag B</span></div>
+    <div class="slot free"><span><b>Lør 17.</b></span><span class="hus d">Heldag D</span></div>
+    <div class="slot free"><span><b>Søn 18.</b></span><span class="hus c">Heldag C</span></div>
+  </div>
+</div>
+</div>
+<p>Slik ser <b>månedsvisningen</b> ut:</p>
+<figure><div style="font-weight:700;margin-bottom:6px">Juli 2027</div><table class="cal" aria-label="Kalender juli 2027"><thead><tr><th>Man</th><th>Tir</th><th>Ons</th><th>Tor</th><th>Fre</th><th>Lør</th><th>Søn</th></tr></thead><tbody><tr><td class="out"></td><td class="out"></td><td class="out"></td><td class=""><span class="d">1</span></td><td class="wk"><span class="d">2</span><span class="p a" title="Hus A">Hus A</span></td><td class="wk"><span class="d">3</span><span class="p b" title="Hus B">Hus B</span></td><td class="wk"><span class="d">4</span></td></tr><tr><td class=""><span class="d">5</span></td><td class=""><span class="d">6</span></td><td class=""><span class="d">7</span></td><td class="today"><span class="d">8</span></td><td class="wk"><span class="d">9</span></td><td class="wk"><span class="d">10</span><span class="p a half" title="08–14 A">08–14 A</span></td><td class="wk"><span class="d">11</span></td></tr><tr><td class=""><span class="d">12</span><span class="p b half" title="14–00 B">14–00 B</span></td><td class=""><span class="d">13</span></td><td class=""><span class="d">14</span></td><td class=""><span class="d">15</span></td><td class="wk"><span class="d">16</span></td><td class="wk"><span class="d">17</span><span class="p d" title="Hus D">Hus D</span></td><td class="wk"><span class="d">18</span><span class="p c" title="Hus C">Hus C</span></td></tr><tr><td class=""><span class="d">19</span></td><td class=""><span class="d">20</span></td><td class=""><span class="d">21</span></td><td class=""><span class="d">22</span></td><td class="wk"><span class="d">23</span></td><td class="wk"><span class="d">24</span><span class="p c" title="Hus C">Hus C</span></td><td class="wk"><span class="d">25</span></td></tr><tr><td class=""><span class="d">26</span></td><td class=""><span class="d">27</span></td><td class=""><span class="d">28</span></td><td class=""><span class="d">29</span></td><td class="wk"><span class="d">30</span></td><td class="wk"><span class="d">31</span></td><td class="out"></td></tr></tbody></table><figcaption>Månedskalenderen: hver husstand har sin faste farge. Trykk på en dato for detaljer.</figcaption></figure>
+
+<h2 id="5-se-detaljer-for-en-dag">5. Se detaljer for en dag</h2>
+
+<div class="two">
+<div>
+<p>Trykk på en dag i kalenderen. Da ser du periodene for dagen, hvem som har booket, status og endringshistorikk.</p>
 <p>Eksempel fra kravspesifikasjonen – 12. juli:</p>
 <ul><li>08:00–14:00: <b>Ledig</b></li><li>14:00–00:00: <b>Booket Hus B</b></li></ul>
 <p>Trykker du på en booking ser du <b>booket av</b>, dato, tidspunkt, status, endringer og historikk.</p>
@@ -113,12 +176,12 @@
 </div>
 </div>
 
-<h2 id="4-booke-badehuset">4. Booke badehuset</h2>
+<h2 id="6-booke-fra-mobilkalenderen">6. Booke fra mobilkalenderen</h2>
 <div class="two">
 <div>
 <ol class="steps">
-  <li><b>Trykk på datoen</b>i kalenderen.</li>
-  <li><b>Velg type</b><i>Heldag</i> er forhåndsvalgt. Velg <i>Formiddag</i> (08–14) eller <i>Ettermiddag/kveld</i> (14–00) hvis dere bare trenger en halv dag – da kan andre bruke resten av dagen.</li>
+  <li><b>Trykk på dagen</b>i ukekalenderen (eller månedsvisningen). Et ark glir opp nederst på skjermen.</li>
+  <li><b>Velg heldag, formiddag eller kveld</b><i>Heldag</i> (08–00) er forhåndsvalgt. Velg <i>Formiddag</i> (08–14) eller <i>Kveld</i> (14–00) hvis dere bare trenger en halv dag – da kan andre bruke resten av dagen. Det som er opptatt, kan ikke velges.</li>
   <li><b>Trykk «Book»</b>Reglene sjekkes automatisk.</li>
   <li><b>Ferdig!</b>Nå ser alle dagen i husets farge.</li>
 </ol>
@@ -138,7 +201,7 @@
 </div>
 </div>
 
-<h3 id="hvis-losningen-sier-nei">Hvis løsningen sier nei</h3>
+<h3 id="hvis-badehusappen-sier-nei">Hvis Badehusappen sier nei</h3>
 <div class="two">
 <div>
 <p>Hvis en regel stopper bookingen får du en forklaring. Vanlige grunner:</p>
@@ -161,7 +224,7 @@
 </div>
 </div>
 
-<h2 id="5-avbestille">5. Avbestille</h2>
+<h2 id="7-avbestille">7. Avbestille</h2>
 <div class="two">
 <div>
 <ol class="steps">
@@ -173,7 +236,7 @@
 <tr><td>Mer enn 7 dager før</td><td>Bookingen fjernes fra kvoten.</td></tr>
 <tr><td>7 dager eller mindre før</td><td>Perioden frigjøres, men teller fortsatt mot sommerkvoten (status «sent avbestilt»).</td></tr>
 </tbody></table></div>
-<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> Alle i samme hus kan avbestille husets bookinger.</p></div>
+<p class="note">Alle i samme hus kan avbestille husets bookinger.</p>
 </div>
 <div class="device">
   <div class="mock-bar"><span>✕</span><span>Avbestille?</span><span></span></div>
@@ -186,7 +249,7 @@
 </div>
 </div>
 
-<h2 id="6-sjekke-inn">6. Sjekke inn</h2>
+<h2 id="8-sjekke-inn">8. Sjekke inn</h2>
 <div class="two">
 <div>
 <h3 id="nar-dere-har-booket">Når dere har booket</h3>
@@ -210,7 +273,7 @@
 </div>
 </div>
 
-<h2 id="7-bekrefte-at-dere-brukte-badehuset">7. Bekrefte at dere brukte badehuset</h2>
+<h2 id="9-bekrefte-at-dere-brukte-badehuset">9. Bekrefte at dere brukte badehuset</h2>
 <div class="two">
 <div>
 <p>Glemte dere å sjekke inn? Det er helt greit. Når perioden er over får bookingen status <span class="st st-NOT_CONFIRMED">NOT_CONFIRMED</span> («ikke bekreftet»). Det betyr ikke at badehuset var ubrukt.</p>
@@ -230,7 +293,7 @@
 </div>
 </div>
 
-<h2 id="8-historikk">8. Historikk</h2>
+<h2 id="10-historikk">10. Historikk</h2>
 <p>Alle kan se all historikk – også avbestilte bookinger og alle endringer. Ingenting slettes permanent.</p>
 <div class="device wide">
   <div class="mock-bar"><span>Historikk 2027</span><span style="font-weight:400;font-size:.78rem">Filter: Alle husstander ▾</span></div>
@@ -254,10 +317,10 @@
 <tr><td><span class="st st-NOT_CONFIRMED">NOT_CONFIRMED</span></td><td>Ikke bekreftet – ingen sjekket inn</td></tr>
 <tr><td><span class="st st-CANCELLED">CANCELLED</span></td><td>Avbestilt i god tid</td></tr>
 <tr><td><span class="st st-CANCELLED_LATE">CANCELLED_LATE</span></td><td>Sent avbestilt</td></tr>
-<tr><td><span class="st st-ADMIN_CORRECTED">ADMIN_CORRECTED</span></td><td>Rettet av en administrator – vises som et merke på bookingen, ikke som egen status <span class="badge-teknisk">Å8 · teknisk valg</span></td></tr>
+<tr><td><span class="st st-ADMIN_CORRECTED">ADMIN_CORRECTED</span></td><td>Rettet av en administrator – vises som et merke på bookingen, ikke som egen status</td></tr>
 </tbody></table></div>
 
-<h2 id="9-statistikk">9. Statistikk</h2>
+<h2 id="11-statistikk">11. Statistikk</h2>
 <div class="two">
 <div>
 <p>Statistikken viser bruk per husstand for <b>denne måneden</b>, <b>denne sesongen</b> (juni–august) og <b>i år</b>. Bruk telles i perioder:</p>
@@ -276,7 +339,7 @@
         <rect x="230" y="70" width="50" height="60" rx="6" fill="#7c3aed"/><text x="255" y="64" fill="#0f172a" font-weight="700">4</text><text x="255" y="146" fill="#6d28d9">D</text>
       </g>
     </svg>
-    <div style="font-size:.74rem;color:var(--muted)">Ikke bekreftet vises for seg <span class="badge-regel">Forslag – ikke godkjent av sameiet</span></div>
+    <div style="font-size:.74rem;color:var(--muted)">Ikke bekreftet vises for seg</div>
   </div>
 </div>
 </div>
@@ -285,12 +348,15 @@
 <details><summary>Kan jeg booke for en annen husstand?</summary><p>Nei, du booker alltid for ditt eget hus. Bare administratorene kan gjøre unntak.</p></details>
 <details><summary>Hvorfor kan jeg ikke booke to lørdager i juli?</summary><p>Om sommeren (juni–august) kan hver husstand ha maks én fredag, én lørdag og én søndag per måned, for å fordele de populære dagene rettferdig. Når det er under 7 dager til datoen, oppheves begrensningen.</p></details>
 <details><summary>Vi rakk ikke å sjekke inn – teller det likevel?</summary><p>Bookingen blir «ikke bekreftet». Trykk «Vi brukte badehuset» på bookingen for å bekrefte – da blir den registrert som brukt (COMPLETED). En administrator kan også rette det.</p></details>
-<details><summary>Får jeg varsel på e-post eller SMS?</summary><p>Nei, ikke i første versjon. Det er en mulig forbedring i versjon 2.</p></details>
+<details><summary>Får jeg varsel på e-post eller SMS?</summary><p>Nei, ikke i starten. Det kan komme senere.</p></details>
+<details><summary>Jeg har mistet mobilen – hva gjør jeg?</summary><p>Si fra til en administrator. Hun eller han kan logge ut akkurat den mobilen, så ingen andre kommer inn i Badehusappen med den. Du kan fortsatt logge inn som vanlig på en ny mobil.</p></details>
+<details><summary>Jeg skrev feil passord mange ganger og må vente?</summary><p>Ja, etter flere feil forsøk på rad blir det en kort pause på noen minutter. Det er for å stoppe folk som prøver å gjette passord. Vent litt og prøv igjen, eller be en administrator om et nytt passord.</p></details>
+<details><summary>Kan jeg logge inn med Face ID uten passord?</summary><p>Ja, nesten: når mobilen har lagret passordet, fyller den det inn med Face ID eller fingeravtrykk. Helt uten passord (såkalte passkeys) er en idé for senere – ikke med nå.</p></details>
 <details><summary>Kan noen slette min booking i det stille?</summary><p>Nei. Ingen bookinger slettes permanent, og alle endringer logges med hvem, når og hvorfor – synlig i historikken.</p></details>
-<details><summary>Hvem kontakter jeg ved problemer?</summary><p>En av de to administratorene. I dag er det Thomas som har laget og passer på løsningen.</p></details>
+<details><summary>Hvem kontakter jeg ved problemer?</summary><p>En av de to administratorene. I dag er det Thomas som har laget og passer på Badehusappen.</p></details>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="regler.html"><small>← Forrige</small>Bookingregler</a><a class="next" href="adminmanual.html"><small>Neste →</small>Brukermanual – administrator</a></nav>
-      <p class="footer">Badehus Booking System – dokumentasjon av en <b>planlagt</b> løsning (v0.4 · 25.10.2026). Den er ikke bygget ennå. Thomas Gude Svensrud lager den på oppdrag fra sameiet, og <b>ingenting er godkjent av sameiet ennå</b>. Merkene betyr: <span class="badge-regel">Forslag – ikke godkjent av sameiet</span> = regler som sameiet skal ta stilling til · <span class="badge-teknisk">Teknisk valg (Thomas)</span> = praktiske og tekniske valg som ikke trenger godkjenning · <span class="badge-forslag">Forslag – detaljdesign</span> = detaljer som kan justeres når løsningen bygges. Alle navn er eksempler.</p>
+      <p class="footer">Badehusappen – dokumentasjon av bookingløsningen for badehuset vårt. Den er ikke bygget ennå, og alle navn i eksemplene er oppdiktet. Spørsmål eller ideer? Si fra til Thomas.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
   </div>

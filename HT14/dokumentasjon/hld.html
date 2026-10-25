@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HLD – High Level Design – Badehus Booking System</title>
-<meta name="description" content="High Level Design for Badehus Booking System: kontekst, komponenter, dataflyt, sikkerhet, personvern, kostnad og arkitekturvalg.">
+<title>HLD – High Level Design – Badehusappen</title>
+<meta name="description" content="High Level Design for Badehusappen: kontekst, komponenter, innlogging, dataflyt, sikkerhet, personvern, kostnad og arkitekturvalg.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
@@ -15,11 +15,11 @@
 <a href="#innhold" class="chip" style="position:absolute;left:-9999px" onfocus="this.style.left='8px'">Hopp til innhold</a>
 <header class="topbar">
   <button class="hamburger" aria-label="Åpne meny" aria-expanded="false" aria-controls="sidemeny"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-  <b>Badehus · Dokumentasjon</b>
+  <b>Badehusappen · Dokumentasjon</b>
 </header>
 <div class="scrim"></div>
 <nav class="sidebar" id="sidemeny" aria-label="Hovedmeny">
-  <a class="brand" href="index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Badehus Booking</b><small>Sameiet Halden Terrasse 14</small></span></a>
+  <a class="brand" href="index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Badehusappen</b><small>Sameiet Halden Terrasse 14</small></span></a>
   <div class="search" role="search"><svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9cc3d1" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
     <input id="sok" type="search" placeholder="Søk i dokumentasjonen  ( / )" aria-label="Søk i dokumentasjonen" autocomplete="off">
     <ul id="sok-resultat" class="search-results" aria-live="polite"></ul>
@@ -45,7 +45,7 @@
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
-    Planlagt løsning · v0.4 · 25.10.2026<br>Laget av Thomas på oppdrag fra sameiet – ingenting er godkjent ennå.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
+    Laget av Thomas for oss i HT14.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
   </div>
 </nav>
 <main class="main" id="innhold">
@@ -54,11 +54,11 @@
 <section class="hero">
   <div class="eyebrow">Teknisk · Arkitektur</div>
   <h1>HLD – High Level Design</h1>
-  <p>Overordnet arkitektur for Badehus Booking System: hvilke deler løsningen består av, hvordan data flyter, og hvorfor den er bygget slik.</p>
-  <div class="meta"><span class="chip draft">v0.4 · 25.10.2026</span><span class="chip teknisk">Teknisk valg (Thomas) – trenger ikke godkjenning</span></div>
+  <p>Overordnet arkitektur for Badehusappen: hvilke deler den består av, hvordan data flyter, og hvorfor den er bygget slik.</p>
+  <div class="meta"><span class="chip">⏱ Ca. 8 min lesetid</span></div>
 </section>
 
-<div class="callout teknisk"><p><span class="badge-teknisk">Teknisk valg (Thomas)</span> Arkitekturen på denne siden (GitHub Pages + én Cloudflare Worker + privat data-repo + GitHub Actions) er valgt av Thomas Gude Svensrud, som lager løsningen på oppdrag fra sameiet. Tekniske valg som dette trenger ikke godkjenning av sameiet. GitHub- og Cloudflare-kontoene eies av Thomas via FluxReveal-kontoene hans. Reglene løsningen håndhever er derimot bare forslag til sameiet ble enige om dem – se <a href="regler.html">Bookingregler</a>.</p></div>
+<p class="note">Arkitekturen på denne siden (GitHub Pages + én Cloudflare Worker + privat data-repo + GitHub Actions) er valgt av Thomas Gude Svensrud, som lager Badehusappen på oppdrag fra sameiet. Tekniske valg som dette trenger ikke godkjenning av sameiet. GitHub- og Cloudflare-kontoene eies av Thomas via FluxReveal-kontoene hans. Reglene Badehusappen håndhever er derimot bare forslag til vi blir enige om dem på sameiemøtet – se <a href="regler.html">Bookingregler</a>.</p>
 
 <h2 id="mal-og-foringer">Mål og føringer</h2>
 <div class="grid c2">
@@ -98,8 +98,8 @@
     <g transform="translate(270 20)">
       <rect width="250" height="120" rx="16" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
       <text x="125" y="28" text-anchor="middle" font-weight="800" fill="#0e7490">GitHub Pages</text>
-      <text x="125" y="50" text-anchor="middle" fill="#0f172a">Frontend: statisk HTML/CSS/JS</text>
-      <text x="125" y="72" text-anchor="middle" fill="#334155">kalender · booking · innsjekk</text>
+      <text x="125" y="50" text-anchor="middle" fill="#0f172a">Badehusappen: HTML/CSS/JS (PWA)</text>
+      <text x="125" y="72" text-anchor="middle" fill="#334155">ukekalender · booking · innsjekk</text>
       <text x="125" y="92" text-anchor="middle" fill="#334155">historikk · statistikk · admin</text>
       <text x="125" y="110" text-anchor="middle" fill="#64748b" font-size="10">inneholder ingen data og ingen hemmeligheter</text>
     </g>
@@ -108,8 +108,8 @@
       <rect width="250" height="140" rx="16" fill="url(#gw)" stroke="#ea580c" stroke-width="2"/>
       <text x="125" y="28" text-anchor="middle" font-weight="800" fill="#c2410c">Cloudflare Worker</text>
       <text x="125" y="48" text-anchor="middle" fill="#64748b" font-size="11">gratis plan · 100 000 forespørsler/døgn</text>
-      <text x="125" y="72" text-anchor="middle" fill="#0f172a">passordsjekk (PBKDF2 / WebCrypto)</text>
-      <text x="125" y="92" text-anchor="middle" fill="#0f172a">kortlevd sesjonstoken</text>
+      <text x="125" y="72" text-anchor="middle" fill="#0f172a">e-post + passord (PBKDF2)</text>
+      <text x="125" y="92" text-anchor="middle" fill="#0f172a">økt-cookie 365 d · KV-øktliste</text>
       <text x="125" y="112" text-anchor="middle" fill="#0f172a">regelvalidering mot rules.json</text>
       <text x="125" y="130" text-anchor="middle" fill="#0f172a">commit via GitHub API</text>
     </g>
@@ -145,16 +145,17 @@
 </figure>
 
 <h2 id="adresse">Adresse</h2>
-<div class="callout teknisk"><p><span class="badge-teknisk">Teknisk valg (Thomas)</span> Løsningen skal ligge på <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a>, og dokumentasjonen på <a href="https://fluxreveal.com/HT14/dokumentasjon/">fluxreveal.com/HT14/dokumentasjon/</a>. Workerens CORS-origin er <code>https://fluxreveal.com</code>.</p></div>
+<p class="note">Badehusappen skal ligge på <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a>, og dokumentasjonen på <a href="https://fluxreveal.com/HT14/dokumentasjon/">fluxreveal.com/HT14/dokumentasjon/</a>. Workerens CORS-origin er <code>https://fluxreveal.com</code>.</p>
 
 <h2 id="komponenter">Komponenter</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Komponent</th><th>Teknologi</th><th>Ansvar</th><th>Kostnad</th></tr></thead>
 <tbody>
-<tr><td><b>Frontend</b></td><td>Statisk HTML, CSS, JavaScript på GitHub Pages: <code>https://fluxreveal.com/HT14/</code> (mappen <code>HT14/</code> i FluxReveal/fluxreveal-website)</td><td>Brukergrensesnitt: innlogging, månedskalender, detaljvisning, booking, avbestilling, innsjekk, bekreftelse, historikk, statistikk, adminsider. Beregner visningsstatus fra klokka (Europe/Oslo).</td><td>0 kr</td></tr>
-<tr><td><b>Skrive-/auth-ledd</b></td><td>Én Cloudflare Worker (gratis plan)</td><td>Verifiserer passord (hash, f.eks. PBKDF2 via WebCrypto), utsteder kortlevd sesjonstoken, validerer alle regler <b>server-side</b> mot <code>rules.json</code>, committer endringer til data-repo via GitHub API. Optimistisk låsing via fil-SHA.</td><td>0 kr</td></tr>
+<tr><td><b>Frontend</b></td><td>Statisk HTML, CSS, JavaScript på GitHub Pages: <code>https://fluxreveal.com/HT14/</code> (mappen <code>HT14/</code> i FluxReveal/fluxreveal-website)</td><td>Badehusappen: innlogging, mobilvennlig ukekalender (månedsvisning valgfritt), detaljvisning, booking, avbestilling, innsjekk, bekreftelse, historikk, statistikk, adminsider. Beregner visningsstatus fra klokka (Europe/Oslo). Web app-manifest og ikon, så den kan legges på Hjem-skjermen.</td><td>0 kr</td></tr>
+<tr><td><b>Skrive-/auth-ledd</b></td><td>Én Cloudflare Worker (gratis plan)</td><td>Egen innlogging med e-post og passord (PBKDF2-hash via WebCrypto), setter en lang økt-cookie (HttpOnly, Secure, SameSite=Strict, ca. 365 dager, fornyes ved bruk), holder øktliste og teller feil forsøk i Workers KV, validerer alle regler <b>server-side</b> mot <code>rules.json</code>, committer endringer til data-repo via GitHub API. Optimistisk låsing via fil-SHA.</td><td>0 kr</td></tr>
 <tr><td><b>Data</b></td><td>Privat GitHub-repo med JSON/JSONL/CSV</td><td><code>users.json</code> (uten klartekstpassord), <code>bookings/&lt;år&gt;.json</code>, <code>audit/&lt;år&gt;.jsonl</code>, <code>rules.json</code>. Git-historikken er revisjonssporet.</td><td>0 kr</td></tr>
 <tr><td><b>Planlagte jobber</b></td><td>GitHub Actions (cron, nattlig)</td><td>Skriver endelig status (COMPLETED / NOT_CONFIRMED) til Git, genererer <code>archive/&lt;år&gt;.csv</code> og backup.</td><td>0 kr</td></tr>
+<tr><td><b>Økter</b></td><td>Cloudflare Workers KV (gratis plan)</td><td>Aktive økter (bare hash av økt-nøkkelen), og teller for feil innloggingsforsøk. Admin kan slette økter.</td><td>0 kr</td></tr>
 <tr><td><b>Regler</b></td><td><code>rules.json</code></td><td>All regelkonfigurasjon (sommermåneder, kvoter, vindu, 7-dagersgrense, perioder). Endres uten kodeendring.</td><td>–</td></tr>
 </tbody></table></div>
 
@@ -164,7 +165,8 @@
 <pre class="mermaid">
 flowchart LR
   U["Beboer<br/>(nettleser)"] -->|1. åpner side| P["GitHub Pages<br/>statisk frontend"]
-  U -->|2. innlogging / booking| W["Cloudflare Worker"]
+  U -->|2. innlogging / booking<br/>med økt-cookie| W["Cloudflare Worker"]
+  W -->|sjekker og fornyer økt| K[("Workers KV<br/>øktliste")]
   W -->|3. leser rules.json,<br/>bookings, users| D[("Privat data-repo<br/>badehus-data")]
   W -->|4. validerer regler<br/>server-side| W
   W -->|5. commit med SHA-sjekk| D
@@ -174,7 +176,7 @@ flowchart LR
   classDef wk fill:#fff7ed,stroke:#ea580c,color:#0f172a;
   classDef data fill:#f5f3ff,stroke:#7c3aed,color:#0f172a;
   classDef act fill:#f0fdf4,stroke:#16a34a,color:#0f172a;
-  class P ext; class W wk; class D data; class A act;
+  class P ext; class W wk; class D data; class A act; class K data;
 </pre>
 <figcaption>Klienten skriver aldri direkte til data-repoet. Alle regler håndheves i Workeren, også om noen manipulerer JavaScript i nettleseren.</figcaption>
 </figure>
@@ -182,9 +184,58 @@ flowchart LR
 <h3 id="hvor-bor-hva">Hvor bor hva?</h3>
 <div class="grid c3">
   <div class="card" style="border-top:5px solid #0891b2"><h4>Offentlig (Pages)</h4><p style="margin:0;color:var(--muted)">Kode for grensesnittet, stilark, ikoner. Ingen navn, ingen bookinger, ingen nøkler.</p></div>
-  <div class="card" style="border-top:5px solid #ea580c"><h4>Hemmelig (Worker-secrets)</h4><p style="margin:0;color:var(--muted)">Fine-grained GitHub-token med tilgang kun til data-repoet, og nøkkel for signering av sesjonstoken.</p></div>
+  <div class="card" style="border-top:5px solid #ea580c"><h4>Hemmelig (Worker-secrets)</h4><p style="margin:0;color:var(--muted)">Fine-grained GitHub-token med tilgang kun til data-repoet, og en hemmelig «pepper» som blandes inn i hashen av økt-nøkler.</p></div>
   <div class="card" style="border-top:5px solid #7c3aed"><h4>Privat (data-repo)</h4><p style="margin:0;color:var(--muted)">Brukere (med passord-hash), bookinger, revisjonslogg, regler og CSV-arkiv.</p></div>
 </div>
+
+<h2 id="innlogging-og-okter">Innlogging og økter</h2>
+<p>Badehusappen har sin egen innlogging med <b>e-post og passord</b>, og det er Workeren som sjekker passordet. Passordene lagres aldri i klartekst – bare som PBKDF2-hash i <code>users.json</code> i det private data-repoet. Målet er at man logger inn én gang på mobilen og så slipper å tenke mer på det.</p>
+<div class="grid c3">
+  <div class="card"><h4>🔑 Laget for passordhåndtering</h4><p style="margin:0;color:var(--muted)">Innloggingsskjemaet bruker <code>autocomplete="username"</code> og <code>autocomplete="current-password"</code> (og <code>new-password</code> når man velger passord). Da tilbyr iPhone og Android å lagre passordet, og fyller det inn med Face ID eller fingeravtrykk neste gang.</p></div>
+  <div class="card"><h4>📱 Innlogget i et år</h4><p style="margin:0;color:var(--muted)">Etter innlogging får mobilen en trygg informasjonskapsel (cookie) som varer i ca. 365 dager. Fristen fornyes når man bruker Badehusappen, så den som bruker den jevnlig, blir aldri logget ut.</p></div>
+  <div class="card"><h4>🛡️ Kontroll for admin</h4><p style="margin:0;color:var(--muted)">Workeren har en liste over aktive økter. En administrator kan logge ut én mistet mobil, eller alle økter for en bruker. Etter flere feil passord i strekk blir det en kort pause.</p></div>
+</div>
+<figure>
+<pre class="mermaid">
+sequenceDiagram
+  autonumber
+  actor B as Beboer (mobil)
+  participant P as Badehusappen (Pages)
+  participant W as Cloudflare Worker
+  participant K as Økter (Workers KV)
+  participant D as Data-repo (users.json)
+  B->>P: Åpner Badehusappen fra Hjem-skjermen
+  P->>W: GET /api/me (med cookie)
+  alt Gyldig økt
+    W->>K: Finn økt, forny fristen
+    W-->>P: 200 bruker og hus
+    P-->>B: Rett til kalenderen
+  else Ingen eller utløpt økt
+    W-->>P: 401
+    P-->>B: Innloggingsskjema
+    Note over B: Mobilen fyller inn e-post og passord med Face ID eller fingeravtrykk
+    B->>W: POST /api/login (e-post og passord)
+    W->>K: Sjekk antall feil forsøk
+    W->>D: Hent PBKDF2-hash
+    W->>W: Sammenlign hash
+    W->>K: Lagre ny økt (365 dager)
+    W-->>P: Set-Cookie (HttpOnly, Secure, SameSite=Strict)
+    P-->>B: Kalenderen
+  end
+</pre>
+<figcaption>Innlogging og automatisk gjenkjenning. Passordet sendes bare til Workeren over HTTPS, og nettsiden får aldri se selve økt-nøkkelen (HttpOnly).</figcaption>
+</figure>
+
+<h3 id="hvorfor-ikke-cloudflare-access">Hvorfor ikke Cloudflare Access?</h3>
+<p>Cloudflare Access ble vurdert, men valgt bort av Thomas. En Access-innlogging varer maks 30 dager, og man logger inn med en engangskode på e-post. En slik kode kan ikke lagres på mobilen, så man må hente en ny kode fra e-posten hver gang økten går ut. Med egen innlogging kan mobilen huske passordet, og man er innlogget i et helt år.</p>
+
+<h2 id="badehusappen-pa-mobilen">Badehusappen på mobilen</h2>
+<ul>
+  <li><b>Hjem-skjerm (PWA):</b> Badehusappen har et web app-manifest og et ikon. Velger man «Legg til på Hjem-skjerm», åpner den rett i kalenderen (<code>start_url</code> er kalenderen, <code>display: standalone</code>) – uten adressefelt, som en vanlig app.</li>
+  <li><b>Rett til kalenderen:</b> Er man allerede innlogget, hopper Badehusappen over innloggingen og viser kalenderen med en gang.</li>
+  <li><b>Mobil først:</b> Ukevisning er standard, med store trykkflater. Trykk på en dag for å booke heldag, formiddag eller kveld. Månedsvisning kan velges.</li>
+  <li><b>Senere idé:</b> passkeys, slik at de som vil, kan logge inn med Face ID helt uten passord. Det er ikke med nå.</li>
+</ul>
 
 <h2 id="tid-og-status">Tid og status</h2>
 <ul>
@@ -192,20 +243,22 @@ flowchart LR
   <li>GitHub Actions-cron kjører i UTC og kan bli forsinket. Den brukes derfor <b>kun</b> til å skrive endelig status i Git – ikke til å bestemme hva brukerne ser i øyeblikket.</li>
   <li>Automatisk utsjekk ved periodens slutt: 08–14 → 14:00, 14–00 → 00:00.</li>
 </ul>
-<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> 00:00 betyr slutten av dagen (24:00) i Europe/Oslo, inkludert sommertid. Se avklaring 10.</p></div>
+<p class="note">00:00 betyr slutten av dagen (24:00) i Europe/Oslo, inkludert sommertid. Se avklaring 10.</p>
 
 <h2 id="sikkerhet">Sikkerhet</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Trussel / behov</th><th>Tiltak i valgt arkitektur</th></tr></thead>
 <tbody>
 <tr><td>Uvedkommende leser bookingdata</td><td>Data ligger i privat repo; kun Workeren har token. Pages-output inneholder ingen data.</td></tr>
-<tr><td>Passord på avveie</td><td>Kun hash lagres (f.eks. PBKDF2 via WebCrypto). Ingen klartekstpassord i <code>users.json</code>.</td></tr>
+<tr><td>Passord på avveie</td><td>Kun hash lagres (PBKDF2 via WebCrypto, med salt). Ingen klartekstpassord i <code>users.json</code>.</td></tr>
+<tr><td>Gjetting av passord</td><td>Begrensning på antall forsøk: etter flere feil passord i strekk blir e-postadressen (og IP-adressen) midlertidig stengt i noen minutter, og pausen øker ved flere feil.</td></tr>
 <tr><td>Manipulert klient omgår regler</td><td>Alle regler valideres server-side i Workeren mot <code>rules.json</code>.</td></tr>
-<tr><td>Stjålet innlogging</td><td>Kortlevd sesjonstoken.</td></tr>
+<tr><td>Stjålet eller mistet mobil</td><td>Økten ligger i en <code>HttpOnly</code>-cookie (kan ikke leses av JavaScript), <code>Secure</code> (bare HTTPS) og <code>SameSite=Strict</code>. Hver økt står i øktlisten, så en administrator kan logge ut én mobil eller alle økter for en bruker. Bytte av passord logger ut alle andre økter.</td></tr>
+<tr><td>Innlogging fra andre nettsider (CSRF)</td><td><code>SameSite=Strict</code>-cookie, i tillegg til CORS-sjekk av origin.</td></tr>
 <tr><td>Dobbeltbooking ved samtidige forespørsler</td><td>Optimistisk låsing via fil-SHA i GitHub API.</td></tr>
 <tr><td>Selvregistrering / ukjente brukere</td><td>Ingen selvregistrering. Administrator oppretter brukere og setter/resetter passord.</td></tr>
 <tr><td>Skjulte endringer</td><td>Hver endring er en commit, og logges i <code>audit/&lt;år&gt;.jsonl</code> med hvem, når, fra, til og kommentar. Alle adminhandlinger logges.</td></tr>
-<tr><td>Kall fra fremmede nettsider</td><td>Workeren tillater kun origin <code>https://fluxreveal.com</code> (CORS), i tillegg til token-krav.</td></tr>
+<tr><td>Kall fra fremmede nettsider</td><td>Workeren tillater kun origin <code>https://fluxreveal.com</code> (CORS), i tillegg til gyldig økt.</td></tr>
 <tr><td>Token med for vide rettigheter</td><td>Fine-grained token, lagret som Worker-secret (aldri i kode).</td></tr>
 </tbody></table></div>
 
@@ -215,7 +268,7 @@ flowchart LR
   <li>Innsyn: alle innloggede beboere kan se all historikk (krav om åpenhet).</li>
   <li>Kravet «ingen data slettes permanent» står i spenning mot retten til sletting.</li>
 </ul>
-<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> «Ingen sletting» gjelder bookinger. Utflyttede brukere deaktiveres og kan anonymiseres (navn → «Tidligere beboer Hus A»); husstanden beholdes. Se avklaring 9.</p></div>
+<p class="note">«Ingen sletting» gjelder bookinger. Utflyttede brukere deaktiveres og kan anonymiseres (navn → «Tidligere beboer Hus A»); husstanden beholdes. Se avklaring 9.</p>
 
 <h2 id="kostnad">Kostnad</h2>
 <div class="grid c4">
@@ -235,6 +288,8 @@ flowchart LR
 <tr><td>Git (privat repo) som «database»</td><td>Ingen database å drifte; hver endring er en commit = gratis revisjonsspor og historikk.</td></tr>
 <tr><td>JSON for data, CSV for arkiv/eksport</td><td>Lesbart for mennesker, kan åpnes i Excel, i tråd med ønsket teknologi.</td></tr>
 <tr><td>Regler i <code>rules.json</code></td><td>Regler kan endres uten kodeendring.</td></tr>
+<tr><td>Egen innlogging med e-post og passord i Workeren</td><td>Mobilen kan huske passordet og fylle det inn med Face ID/fingeravtrykk, og man er innlogget i ca. ett år. Se <a href="#hvorfor-ikke-cloudflare-access">Hvorfor ikke Cloudflare Access?</a></td></tr>
+<tr><td>PWA med ukekalender som startside</td><td>Badehusappen kan ligge på Hjem-skjermen og åpner rett i kalenderen. Laget for mobil først.</td></tr>
 <tr><td>Status fra klokka + nattlig frysing</td><td>Riktig visning selv om cron-jobben er forsinket.</td></tr>
 </tbody></table></div>
 
@@ -242,6 +297,7 @@ flowchart LR
 <div class="grid c2">
   <div class="card" style="border-left:5px solid var(--danger)"><h4>100 % GitHub med Issues og konto per bruker</h4><p style="margin:0;color:var(--muted)">Hver beboer måtte hatt egen GitHub-konto og brukt GitHub Issues. Forkastet: urealistisk for 20 ikke-tekniske naboer.</p></div>
   <div class="card" style="border-left:5px solid var(--danger)"><h4>Kun GitHub Pages med passord/nøkkel i JavaScript</h4><p style="margin:0;color:var(--muted)">Forkastet fordi skrivenøkkel i JS er lesbar for alle, passordsjekk i JS kan omgås, og alt i Pages-output er offentlig.</p></div>
+  <div class="card" style="border-left:5px solid var(--danger)"><h4>Cloudflare Access foran Badehusappen</h4><p style="margin:0;color:var(--muted)">Forkastet fordi en Access-økt varer maks 30 dager og bruker engangskoder på e-post, som ikke kan lagres på mobilen. Det blir for mye styr for naboene.</p></div>
 </div>
 
 <h2 id="risiko-og-avhengigheter">Risiko og avhengigheter</h2>
@@ -249,11 +305,11 @@ flowchart LR
   <li>Avhengig av gratisplanene til GitHub og Cloudflare.</li>
   <li>Actions-cron kan være forsinket (håndtert ved at status beregnes fra klokka).</li>
   <li>Token i Worker må fornyes/roteres – se <a href="adminmanual.html">administratormanualen</a>.</li>
-  <li>Reglene i <code>rules.json</code> er forslag til sameiet har godkjent dem (vedtektene § 10 og vedlegg 1) – se <a href="beslutninger.html">Hva må godkjennes?</a></li>
+  <li>Reglene i <code>rules.json</code> er forslag til vi har bestemt dem på sameiemøtet (vedtektene § 10 og vedlegg 1) – se <a href="beslutninger.html">Hva må godkjennes?</a></li>
 </ul>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="beskrivelse.html"><small>← Forrige</small>Overordnet beskrivelse</a><a class="next" href="lld.html"><small>Neste →</small>LLD – Low Level Design</a></nav>
-      <p class="footer">Badehus Booking System – dokumentasjon av en <b>planlagt</b> løsning (v0.4 · 25.10.2026). Den er ikke bygget ennå. Thomas Gude Svensrud lager den på oppdrag fra sameiet, og <b>ingenting er godkjent av sameiet ennå</b>. Merkene betyr: <span class="badge-regel">Forslag – ikke godkjent av sameiet</span> = regler som sameiet skal ta stilling til · <span class="badge-teknisk">Teknisk valg (Thomas)</span> = praktiske og tekniske valg som ikke trenger godkjenning · <span class="badge-forslag">Forslag – detaljdesign</span> = detaljer som kan justeres når løsningen bygges. Alle navn er eksempler.</p>
+      <p class="footer">Badehusappen – dokumentasjon av bookingløsningen for badehuset vårt. Den er ikke bygget ennå, og alle navn i eksemplene er oppdiktet. Spørsmål eller ideer? Si fra til Thomas.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
   </div>

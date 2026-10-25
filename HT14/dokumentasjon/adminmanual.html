@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Brukermanual – administrator – Badehus Booking System</title>
-<meta name="description" content="Brukermanual for administratorene: brukere, passord, regler, overstyring, korrigering, import/eksport, årsarkiv, backup, feilsøking og overlevering.">
+<title>Brukermanual – administrator – Badehusappen</title>
+<meta name="description" content="Brukermanual for administratorene: brukere, passord, utlogging av mistet mobil, regler, overstyring, korrigering, import/eksport, årsarkiv, backup, feilsøking og overlevering.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
@@ -15,11 +15,11 @@
 <a href="#innhold" class="chip" style="position:absolute;left:-9999px" onfocus="this.style.left='8px'">Hopp til innhold</a>
 <header class="topbar">
   <button class="hamburger" aria-label="Åpne meny" aria-expanded="false" aria-controls="sidemeny"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-  <b>Badehus · Dokumentasjon</b>
+  <b>Badehusappen · Dokumentasjon</b>
 </header>
 <div class="scrim"></div>
 <nav class="sidebar" id="sidemeny" aria-label="Hovedmeny">
-  <a class="brand" href="index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Badehus Booking</b><small>Sameiet Halden Terrasse 14</small></span></a>
+  <a class="brand" href="index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Badehusappen</b><small>Sameiet Halden Terrasse 14</small></span></a>
   <div class="search" role="search"><svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9cc3d1" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
     <input id="sok" type="search" placeholder="Søk i dokumentasjonen  ( / )" aria-label="Søk i dokumentasjonen" autocomplete="off">
     <ul id="sok-resultat" class="search-results" aria-live="polite"></ul>
@@ -45,7 +45,7 @@
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
-    Planlagt løsning · v0.4 · 25.10.2026<br>Laget av Thomas på oppdrag fra sameiet – ingenting er godkjent ennå.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
+    Laget av Thomas for oss i HT14.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
   </div>
 </nav>
 <main class="main" id="innhold">
@@ -54,25 +54,24 @@
 <section class="hero">
   <div class="eyebrow">Manual · For administratorene</div>
   <h1>Brukermanual – administrator</h1>
-  <p>For de to som passer på løsningen: slik ordner du brukere og regler, retter feil, tar vare på dataene og gir stafettpinnen videre – uten å være utvikler.</p>
-  <div class="meta"><span class="chip draft">v0.4 · 25.10.2026</span><span class="chip regel">Ingenting er godkjent av sameiet ennå</span><span class="chip">2 administratorer</span><span class="chip">Alle adminhandlinger logges</span></div>
+  <p>For de to som passer på Badehusappen: slik ordner du brukere og regler, retter feil, tar vare på dataene og gir stafettpinnen videre – uten å være utvikler.</p>
+  <div class="meta"><span class="chip">⏱ Ca. 11 min lesetid</span><span class="chip">2 administratorer</span><span class="chip">Alle adminhandlinger logges</span></div>
 </section>
 
-<div class="callout status"><p><b>Status:</b> Thomas Gude Svensrud lager dette på oppdrag fra sameiet. <b>Ingenting er godkjent av sameiet ennå.</b> Det eneste sameiet må godkjenne, er vedtektene (§ 10) og reglene for bruk av badehuset (vedlegg 1). Tekniske og praktiske valg trenger ikke godkjenning. <a href="beslutninger.html">Les mer om hva som trenger godkjenning</a>.</p></div>
-<div class="callout info"><p>Manualen beskriver den <b>planlagte</b> løsningen med arkitekturen Thomas har valgt (GitHub Pages + Cloudflare Worker + privat data-repo + GitHub Actions). Skjermbildene er skisser. Detaljer om filer og felt står i <a href="lld.html">LLD</a>.</p></div>
+<div class="callout info"><p>Manualen beskriver den <b>planlagte</b> Badehusappen med arkitekturen Thomas har valgt (GitHub Pages + Cloudflare Worker + privat data-repo + GitHub Actions). Skjermbildene er skisser. Detaljer om filer og felt står i <a href="lld.html">LLD</a>.</p></div>
 
 <h2 id="roller-og-ansvar">Roller og ansvar</h2>
 <div class="grid c2">
-  <div class="card"><h4>Administrator kan</h4><ul style="margin:0"><li>opprette og deaktivere brukere</li><li>tilbakestille passord</li><li>endre regler</li><li>overstyre begrensninger</li><li>korrigere historikk</li><li>importere og eksportere data</li></ul></div>
+  <div class="card"><h4>Administrator kan</h4><ul style="margin:0"><li>opprette og deaktivere brukere</li><li>tilbakestille passord</li><li>logge ut en mistet mobil</li><li>endre regler</li><li>overstyre begrensninger</li><li>korrigere historikk</li><li>importere og eksportere data</li></ul></div>
   <div class="card"><h4>Viktige prinsipper</h4><ul style="margin:0"><li>Alt administratorene gjør, logges (hvem, når, fra, til, kommentar).</li><li>Ingen bookinger slettes.</li><li>Ingen registrerer seg selv – administrator lager brukerne.</li><li>Hver bruker hører til ett hus.</li></ul></div>
 </div>
 
 <h3 id="kontoer-og-tilganger-administratorene-trenger">Kontoer og tilganger administratorene trenger</h3>
 <div class="table-wrap"><table><thead><tr><th>Tjeneste</th><th>Hva den brukes til</th><th>Hvem bør ha tilgang</th></tr></thead><tbody>
-<tr><td>Admin-bruker i Badehus-appen</td><td>Daglig administrasjon via adminsiden</td><td>De to administratorene</td></tr>
-<tr><td>GitHub (FluxReveal/fluxreveal-website med <code>HT14/</code>, og privat data-repo)</td><td>Kode, data, historikk, Actions, eventuell manuell redigering</td><td>Eies av Thomas via FluxReveal-kontoene <span class="badge-teknisk">Teknisk valg (Thomas)</span>. Tilgang for den andre administratoren <span class="badge-forslag">Forslag – detaljdesign</span></td></tr>
-<tr><td>Cloudflare (Worker)</td><td>Innlogging/skriving, hemmeligheter (token)</td><td>Eies av Thomas via FluxReveal-kontoene <span class="badge-teknisk">Teknisk valg (Thomas)</span>. Tilgang for den andre administratoren <span class="badge-forslag">Forslag – detaljdesign</span></td></tr>
-<tr><td>Adresse</td><td>Løsning: <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a> · Dokumentasjon: <a href="https://fluxreveal.com/HT14/dokumentasjon/">fluxreveal.com/HT14/dokumentasjon/</a></td><td>Domenet fluxreveal.com hører til FluxReveal-nettstedet <span class="badge-teknisk">Teknisk valg (Thomas)</span></td></tr>
+<tr><td>Admin-bruker i Badehusappen</td><td>Daglig administrasjon via adminsiden</td><td>De to administratorene</td></tr>
+<tr><td>GitHub (FluxReveal/fluxreveal-website med <code>HT14/</code>, og privat data-repo)</td><td>Kode, data, historikk, Actions, eventuell manuell redigering</td><td>Eies av Thomas via FluxReveal-kontoene. Tilgang for den andre administratoren</td></tr>
+<tr><td>Cloudflare (Worker)</td><td>Innlogging/skriving, hemmeligheter (token)</td><td>Eies av Thomas via FluxReveal-kontoene. Tilgang for den andre administratoren</td></tr>
+<tr><td>Adresse</td><td>Løsning: <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a> · Dokumentasjon: <a href="https://fluxreveal.com/HT14/dokumentasjon/">fluxreveal.com/HT14/dokumentasjon/</a></td><td>Domenet fluxreveal.com hører til FluxReveal-nettstedet</td></tr>
 </tbody></table></div>
 
 <h2 id="adminsiden">Adminsiden</h2>
@@ -80,7 +79,7 @@
   <div class="mock-bar"><span>⚙️ Administrasjon</span><span style="font-weight:400;font-size:.78rem">Innlogget: Per Hansen (admin, Hus A)</span></div>
   <div class="mock-body">
     <div class="grid c3" style="gap:10px">
-      <div class="card" style="padding:12px"><b>👥 Brukere</b><br><small style="color:var(--muted)">Opprett, deaktiver, reset passord</small></div>
+      <div class="card" style="padding:12px"><b>👥 Brukere</b><br><small style="color:var(--muted)">Opprett, deaktiver, reset passord, logg ut mobil</small></div>
       <div class="card" style="padding:12px"><b>📏 Regler</b><br><small style="color:var(--muted)">Rediger rules.json</small></div>
       <div class="card" style="padding:12px"><b>🛠️ Overstyr / korriger</b><br><small style="color:var(--muted)">Booking utenfor regler, rett status</small></div>
       <div class="card" style="padding:12px"><b>⬇️ Eksport</b><br><small style="color:var(--muted)">CSV / JSON per år</small></div>
@@ -96,11 +95,12 @@
 <div>
 <ol class="steps">
   <li><b>Adminsiden → Brukere → «Ny bruker»</b></li>
-  <li><b>Fyll inn navn og brukernavn</b>f.eks. «Lise Hansen» / «lise.hansen».</li>
+  <li><b>Fyll inn navn og e-post</b>f.eks. «Lise Hansen» / «lise.hansen@example.com». E-posten er det beboeren logger inn med.</li>
   <li><b>Velg husstand</b>A, B, C eller D. Hver bruker tilhører én husstand.</li>
   <li><b>Velg rolle</b>Vanlig bruker (standard) eller administrator.</li>
-  <li><b>Sett et startpassord</b>og gi det til beboeren på en trygg måte.</li>
+  <li><b>Sett et startpassord</b>Trykk «Generer» og gi det til beboeren på en trygg måte – helst muntlig eller på en lapp, ikke i samme e-post som adressen.</li>
   <li><b>Lagre</b>Hendelsen <code>USER_CREATED</code> logges.</li>
+  <li><b>Hjelp beboeren i gang</b>Første gang velger beboeren sitt eget passord og lagrer det på mobilen. Vis gjerne <a href="brukermanual.html">brukermanualen</a> punkt 1–3 (lagre passord og legge Badehusappen på Hjem-skjermen).</li>
 </ol>
 <p>Maks ca. 20 brukere totalt.</p>
 </div>
@@ -108,7 +108,7 @@
   <div class="mock-bar"><span>✕</span><span>Ny bruker</span><span></span></div>
   <div class="mock-body">
     <div class="mock-label">Navn</div><div class="mock-field">Lise Hansen</div>
-    <div class="mock-label">Brukernavn</div><div class="mock-field">lise.hansen</div>
+    <div class="mock-label">E-post</div><div class="mock-field">lise.hansen@example.com</div>
     <div class="mock-label">Husstand</div>
     <div style="display:flex;gap:6px;margin:6px 0 12px"><span class="hus a" style="outline:2px solid var(--hus-a)">A</span><span class="hus b">B</span><span class="hus c">C</span><span class="hus d">D</span></div>
     <div class="mock-label">Rolle</div><div class="mock-field">Vanlig bruker ▾</div>
@@ -122,16 +122,44 @@
 <ol class="steps">
   <li><b>Brukere → velg bruker → «Deaktiver»</b></li>
   <li><b>Skriv en kommentar</b>f.eks. «Flyttet ut».</li>
-  <li><b>Lagre</b>Brukeren kan ikke lenger logge inn, men alle bookinger og historikk beholdes.</li>
+  <li><b>Lagre</b>Brukeren blir logget ut på alle enheter og kan ikke lenger logge inn, men alle bookinger og historikk beholdes.</li>
 </ol>
-<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> <b>Avklaring 9:</b> Utflyttede brukere deaktiveres og kan anonymiseres (navnet erstattes med «Tidligere beboer Hus A»). Husstanden beholdes i historikken. «Ingen sletting» gjelder bookinger.</p></div>
+<p class="note"><b>Avklaring 9:</b> Utflyttede brukere deaktiveres og kan anonymiseres (navnet erstattes med «Tidligere beboer Hus A»). Husstanden beholdes i historikken. «Ingen sletting» gjelder bookinger.</p>
 
 <h3 id="tilbakestille-passord">Tilbakestille passord</h3>
 <ol class="steps">
   <li><b>Brukere → velg bruker → «Tilbakestill passord»</b></li>
-  <li><b>Sett et nytt midlertidig passord</b>og gi det til beboeren.</li>
+  <li><b>Sett et nytt midlertidig passord</b>(«Generer») og gi det til beboeren.</li>
+  <li><b>Brukeren logges ut overalt</b>Alle innlogginger for brukeren avsluttes, og en eventuell pause etter feil forsøk nullstilles.</li>
+  <li><b>Beboeren logger inn og velger nytt passord</b>Mobilen spør om å oppdatere det lagrede passordet – svar ja.</li>
   <li><b>Logges</b>som <code>PASSWORD_RESET</code> (selve passordet logges aldri).</li>
 </ol>
+
+<h3 id="logge-ut-en-mistet-mobil">Logge ut en mistet mobil</h3>
+<p>Har noen mistet mobilen eller fått den stjålet? Siden man holder seg innlogget i omtrent ett år, bør en administrator logge ut den mobilen med en gang. Det tar under ett minutt.</p>
+<div class="two">
+<div>
+<ol class="steps">
+  <li><b>Brukere → velg bruker → «Innlogginger»</b>Du ser en liste over mobiler og PC-er brukeren er innlogget på, med omtrentlig enhet og når de sist ble brukt.</li>
+  <li><b>Trykk «Logg ut» på den mistede mobilen</b>Usikker på hvilken? Trykk <b>«Logg ut alle»</b>.</li>
+  <li><b>Lagre</b>Neste gang noen åpner Badehusappen på den mobilen, kommer innloggingssiden. Hendelsen logges som <code>SESSION_REVOKED</code> eller <code>SESSIONS_REVOKED_ALL</code>.</li>
+  <li><b>Vurder nytt passord</b>Hvis passordet var lagret på mobilen uten skjermlås, tilbakestill også passordet (se over).</li>
+</ol>
+<p>Beboeren kan logge inn som vanlig på en ny mobil – ingenting annet endres, og ingen bookinger forsvinner.</p>
+</div>
+<div class="device">
+  <div class="mock-bar"><span>←</span><span>Innlogginger · Lise Hansen</span><span></span></div>
+  <div class="mock-body">
+    <div class="slot free"><span><b>iPhone · Safari (Hjem-skjerm)</b><br><small style="color:var(--muted)">Sist brukt i dag 08:01</small></span><span class="mock-btn danger" style="margin:0;padding:6px 10px">Logg ut</span></div>
+    <div class="slot free"><span><b>PC · Chrome</b><br><small style="color:var(--muted)">Sist brukt 3. juni</small></span><span class="mock-btn ghost" style="margin:0;padding:6px 10px">Logg ut</span></div>
+    <div class="mock-btn danger">Logg ut alle</div>
+  </div>
+</div>
+</div>
+
+<h3 id="nar-noen-har-skrevet-feil-passord-for-mange-ganger">Når noen har skrevet feil passord for mange ganger</h3>
+<p>Etter flere feil forsøk på rad blir det en kort pause (noen minutter) før man kan prøve igjen. Pausen går over av seg selv. Haster det, kan du tilbakestille passordet – da nullstilles også pausen.</p>
+
 
 <h2 id="endre-regler-rules-json">Endre regler (rules.json)</h2>
 <p>Alle regler ligger i <code>rules.json</code> i det private data-repoet, slik at de kan endres uten kodeendring.</p>
@@ -151,7 +179,7 @@
   <div class="card" style="border-top:5px solid var(--warn)"><h4>B. Direkte i GitHub (nødløsning)</h4><ol style="margin:0;padding-left:20px"><li>Åpne data-repoet på github.com → <code>rules.json</code> → blyant-ikonet.</li><li>Endre forsiktig – pass på komma og anførselstegn.</li><li>Skriv commit-melding (hvorfor) og lagre.</li><li>Git-commiten er revisjonssporet.</li></ol></div>
 </div>
 <div class="callout warn"><p><b>Viktig:</b> En feil i <code>rules.json</code> (f.eks. et manglende komma) gjør at Workeren avviser alle bookinger med feilen <code>RULES_INVALID</code>. Ved direkte redigering: bruk en JSON-validator før du lagrer, og angre ved å gå tilbake til forrige versjon i GitHub (se <a href="#nar-noe-feiler">Når noe feiler</a>).</p></div>
-<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> Reglene bak nøklene <code>shortNoticeCountsTowardQuota</code>, <code>quotaMonthBy</code>, <code>cancelPermission</code>, <code>offSeason</code> m.fl. er Thomas sitt forslag. Selve nøkkelnavnene er <span class="badge-forslag">Forslag – detaljdesign</span>.</p></div>
+<p class="note">Reglene bak nøklene <code>shortNoticeCountsTowardQuota</code>, <code>quotaMonthBy</code>, <code>cancelPermission</code>, <code>offSeason</code> m.fl. er Thomas sitt forslag. Selve nøkkelnavnene er .</p>
 <div class="callout info"><p><b>Når kan reglene endres?</b> Bare når sameiet har bestemt det – se <a href="regler.html#slik-endrer-vi-reglene">Slik endrer vi reglene</a>. Administrator legger da endringen inn i <code>rules.json</code>, oppdaterer dokumentasjonen og fører det i <a href="beslutninger.html#logg">loggen</a>.</p></div>
 
 <h2 id="overstyre-begrensninger">Overstyre begrensninger</h2>
@@ -186,7 +214,7 @@
   <li><b>Skriv kommentar</b>Påkrevd.</li>
   <li><b>Lagre</b>Endringen logges med hvem, når, fra, til og kommentar (<code>STATUS_CORRECTED</code>). Ingenting slettes.</li>
 </ol>
-<div class="callout teknisk"><p><span class="badge-teknisk">Teknisk valg (Thomas)</span> <b>Avklaring 8:</b> ADMIN_CORRECTED blir ikke en egen status, men en hendelse i audit-loggen og et flagg <code>corrected: true</code>. Statusen viser den faktiske tilstanden.</p></div>
+<p class="note"><b>Avklaring 8:</b> ADMIN_CORRECTED blir ikke en egen status, men en hendelse i audit-loggen og et flagg <code>corrected: true</code>. Statusen viser den faktiske tilstanden.</p>
 
 <h2 id="import-og-eksport">Import og eksport</h2>
 <div class="grid c2">
@@ -214,25 +242,27 @@ flowchart LR
   <li>Hvert år har sine egne filer: <code>bookings/&lt;år&gt;.json</code>, <code>audit/&lt;år&gt;.jsonl</code> og <code>archive/&lt;år&gt;.csv</code>.</li>
   <li>Når et år er over, endres årets filer normalt ikke mer (unntatt admin-korrigeringer, som logges).</li>
 </ul>
-<div class="callout forslag"><p><span class="badge-forslag">Forslag – detaljdesign</span> Ny årsfil opprettes automatisk av Workeren ved første booking i et nytt år.</p></div>
+<p class="note">Ny årsfil opprettes automatisk av Workeren ved første booking i et nytt år.</p>
 
 <h2 id="backup">Backup</h2>
 <div class="grid c3">
   <div class="card"><h4>1. Git-historikk</h4><p style="margin:0;color:var(--muted)">Hver endring er en commit. Alle tidligere versjoner kan hentes frem.</p></div>
   <div class="card"><h4>2. Nattlig CSV + backup</h4><p style="margin:0;color:var(--muted)">GitHub Actions genererer <code>archive/&lt;år&gt;.csv</code> og backup hver natt.</p></div>
-  <div class="card"><h4>3. Egen kopi <span class="badge-forslag">Forslag – detaljdesign</span></h4><p style="margin:0;color:var(--muted)">En administrator laster ned en eksport f.eks. etter hver sommer og legger den i sameiets arkiv.</p></div>
+  <div class="card"><h4>3. Egen kopi</h4><p style="margin:0;color:var(--muted)">En administrator laster ned en eksport f.eks. etter hver sommer og legger den i sameiets arkiv.</p></div>
 </div>
 <h3 id="gjenopprette-fra-backup">Gjenopprette fra backup</h3>
 <ol class="steps">
   <li><b>Finn riktig versjon</b>Data-repoet på github.com → fila (f.eks. <code>bookings/2027.json</code>) → «History».</li>
   <li><b>Åpne versjonen</b>fra før feilen og kopier innholdet.</li>
   <li><b>Lagre som ny versjon</b>Rediger fila, lim inn, skriv commit-melding («Gjenopprettet fra … fordi …»).</li>
-  <li><b>Kontroller</b>i appen at kalenderen ser riktig ut.</li>
+  <li><b>Kontroller</b>i Badehusappen at kalenderen ser riktig ut.</li>
 </ol>
 
 <h2 id="nar-noe-feiler">Når noe feiler</h2>
 <div class="table-wrap"><table><thead><tr><th>Symptom</th><th>Mulig årsak</th><th>Hva du gjør</th></tr></thead><tbody>
-<tr><td>En beboer kommer ikke inn</td><td>Feil passord, deaktivert bruker</td><td>Sjekk at brukeren er aktiv. Tilbakestill passord.</td></tr>
+<tr><td>En beboer kommer ikke inn</td><td>Feil e-post eller passord, pause etter mange feil forsøk, deaktivert bruker</td><td>Sjekk at brukeren er aktiv og at e-posten er riktig. Vent noen minutter, eller tilbakestill passordet.</td></tr>
+<tr><td>Mobilen spør ikke om å lagre passordet</td><td>Autoutfyll av passord er slått av på mobilen</td><td>Se <a href="brukermanual.html#2-la-mobilen-huske-passordet">brukermanualen punkt 2</a>.</td></tr>
+<tr><td>En mobil er mistet eller stjålet</td><td>–</td><td>Se <a href="#logge-ut-en-mistet-mobil">Logge ut en mistet mobil</a>.</td></tr>
 <tr><td>Ingen kommer inn / «Tjenesten er midlertidig utilgjengelig»</td><td>Worker nede, GitHub API nede, eller token utløpt</td><td>Sjekk status hos GitHub og Cloudflare. Sjekk at tokenet i Worker-secrets ikke er utløpt – lag nytt fine-grained token med tilgang kun til data-repoet og lagre det som Worker-secret.</td></tr>
 <tr><td>Alle bookinger avvises med teknisk feil (<code>RULES_INVALID</code>)</td><td>Feil i <code>rules.json</code></td><td>Gå tilbake til forrige versjon av <code>rules.json</code> i GitHub (History → kopier → lagre).</td></tr>
 <tr><td>Statuser blir ikke «frosset» / CSV oppdateres ikke</td><td>Nattlig Actions-jobb har feilet eller er forsinket</td><td>Data-repoet → Actions → se rød jobb og feilmelding. Kjør jobben manuelt («Run workflow»). Merk: brukerne ser likevel riktig status, fordi den beregnes fra klokka.</td></tr>
@@ -243,11 +273,11 @@ flowchart LR
 
 <h2 id="overlevering-til-ny-administrator">Overlevering til ny administrator</h2>
 <p>Løsningen skal kunne overtas av hvem som helst av oss. Bruk sjekklisten når en ny administrator tar over.</p>
-<div class="callout teknisk"><p><span class="badge-teknisk">Teknisk valg (Thomas)</span> GitHub- og Cloudflare-kontoene eies av Thomas Gude Svensrud via FluxReveal-kontoene hans. En ny administrator får derfor tilgang (punkt 2–4) fra Thomas. Skal sameiet selv eie kontoene, se <a href="#overforing-til-sameiet-ved-behov">Overføring til sameiet ved behov</a>.</p></div>
+<p class="note">GitHub- og Cloudflare-kontoene eies av Thomas Gude Svensrud via FluxReveal-kontoene hans. En ny administrator får derfor tilgang (punkt 2–4) fra Thomas. Skal sameiet selv eie kontoene, se <a href="#overforing-til-sameiet-ved-behov">Overføring til sameiet ved behov</a>.</p>
 <figure>
 <pre class="mermaid">
 flowchart LR
-  A["1. Ny administrator<br/>får admin i appen"] --> B["2. Tilgang til<br/>GitHub-repoene"]
+  A["1. Ny administrator<br/>får admin i Badehusappen"] --> B["2. Tilgang til<br/>GitHub-repoene"]
   B --> C["3. Tilgang til<br/>Cloudflare-kontoen"]
   C --> D["4. Nytt GitHub-token<br/>som Worker-secret"]
   D --> E["5. Avtroppende<br/>mister tilganger"]
@@ -257,14 +287,14 @@ flowchart LR
 </pre>
 </figure>
 <div class="table-wrap"><table><thead><tr><th>✓</th><th>Oppgave</th><th>Detaljer</th></tr></thead><tbody>
-<tr><td>☐</td><td>Gi den nye administratoren rollen <code>admin</code> i appen</td><td>Adminsiden → Brukere → endre rolle. Logges.</td></tr>
+<tr><td>☐</td><td>Gi den nye administratoren rollen <code>admin</code> i Badehusappen</td><td>Adminsiden → Brukere → endre rolle. Logges.</td></tr>
 <tr><td>☐</td><td>Gi tilgang til fluxreveal-website (mappen HT14/) og data-repo i GitHub</td><td>Repo → Settings → Collaborators (eller organisasjon).</td></tr>
 <tr><td>☐</td><td>Gi tilgang til Cloudflare-kontoen med Workeren</td><td>Cloudflare → Members.</td></tr>
 <tr><td>☐</td><td>Lag nytt fine-grained GitHub-token og legg det inn som Worker-secret</td><td>Kun tilgang til data-repoet. Slett det gamle tokenet.</td></tr>
 <tr><td>☐</td><td>Fjern admin-rolle og tilganger for avtroppende (hvis de ikke skal fortsette)</td><td>App, GitHub og Cloudflare.</td></tr>
 <tr><td>☐</td><td>Gå gjennom denne dokumentasjonen sammen</td><td>Særlig <a href="regler.html">Regler</a> og <a href="#nar-noe-feiler">Når noe feiler</a>.</td></tr>
 <tr><td>☐</td><td>Test: logg inn, book en dato, avbestill, sjekk historikk og eksport</td><td>Bruk en dato langt frem og avbestill tidlig.</td></tr>
-<tr><td>☐</td><td>Oppdater kontaktinfo for brukerstøtte i appen</td><td>Hvem beboerne skal kontakte.</td></tr>
+<tr><td>☐</td><td>Oppdater kontaktinfo for brukerstøtte i Badehusappen</td><td>Hvem beboerne skal kontakte.</td></tr>
 </tbody></table></div>
 <div class="callout info"><p>Det er alltid to administratorer. Da finnes det hele tiden to som kan passe på løsningen – også mens den ene overleverer.</p></div>
 
@@ -284,14 +314,14 @@ flowchart LR
 <ol class="steps">
   <li><b>Overfør GitHub-repoene</b><b>Data-repoet:</b> repoet på github.com → <b>Settings</b> → nederst under «Danger Zone» → <b>Transfer</b> → skriv inn sameiets GitHub-konto eller organisasjon. Sjekk at Actions-jobben (nattlig) kjører etterpå. <b>Frontend:</b> den ligger i mappen <code>HT14/</code> i FluxReveal/fluxreveal-website, som også inneholder resten av FluxReveal-nettstedet – hele det repoet skal normalt ikke overføres. Kopier i stedet mappen <code>HT14/</code> til et nytt repo hos sameiet, slå på GitHub Pages der og velg ny adresse.</li>
   <li><b>Flytt Cloudflare Worker og secrets til ny konto</b>Opprett Workeren på sameiets Cloudflare-konto med samme kode (fra <code>worker/</code> i frontend-repoet). Hemmeligheter kan ikke leses ut og kopieres – de må legges inn på nytt i den nye kontoen (se neste steg). Oppdater Worker-URL-en i <code>js/config.js</code> hvis den endres, og sett Workerens CORS-origin til den nye adressen (i dag <code>https://fluxreveal.com</code>). Slett den gamle Workeren når den nye er testet.</li>
-  <li><b>Roter tokens</b>Lag et nytt fine-grained GitHub-token fra sameiets konto med tilgang kun til data-repoet, og legg det inn som Worker-secret. Lag også en ny nøkkel for signering av sesjonstoken (alle blir logget ut én gang). Slett de gamle tokenene fra FluxReveal-kontoen.</li>
-  <li><b>Oppdater admin-kontakter</b>Sett riktige administratorer i appen (rolle <code>admin</code>), riktige medlemmer/eiere i GitHub og Cloudflare, og kontaktinformasjon for brukerstøtte. Fjern tilganger som ikke lenger trengs.</li>
+  <li><b>Roter tokens</b>Lag et nytt fine-grained GitHub-token fra sameiets konto med tilgang kun til data-repoet, og legg det inn som Worker-secret. Lag også en ny «pepper» for økt-nøkler (alle blir logget ut én gang og må logge inn igjen – mobilen husker passordet). Øktlisten i Workers KV flyttes ikke, den lages på nytt. Slett de gamle tokenene fra FluxReveal-kontoen.</li>
+  <li><b>Oppdater admin-kontakter</b>Sett riktige administratorer i Badehusappen (rolle <code>admin</code>), riktige medlemmer/eiere i GitHub og Cloudflare, og kontaktinformasjon for brukerstøtte. Fjern tilganger som ikke lenger trengs.</li>
   <li><b>Test og loggfør</b>Logg inn, book og avbestill en testdato, sjekk historikk og eksport, og før overføringen inn i <a href="beslutninger.html#logg">beslutningsloggen</a>.</li>
 </ol>
 <div class="callout info"><p>Ved overføring får løsningen en ny adresse (i dag <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a>). Gi beboerne den nye adressen, og la gjerne <code>HT14/index.html</code> på fluxreveal.com lenke videre en periode.</p></div>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="brukermanual.html"><small>← Forrige</small>Brukermanual – beboer</a><a class="next" href="beslutninger.html"><small>Neste →</small>Hva må godkjennes?</a></nav>
-      <p class="footer">Badehus Booking System – dokumentasjon av en <b>planlagt</b> løsning (v0.4 · 25.10.2026). Den er ikke bygget ennå. Thomas Gude Svensrud lager den på oppdrag fra sameiet, og <b>ingenting er godkjent av sameiet ennå</b>. Merkene betyr: <span class="badge-regel">Forslag – ikke godkjent av sameiet</span> = regler som sameiet skal ta stilling til · <span class="badge-teknisk">Teknisk valg (Thomas)</span> = praktiske og tekniske valg som ikke trenger godkjenning · <span class="badge-forslag">Forslag – detaljdesign</span> = detaljer som kan justeres når løsningen bygges. Alle navn er eksempler.</p>
+      <p class="footer">Badehusappen – dokumentasjon av bookingløsningen for badehuset vårt. Den er ikke bygget ennå, og alle navn i eksemplene er oppdiktet. Spørsmål eller ideer? Si fra til Thomas.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
   </div>
