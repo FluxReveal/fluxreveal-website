@@ -24,6 +24,8 @@
     <ul id="sok-resultat" class="search-results" aria-live="polite"></ul>
   </div>
   <ul class="nav">
+<li class="nav-label">Sameiet</li>
+<li><a href="../index.html#arshjul"><span class="num">⌂</span>Sameiets årshjul</a></li>
 <li class="nav-label">Start</li>
 <li><a href="index.html" aria-current="page"><span class="num">1</span>Oversikt</a></li>
 <li class="nav-label">For alle</li>
@@ -37,12 +39,12 @@
 <li><a href="brukermanual.html"><span class="num">6</span>Brukermanual – beboer</a></li>
 <li><a href="adminmanual.html"><span class="num">7</span>Brukermanual – administrator</a></li>
 <li class="nav-label">Styring</li>
-<li><a href="beslutninger.html"><span class="num">8</span>Beslutninger</a></li>
+<li><a href="beslutninger.html"><span class="num">8</span>Hva må godkjennes?</a></li>
 <li><a href="vedtekter.html"><span class="num">9</span>Forslag til vedtekter</a></li>
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
-    Planlagt løsning · v0.3 · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
+    Planlagt løsning · v0.4 · 25.10.2026<br>Laget av Thomas på oppdrag fra sameiet – ingenting er godkjent ennå.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
   </div>
 </nav>
 <main class="main" id="innhold">
@@ -51,18 +53,17 @@
 <section class="hero">
   <div class="eyebrow">Sameiet Halden Terrasse 14 · Dokumentasjon</div>
   <h1>Badehus Booking System</h1>
-  <p>En enkel, gratis og åpen nettløsning for å reservere og registrere bruk av det felles badehuset – for de fire husstandene <span class="hus a">Hus A</span> <span class="hus b">Hus B</span> <span class="hus c">Hus C</span> <span class="hus d">Hus D</span>.</p>
+  <p>En enkel og gratis nettside der vi naboer kan se når badehuset er ledig, reservere det og registrere at vi har brukt det – for alle fire husene <span class="hus a">Hus A</span> <span class="hus b">Hus B</span> <span class="hus c">Hus C</span> <span class="hus d">Hus D</span>.</p>
   <div class="meta">
-    <span class="chip draft">v0.3 · 25.10.2026</span><span class="chip ok">Beslutninger vedtatt 25.10.2026</span>
+    <span class="chip draft">v0.4 · 25.10.2026</span><span class="chip regel">Ingenting er godkjent av sameiet ennå</span>
     <span class="chip">Status: planlagt – ikke bygget</span>
     <span class="chip">Opptil 20 brukere</span>
     <span class="chip">Mål: 0 kr i drift</span>
   </div>
 </section>
 
-<div class="callout vedtatt">
-  <p><b>Dette er dokumentasjonen av en planlagt løsning.</b> Kravene kommer fra Thomas Gude Svensrud (25.10.2026). Den anbefalte arkitekturen og alle ti regelavklaringer ble godkjent av Thomas 25.10.2026 og er merket <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Detaljer i det tekniske designet som er utdypet av assistenten er merket <span class="badge-forslag">Forslag – detaljdesign</span>.</p>
-</div>
+<div class="callout status"><p><b>Status:</b> Thomas Gude Svensrud lager dette på oppdrag fra sameiet. <b>Ingenting er godkjent av sameiet ennå.</b> Det eneste sameiet må godkjenne, er vedtektene (§ 10) og reglene for bruk av badehuset (vedlegg 1). Tekniske og praktiske valg trenger ikke godkjenning. <a href="beslutninger.html">Les mer om hva som trenger godkjenning</a>.</p></div>
+<p>Her ligger alt om den planlagte bookingløsningen for badehuset. Den er ikke bygget ennå. Reglene er merket <span class="badge-regel">Forslag – ikke godkjent av sameiet</span> til sameiet har sagt ja til dem. Tekniske valg er merket <span class="badge-teknisk">Teknisk valg (Thomas)</span>, og detaljer som kan justeres underveis er merket <span class="badge-forslag">Forslag – detaljdesign</span>.</p>
 
 <h2 id="systemet-pa-30-sekunder">Systemet på 30 sekunder</h2>
 <figure>
@@ -94,7 +95,7 @@
 </figure>
 
 <h2 id="husstander-og-farger">Husstander og farger</h2>
-<p>Hver husstand har én fast farge som brukes likt i kalender, historikk, statistikk og rapporter.</p>
+<p>Hvert hus har sin faste farge – den samme i kalenderen, historikken og statistikken.</p>
 <div class="grid c4">
   <div class="card" style="border-top:6px solid var(--hus-a)"><span class="hus a">Hus A</span><p style="margin:.5rem 0 0;color:var(--muted);font-size:.9rem">Halden Terrasse 14A<br><b style="color:var(--hus-a)">Blå</b></p></div>
   <div class="card" style="border-top:6px solid var(--hus-b)"><span class="hus b">Hus B</span><p style="margin:.5rem 0 0;color:var(--muted);font-size:.9rem">Halden Terrasse 14B<br><b style="color:var(--hus-b)">Grønn</b></p></div>
@@ -104,14 +105,15 @@
 
 <h2 id="alle-sider">Alle sider</h2>
 <div class="grid c2">
+  <a class="card" href="../index.html#arshjul"><div class="ic" style="background:#f0fdf4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg></div><b>Sameiets årshjul</b><p>Dugnader, åpning og stenging av badehuset, møter og når regningene kommer – på startsiden for HT14.</p><span class="go">Se årshjulet →</span></a>
   <a class="card" href="beskrivelse.html"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0e7490" stroke-width="2"><path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2zM8 7h6M8 11h6"/></svg></div><b>Overordnet beskrivelse</b><p>Hva systemet er, hvorfor vi lager det og hvordan det fungerer i hverdagen. For alle – ingen teknikk.</p><span class="go">Les →</span></a>
   <a class="card" href="hld.html"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0e7490" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="8.5" y="14" width="7" height="7" rx="1.5"/><path d="M6.5 10v2h11v-2M12 12v2"/></svg></div><b>HLD – High Level Design</b><p>Kontekst, komponenter, dataflyt, sikkerhet og personvern, kostnad og valgte/forkastede alternativer.</p><span class="go">Les →</span></a>
   <a class="card" href="lld.html"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0e7490" stroke-width="2"><path d="m8 6-6 6 6 6M16 6l6 6-6 6M14 4l-4 16"/></svg></div><b>LLD – Low Level Design</b><p>Filstruktur, JSON-skjemaer, API, regelmotor, statusmaskin, sekvensdiagrammer, CSV og samtidighet.</p><span class="go">Les →</span></a>
   <a class="card" href="regler.html"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0e7490" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M8 14l2 2 4-4"/></svg></div><b>Bookingregler</b><p>Sommerkvoter, helgebegrensning, 7-dagersregel, avbestilling – forklart med kalendereksempler.</p><span class="go">Les →</span></a>
   <a class="card" href="brukermanual.html"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0e7490" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18h4"/></svg></div><b>Brukermanual – beboer</b><p>Steg for steg: logge inn, booke, avbestille, sjekke inn, bekrefte bruk og se statistikk.</p><span class="go">Les →</span></a>
-  <a class="card" href="adminmanual.html"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0e7490" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></div><b>Brukermanual – administrator</b><p>For styret: brukere, passord, regler, overstyring, korrigering, eksport, årsarkiv, backup og overlevering.</p><span class="go">Les →</span></a>
-  <a class="card" href="vedtekter.html"><div class="ic" style="background:#fffbeb"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2"><path d="M12 3v18M5 7h14M7 7l-3 7a3 3 0 0 0 6 0zM17 7l-3 7a3 3 0 0 0 6 0zM8 21h8"/></svg></div><b>Forslag til vedtekter</b><p>Forslag til ny § 10 Bruk av badehuset og vedlegg 1 med regler – utkast til drøfting, ikke vedtatt av sameiet.</p><span class="go">Les →</span></a>
-  <a class="card" href="beslutninger.html"><div class="ic" style="background:#fffbeb"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.01"/></svg></div><b>Beslutninger og beslutningslogg</b><p>De ti regelavklaringene (alle vedtatt 25.10.2026), kontoeierskap og adresse, den ene gjenstående beslutningen og loggen over hva som er bestemt.</p><span class="go">Les →</span></a>
+  <a class="card" href="adminmanual.html"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0e7490" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></div><b>Brukermanual – administrator</b><p>For de som passer på løsningen: brukere, passord, regler, unntak, retting, eksport, årsarkiv, backup og overlevering.</p><span class="go">Les →</span></a>
+  <a class="card" href="vedtekter.html"><div class="ic" style="background:#fffbeb"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2"><path d="M12 3v18M5 7h14M7 7l-3 7a3 3 0 0 0 6 0zM17 7l-3 7a3 3 0 0 0 6 0zM8 21h8"/></svg></div><b>Forslag til vedtekter</b><p>Forslag til ny § 10 Bruk av badehuset og vedlegg 1 med reglene – til drøfting, ikke godkjent av sameiet.</p><span class="go">Les →</span></a>
+  <a class="card" href="beslutninger.html"><div class="ic" style="background:#fffbeb"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.01"/></svg></div><b>Hva må godkjennes?</b><p>Bare vedtektene og reglene for badehuset trenger godkjenning av sameiet. Her står også Thomas sine tekniske valg og loggen.</p><span class="go">Les →</span></a>
 </div>
 
 <h2 id="nokkeltall">Nøkkeltall</h2>
@@ -124,10 +126,10 @@
 
 <h2 id="prinsipper">Prinsipper</h2>
 <div class="grid c3">
-  <div class="card"><h4>Enkel drift</h4><p style="margin:0;color:var(--muted)">Ingen database, ingen egen server. Styret skal kunne drifte uten utviklerkompetanse.</p></div>
-  <div class="card"><h4>Åpenhet</h4><p style="margin:0;color:var(--muted)">Alle beboere ser all historikk og statistikk. Fokus på åpenhet – ikke rangering.</p></div>
-  <div class="card"><h4>Revisjonsspor</h4><p style="margin:0;color:var(--muted)">Ingen bookingdata slettes permanent. Hver endring lagres med hvem, når, fra, til og kommentar.</p></div>
-  <div class="card"><h4>Rettferdig fordeling</h4><p style="margin:0;color:var(--muted)">Sommerregler sørger for at fredager, lørdager og søndager fordeles mellom husstandene.</p></div>
+  <div class="card"><h4>Enkel drift</h4><p style="margin:0;color:var(--muted)">Ingen database og ingen egen server. Hvem som helst av oss skal kunne passe på den uten å være utvikler.</p></div>
+  <div class="card"><h4>Åpenhet</h4><p style="margin:0;color:var(--muted)">Alle ser all historikk og statistikk. Poenget er åpenhet – ikke å rangere hverandre.</p></div>
+  <div class="card"><h4>Revisjonsspor</h4><p style="margin:0;color:var(--muted)">Ingen bookinger slettes. Hver endring lagres med hvem, når, hva og en kommentar.</p></div>
+  <div class="card"><h4>Rettferdig fordeling</h4><p style="margin:0;color:var(--muted)">Sommerreglene sørger for at fredager, lørdager og søndager fordeles mellom husene.</p></div>
   <div class="card"><h4>Regler i konfigurasjon</h4><p style="margin:0;color:var(--muted)">Reglene ligger i en egen fil (<code>rules.json</code>) og kan endres uten kodeendring.</p></div>
   <div class="card"><h4>Alt kan eksporteres</h4><p style="margin:0;color:var(--muted)">All historikk i Git, all data eksporterbar til CSV, arkiv år for år.</p></div>
 </div>
@@ -135,15 +137,15 @@
 <h2 id="om-dokumentet">Om dokumentet</h2>
 <div class="table-wrap"><table>
 <tbody>
-<tr><th>Versjon</th><td>v0.3, 25.10.2026</td></tr>
-<tr><th>Oppdragsgiver</th><td>Thomas Gude Svensrud, på vegne av Sameiet Halden Terrasse 14</td></tr>
-<tr><th>Status</th><td>Planlagt design. Ikke bygget. Arkitektur og alle 10 regelavklaringer vedtatt 25.10.2026. Adresse vedtatt: fluxreveal.com/HT14/. Én beslutning gjenstår (om reglene må godkjennes av styret/sameiermøtet).</td></tr>
-<tr><th>Planlagte dokumentfiler i løsningen</th><td><code>README.md</code> (teknisk drift), <code>USER_GUIDE.md</code> (brukere), <code>ADMIN_GUIDE.md</code> (styret), <code>RULES.md</code> (alle regler), <code>ARCHITECTURE.md</code>. Denne nettsiden er grunnlaget for disse.</td></tr>
+<tr><th>Versjon</th><td>v0.4, 25.10.2026</td></tr>
+<tr><th>Hvem lager det</th><td>Thomas Gude Svensrud, på oppdrag fra Sameiet Halden Terrasse 14</td></tr>
+<tr><th>Status</th><td>Planlagt – ikke bygget. <b>Ingenting er godkjent av sameiet ennå.</b> Sameiet skal bare godkjenne vedtektene (§ 10) og reglene for badehuset (vedlegg 1). Tekniske valg (arkitektur, drift, kontoer, adresse fluxreveal.com/HT14/) er Thomas sine og trenger ikke godkjenning.</td></tr>
+<tr><th>Planlagte dokumentfiler i løsningen</th><td><code>README.md</code> (teknisk drift), <code>USER_GUIDE.md</code> (brukere), <code>ADMIN_GUIDE.md</code> (administratorer), <code>RULES.md</code> (alle regler), <code>ARCHITECTURE.md</code>. Denne nettsiden er grunnlaget for disse.</td></tr>
 <tr><th>Personvern</th><td>Ingen ekte beboernavn. Navn som «Per Hansen», «Lise Hansen» og «Ola Nordmann» er eksempler.</td></tr>
 </tbody></table></div>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><span></span><a class="next" href="beskrivelse.html"><small>Neste →</small>Overordnet beskrivelse</a></nav>
-      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.3 · 25.10.2026). Systemet er ikke bygget ennå. Arkitektur og regelavklaringer er <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Detaljer merket <span class="badge-forslag">Forslag – detaljdesign</span> er utdypinger som kan justeres ved bygging. Alle navn er eksempler.</p>
+      <p class="footer">Badehus Booking System – dokumentasjon av en <b>planlagt</b> løsning (v0.4 · 25.10.2026). Den er ikke bygget ennå. Thomas Gude Svensrud lager den på oppdrag fra sameiet, og <b>ingenting er godkjent av sameiet ennå</b>. Merkene betyr: <span class="badge-regel">Forslag – ikke godkjent av sameiet</span> = regler som sameiet skal ta stilling til · <span class="badge-teknisk">Teknisk valg (Thomas)</span> = praktiske og tekniske valg som ikke trenger godkjenning · <span class="badge-forslag">Forslag – detaljdesign</span> = detaljer som kan justeres når løsningen bygges. Alle navn er eksempler.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
   </div>

@@ -261,3 +261,15 @@ pre.mermaid{background:transparent;color:var(--ink);box-shadow:none;padding:0;ma
 .legal h3{font-family:inherit;font-size:1.12rem;margin:1.8rem 0 .5rem;padding-top:1rem;border-top:1px solid var(--line);display:flex;gap:12px;align-items:baseline}
 .legal .legal-num{flex:none;display:inline-grid;place-items:center;min-width:30px;height:30px;border-radius:8px;background:var(--brand-bg);color:var(--brand);font-family:system-ui,sans-serif;font-weight:800;font-size:.9rem}
 @media (max-width:600px){.legal{padding:20px 18px;font-size:1rem}}
+
+/* ---- v0.4: nye merker for status ---- */
+.badge-teknisk{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.02em;padding:2px 8px;border-radius:99px;background:#e0f2fe;color:#075985;border:1px solid #7dd3fc;vertical-align:middle;white-space:nowrap}
+.badge-regel{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.02em;padding:2px 8px;border-radius:99px;background:#ffedd5;color:#9a3412;border:1px dashed #fb923c;vertical-align:middle;white-space:nowrap}
+.callout.teknisk{background:#f0f9ff;border-color:#bae6fd}
+.callout.teknisk::before{content:"⚙";background:#0284c7}
+.callout.regel{background:#fff7ed;border-color:#fdba74;border-style:dashed}
+.callout.regel::before{content:"?";background:#ea580c}
+.callout.status{background:linear-gradient(90deg,#fff7ed,#fffbeb);border-color:#fdba74}
+.callout.status::before{content:"!";background:#ea580c}
+.chip.regel{background:#ffedd5;color:#9a3412;border-color:#fdba74}
+.chip.teknisk{background:#e0f2fe;color:#075985;border-color:#7dd3fc}

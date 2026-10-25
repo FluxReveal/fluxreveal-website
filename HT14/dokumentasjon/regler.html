@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bookingregler – Badehus Booking System</title>
-<meta name="description" content="Alle bookingregler for badehuset forklart med eksempler og kalendere, inkludert vedtatte avklaringer.">
+<meta name="description" content="Forslag til bookingregler for badehuset forklart med eksempler og kalendere, og hvordan vi endrer reglene.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
@@ -25,6 +25,8 @@
     <ul id="sok-resultat" class="search-results" aria-live="polite"></ul>
   </div>
   <ul class="nav">
+<li class="nav-label">Sameiet</li>
+<li><a href="../index.html#arshjul"><span class="num">⌂</span>Sameiets årshjul</a></li>
 <li class="nav-label">Start</li>
 <li><a href="index.html"><span class="num">1</span>Oversikt</a></li>
 <li class="nav-label">For alle</li>
@@ -38,12 +40,12 @@
 <li><a href="brukermanual.html"><span class="num">6</span>Brukermanual – beboer</a></li>
 <li><a href="adminmanual.html"><span class="num">7</span>Brukermanual – administrator</a></li>
 <li class="nav-label">Styring</li>
-<li><a href="beslutninger.html"><span class="num">8</span>Beslutninger</a></li>
+<li><a href="beslutninger.html"><span class="num">8</span>Hva må godkjennes?</a></li>
 <li><a href="vedtekter.html"><span class="num">9</span>Forslag til vedtekter</a></li>
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
-    Planlagt løsning · v0.3 · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
+    Planlagt løsning · v0.4 · 25.10.2026<br>Laget av Thomas på oppdrag fra sameiet – ingenting er godkjent ennå.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
   </div>
 </nav>
 <main class="main" id="innhold">
@@ -52,16 +54,18 @@
 <section class="hero">
   <div class="eyebrow">For alle · Regler</div>
   <h1>Bookingregler</h1>
-  <p>Alle regler for reservasjon og bruk av badehuset – forklart med eksempler og kalendere. Reglene ligger i konfigurasjonsfila <code>rules.json</code> og kan endres av styret uten kodeendring.</p>
-  <div class="meta"><span class="chip draft">v0.3 · 25.10.2026</span><span class="chip ok">Beslutninger vedtatt 25.10.2026</span><span class="chip">Eksempler bruker sommeren 2027 og fiktive bookinger</span></div>
+  <p>Thomas sitt forslag til regler for badehuset – forklart med eksempler og kalendere. Sameiet bestemmer om de skal gjelde, og kan endre dem senere (se <a href="#slik-endrer-vi-reglene">Slik endrer vi reglene</a>). Reglene ligger i fila <code>rules.json</code>, så de kan endres uten å røre koden.</p>
+  <div class="meta"><span class="chip draft">v0.4 · 25.10.2026</span><span class="chip regel">Ingenting er godkjent av sameiet ennå</span><span class="chip">Eksempler bruker sommeren 2027 og fiktive bookinger</span></div>
 </section>
+
+<div class="callout status"><p><b>Status:</b> Thomas Gude Svensrud lager dette på oppdrag fra sameiet. <b>Ingenting er godkjent av sameiet ennå.</b> Det eneste sameiet må godkjenne, er vedtektene (§ 10) og reglene for bruk av badehuset (vedlegg 1). Tekniske og praktiske valg trenger ikke godkjenning. <a href="beslutninger.html">Les mer om hva som trenger godkjenning</a>.</p></div>
 
 <h2 id="reglene-pa-n-side">Reglene på én side</h2>
 <div class="grid c3">
   <div class="card" style="border-top:5px solid var(--brand)"><h4>① Bookingtyper</h4><p style="margin:0;color:var(--muted)">Heldag 08–00 (standard), formiddag 08–14, ettermiddag/kveld 14–00.</p></div>
   <div class="card" style="border-top:5px solid var(--brand)"><h4>② Bookingvindu</h4><p style="margin:0;color:var(--muted)">Maks 3 måneder frem i tid.</p></div>
-  <div class="card" style="border-top:5px solid var(--hus-c)"><h4>③ Sommerkvote</h4><p style="margin:0;color:var(--muted)">Juni–august: maks 1 fredag, 1 lørdag og 1 søndag per husstand per måned. Dager telles, ikke perioder.</p></div>
-  <div class="card" style="border-top:5px solid var(--hus-c)"><h4>④ Helgebegrensning</h4><p style="margin:0;color:var(--muted)">Juni–august: maks én helgedag per helg per husstand.</p></div>
+  <div class="card" style="border-top:5px solid var(--hus-c)"><h4>③ Sommerkvote</h4><p style="margin:0;color:var(--muted)">Juni–august: maks 1 fredag, 1 lørdag og 1 søndag per hus per måned. Dager telles, ikke perioder.</p></div>
+  <div class="card" style="border-top:5px solid var(--hus-c)"><h4>④ Helgebegrensning</h4><p style="margin:0;color:var(--muted)">Juni–august: maks én helgedag per helg per hus.</p></div>
   <div class="card" style="border-top:5px solid var(--hus-b)"><h4>⑤ 7-dagersregel</h4><p style="margin:0;color:var(--muted)">Mindre enn 7 dager til datoen: sommerbegrensningene oppheves – førstemann til mølla.</p></div>
   <div class="card" style="border-top:5px solid var(--hus-d)"><h4>⑥ Avbestilling</h4><p style="margin:0;color:var(--muted)">Mer enn 7 dager før: ut av kvoten. 7 dager eller mindre: frigjøres, men teller i kvoten.</p></div>
 </div>
@@ -87,7 +91,7 @@ flowchart TD
   classDef n fill:#fee2e2,stroke:#dc2626,color:#7f1d1d;
   class Y1,Y2,Y3 y; class N1,N2,N3,N4 n;
 </pre>
-<figcaption>Forenklet beslutningstre. Systemet sjekker dette automatisk – du får beskjed med en gang hvis en regel stopper deg.</figcaption>
+<figcaption>Forenklet. Løsningen sjekker dette selv – du får beskjed med en gang hvis en regel stopper deg.</figcaption>
 </figure>
 
 <h2 id="regel-1">① Bookingtyper og perioder</h2>
@@ -98,7 +102,7 @@ flowchart TD
 <tr><td><b>Formiddag</b></td><td>08:00 – 14:00</td><td>1</td><td>Resten av dagen kan brukes av andre</td></tr>
 <tr><td><b>Ettermiddag/kveld</b></td><td>14:00 – 00:00</td><td>1</td><td>Formiddagen kan brukes av andre</td></tr>
 </tbody></table></div>
-<p><b>Filosofi:</b> Historisk har badehuset blitt brukt hele dager, derfor er heldag standard. Halve dager er mulig slik at andre kan bruke resten av dagen – formålet er økt utnyttelse.</p>
+<p><b>Tanken:</b> Vi har stort sett brukt badehuset hele dager, så heldag er standard. Halve dager gjør at noen andre kan bruke resten av dagen.</p>
 <figure>
 <svg viewBox="0 0 820 130" role="img" aria-label="Eksempel: to husstander deler en dag">
   <g font-family="system-ui,Segoe UI,Arial" font-size="13">
@@ -124,10 +128,10 @@ flowchart TD
   </g>
 </svg>
 </figure>
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> <b>Avklaring 5:</b> Vinduet er rullerende: i dag + 3 kalendermåneder samme dato (15. april → til og med 15. juli).</p></div>
+<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> <b>Avklaring 5:</b> Vinduet er rullerende: i dag + 3 kalendermåneder samme dato (15. april → til og med 15. juli).</p></div>
 
 <h2 id="regel-3">③ Sommerkvote: maks 1 fredag, 1 lørdag, 1 søndag</h2>
-<p>Gjelder <b>kun juni, juli og august</b>. Hver husstand kan per måned ha maks:</p>
+<p>Gjelder <b>bare juni, juli og august</b>. Hvert hus kan per måned ha maks:</p>
 <div class="grid c3">
   <div class="card" style="text-align:center"><div class="stat">1</div>fredag</div>
   <div class="card" style="text-align:center"><div class="stat">1</div>lørdag</div>
@@ -147,7 +151,7 @@ flowchart TD
 </tbody></table></div>
 
 <h2 id="regel-4">④ Helgebegrensning: maks én helgedag per helg</h2>
-<p>Om sommeren kan samme husstand ikke reservere to dager i samme helg (fredag–søndag).</p>
+<p>Om sommeren kan ett hus ikke ta to dager i samme helg (fredag–søndag).</p>
 <figure>
 <svg viewBox="0 0 820 230" role="img" aria-label="Tillatte og ikke tillatte helgekombinasjoner">
   <g font-family="system-ui,Segoe UI,Arial" font-size="13" text-anchor="middle">
@@ -172,7 +176,7 @@ flowchart TD
 <figure><div style="font-weight:700;margin-bottom:6px">August 2027</div><table class="cal" aria-label="Kalender august 2027"><thead><tr><th>Man</th><th>Tir</th><th>Ons</th><th>Tor</th><th>Fre</th><th>Lør</th><th>Søn</th></tr></thead><tbody><tr><td class="out"></td><td class="out"></td><td class="out"></td><td class="out"></td><td class="out"></td><td class="out"></td><td class="wk"><span class="d">1</span></td></tr><tr><td class=""><span class="d">2</span></td><td class=""><span class="d">3</span></td><td class=""><span class="d">4</span></td><td class=""><span class="d">5</span></td><td class="wk"><span class="d">6</span><span class="p b" title="Hus B ✓">Hus B ✓</span></td><td class="wk"><span class="d">7</span><span class="p x" title="B: lør ✗">B: lør ✗</span></td><td class="wk"><span class="d">8</span><span class="p x" title="B: søn ✗">B: søn ✗</span></td></tr><tr><td class=""><span class="d">9</span></td><td class=""><span class="d">10</span></td><td class=""><span class="d">11</span></td><td class=""><span class="d">12</span></td><td class="wk"><span class="d">13</span></td><td class="wk"><span class="d">14</span><span class="p ok" title="B: lør ✓ (ny helg)">B: lør ✓ (ny helg)</span></td><td class="wk"><span class="d">15</span></td></tr><tr><td class=""><span class="d">16</span></td><td class=""><span class="d">17</span></td><td class=""><span class="d">18</span></td><td class=""><span class="d">19</span></td><td class="wk"><span class="d">20</span></td><td class="wk"><span class="d">21</span></td><td class="wk"><span class="d">22</span></td></tr><tr><td class=""><span class="d">23</span></td><td class=""><span class="d">24</span></td><td class=""><span class="d">25</span></td><td class=""><span class="d">26</span></td><td class="wk"><span class="d">27</span></td><td class="wk"><span class="d">28</span></td><td class="wk"><span class="d">29</span></td></tr><tr><td class=""><span class="d">30</span></td><td class=""><span class="d">31</span></td><td class="out"></td><td class="out"></td><td class="out"></td><td class="out"></td><td class="out"></td></tr></tbody></table><figcaption>Hus B har fredag 6. august. Lørdag 7. og søndag 8. samme helg avvises. Lørdag 14. er en ny helg og er greit (B har ingen lørdag i august ennå).</figcaption></figure>
 
 <h2 id="regel-5">⑤ 7-dagersregelen: førstemann til mølla</h2>
-<p>Når det er <b>mindre enn 7 dager</b> til en dato, oppheves alle sommerbegrensninger (kvote og helgebegrensning) for den datoen. Da kan alle booke alle ledige perioder – førstemann til mølla.</p>
+<p>Er det <b>mindre enn 7 dager</b> til en dato, gjelder ikke sommerbegrensningene (kvote og helg) for den datoen. Da kan alle ta det som er ledig – førstemann til mølla.</p>
 <figure>
 <svg viewBox="0 0 820 120" role="img" aria-label="Tidslinje for 7-dagersregelen">
   <g font-family="system-ui,Segoe UI,Arial" font-size="13">
@@ -184,7 +188,7 @@ flowchart TD
 </svg>
 </figure>
 <figure><div style="font-weight:700;margin-bottom:6px">Juli 2027</div><table class="cal" aria-label="Kalender juli 2027"><thead><tr><th>Man</th><th>Tir</th><th>Ons</th><th>Tor</th><th>Fre</th><th>Lør</th><th>Søn</th></tr></thead><tbody><tr><td class="out"></td><td class="out"></td><td class="out"></td><td class="today"><span class="d">1</span></td><td class="wk"><span class="d">2</span><span class="p a" title="Hus A">Hus A</span></td><td class="wk"><span class="d">3</span><span class="p a" title="Hus A">Hus A</span></td><td class="wk"><span class="d">4</span><span class="p a" title="Hus A">Hus A</span></td></tr><tr><td class=""><span class="d">5</span></td><td class=""><span class="d">6</span></td><td class=""><span class="d">7</span></td><td class=""><span class="d">8</span></td><td class="wk"><span class="d">9</span></td><td class="wk"><span class="d">10</span></td><td class="wk"><span class="d">11</span></td></tr><tr><td class=""><span class="d">12</span></td><td class=""><span class="d">13</span></td><td class=""><span class="d">14</span></td><td class=""><span class="d">15</span></td><td class="wk"><span class="d">16</span></td><td class="wk"><span class="d">17</span></td><td class="wk"><span class="d">18</span></td></tr><tr><td class=""><span class="d">19</span></td><td class=""><span class="d">20</span></td><td class=""><span class="d">21</span></td><td class=""><span class="d">22</span></td><td class="wk"><span class="d">23</span></td><td class="wk"><span class="d">24</span></td><td class="wk"><span class="d">25</span></td></tr><tr><td class=""><span class="d">26</span></td><td class=""><span class="d">27</span></td><td class=""><span class="d">28</span></td><td class=""><span class="d">29</span></td><td class="wk"><span class="d">30</span></td><td class="wk"><span class="d">31</span></td><td class="out"></td></tr></tbody></table><figcaption>I dag er 1. juli (markert). Fredag 2. – søndag 4. er under 7 dager unna: sommerbegrensningene gjelder ikke, førstemann til mølla.</figcaption></figure>
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> <b>Avklaring 1:</b> En booking gjort mindre enn 7 dager før teller <b>ikke</b> mot kvoten, og helgebegrensningen oppheves også. Eksempelet over (Hus A tar fre, lør og søn) følger av denne avklaringen.</p></div>
+<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> <b>Avklaring 1:</b> En booking gjort mindre enn 7 dager før teller <b>ikke</b> mot kvoten, og helgebegrensningen oppheves også. Eksempelet over (Hus A tar fre, lør og søn) følger av denne avklaringen.</p></div>
 
 <h2 id="regel-6">⑥ Avbestilling</h2>
 <figure>
@@ -210,7 +214,7 @@ flowchart TD
 <tr><td>Historikk beholdes</td><td class="pill-yes">Ja (ingenting slettes permanent)</td><td class="pill-yes">Ja</td></tr>
 </tbody></table></div>
 <figure><div style="font-weight:700;margin-bottom:6px">Juli 2027</div><table class="cal" aria-label="Kalender juli 2027"><thead><tr><th>Man</th><th>Tir</th><th>Ons</th><th>Tor</th><th>Fre</th><th>Lør</th><th>Søn</th></tr></thead><tbody><tr><td class="out"></td><td class="out"></td><td class="out"></td><td class=""><span class="d">1</span></td><td class="wk"><span class="d">2</span></td><td class="wk"><span class="d">3</span></td><td class="wk"><span class="d">4</span></td></tr><tr><td class=""><span class="d">5</span></td><td class=""><span class="d">6</span></td><td class=""><span class="d">7</span></td><td class=""><span class="d">8</span></td><td class="wk"><span class="d">9</span></td><td class="wk"><span class="d">10</span></td><td class="wk"><span class="d">11</span></td></tr><tr><td class="today"><span class="d">12</span></td><td class=""><span class="d">13</span></td><td class=""><span class="d">14</span></td><td class=""><span class="d">15</span></td><td class="wk"><span class="d">16</span><span class="p x" title="B: avbestilt sent">B: avbestilt sent</span></td><td class="wk"><span class="d">17</span></td><td class="wk"><span class="d">18</span></td></tr><tr><td class=""><span class="d">19</span></td><td class=""><span class="d">20</span></td><td class=""><span class="d">21</span></td><td class=""><span class="d">22</span></td><td class="wk"><span class="d">23</span><span class="p x" title="B: fre ✗ kvote brukt">B: fre ✗ kvote brukt</span></td><td class="wk"><span class="d">24</span></td><td class="wk"><span class="d">25</span></td></tr><tr><td class=""><span class="d">26</span></td><td class=""><span class="d">27</span></td><td class=""><span class="d">28</span></td><td class=""><span class="d">29</span></td><td class="wk"><span class="d">30</span></td><td class="wk"><span class="d">31</span></td><td class="out"></td></tr></tbody></table><figcaption>I dag er 12. juli. Hus B avbestiller fredag 16. (4 dager før) → CANCELLED_LATE: dagen blir ledig for andre, men teller fortsatt som Hus Bs fredag i juli. Et nytt forsøk på fredag 23. (11 dager frem) avvises derfor.</figcaption></figure>
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> <b>Avklaring 6:</b> Alle brukere i samme husstand kan avbestille husstandens bookinger (f.eks. kan Lise Hansen avbestille en booking Per Hansen har gjort for Hus A).</p></div>
+<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> <b>Avklaring 6:</b> Alle brukere i samme husstand kan avbestille husstandens bookinger (f.eks. kan Lise Hansen avbestille en booking Per Hansen har gjort for Hus A).</p></div>
 
 <h2 id="innsjekk-utsjekk-og-bekreftelse">Innsjekk, utsjekk og bekreftelse</h2>
 <div class="grid c3">
@@ -218,30 +222,30 @@ flowchart TD
   <div class="card"><h4>Automatisk utsjekk</h4><p style="margin:0">Ved slutten av perioden: 08–14 sjekkes ut kl. 14:00, 14–00 sjekkes ut kl. 00:00.</p></div>
   <div class="card"><h4>Bekreftelse</h4><p style="margin:0">Uten innsjekk blir statusen <span class="st st-NOT_CONFIRMED">NOT_CONFIRMED</span> når perioden er over. Brukeren kan senere trykke «Vi brukte badehuset». Admin kan korrigere. Alt logges.</p></div>
 </div>
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> <b>Avklaring 2:</b> Spontan innsjekk teller i statistikken (som bruk), men ikke i kvoten (den skjer alltid mindre enn 7 dager før). <b>Avklaring 10:</b> 00:00 betyr slutten av dagen (24:00) i Europe/Oslo, inkludert sommertid.</p></div>
+<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> <b>Avklaring 2:</b> Spontan innsjekk teller i statistikken (som bruk), men ikke i kvoten (den skjer alltid mindre enn 7 dager før). <b>Avklaring 10:</b> 00:00 betyr slutten av dagen (24:00) i Europe/Oslo, inkludert sommertid.</p></div>
 
 <h2 id="spesialtilfeller">Spesialtilfeller</h2>
 <h3 id="helg-over-to-maneder">Helg over to måneder</h3>
-<figure><div style="font-weight:700;margin-bottom:6px">Juli 2027</div><table class="cal" aria-label="Kalender juli 2027"><thead><tr><th>Man</th><th>Tir</th><th>Ons</th><th>Tor</th><th>Fre</th><th>Lør</th><th>Søn</th></tr></thead><tbody><tr><td class="out"></td><td class="out"></td><td class="out"></td><td class=""><span class="d">1</span></td><td class="wk"><span class="d">2</span></td><td class="wk"><span class="d">3</span></td><td class="wk"><span class="d">4</span></td></tr><tr><td class=""><span class="d">5</span></td><td class=""><span class="d">6</span></td><td class=""><span class="d">7</span></td><td class=""><span class="d">8</span></td><td class="wk"><span class="d">9</span></td><td class="wk"><span class="d">10</span></td><td class="wk"><span class="d">11</span></td></tr><tr><td class=""><span class="d">12</span></td><td class=""><span class="d">13</span></td><td class=""><span class="d">14</span></td><td class=""><span class="d">15</span></td><td class="wk"><span class="d">16</span></td><td class="wk"><span class="d">17</span></td><td class="wk"><span class="d">18</span></td></tr><tr><td class=""><span class="d">19</span></td><td class=""><span class="d">20</span></td><td class=""><span class="d">21</span></td><td class=""><span class="d">22</span></td><td class="wk"><span class="d">23</span></td><td class="wk"><span class="d">24</span></td><td class="wk"><span class="d">25</span></td></tr><tr><td class=""><span class="d">26</span></td><td class=""><span class="d">27</span></td><td class=""><span class="d">28</span></td><td class=""><span class="d">29</span></td><td class="wk"><span class="d">30</span><span class="p c" title="Hus C fre">Hus C fre</span></td><td class="wk"><span class="d">31</span><span class="p x" title="C: lør ✗">C: lør ✗</span></td><td class="out"></td></tr></tbody></table><figcaption>Fredag 30. juli – søndag 1. august er én helg. Vedtatt: kvoten telles i datoens måned, men helgeregelen følger helgen (fre–søn).</figcaption></figure>
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> <b>Avklaring 3:</b> Kvoten følger datoens måned (fredag 30. juli teller som en juli-fredag, søndag 1. august som en august-søndag), mens helgeregelen følger helgen (fre–søn). Hus C kan derfor ikke også ta lørdag 31. juli eller søndag 1. august samme helg. (Kravet nevner eksempelet fre 31. juli + lør 1. aug, som gjelder 2026; i 2027 faller helgen på 30. juli–1. august.)</p></div>
+<figure><div style="font-weight:700;margin-bottom:6px">Juli 2027</div><table class="cal" aria-label="Kalender juli 2027"><thead><tr><th>Man</th><th>Tir</th><th>Ons</th><th>Tor</th><th>Fre</th><th>Lør</th><th>Søn</th></tr></thead><tbody><tr><td class="out"></td><td class="out"></td><td class="out"></td><td class=""><span class="d">1</span></td><td class="wk"><span class="d">2</span></td><td class="wk"><span class="d">3</span></td><td class="wk"><span class="d">4</span></td></tr><tr><td class=""><span class="d">5</span></td><td class=""><span class="d">6</span></td><td class=""><span class="d">7</span></td><td class=""><span class="d">8</span></td><td class="wk"><span class="d">9</span></td><td class="wk"><span class="d">10</span></td><td class="wk"><span class="d">11</span></td></tr><tr><td class=""><span class="d">12</span></td><td class=""><span class="d">13</span></td><td class=""><span class="d">14</span></td><td class=""><span class="d">15</span></td><td class="wk"><span class="d">16</span></td><td class="wk"><span class="d">17</span></td><td class="wk"><span class="d">18</span></td></tr><tr><td class=""><span class="d">19</span></td><td class=""><span class="d">20</span></td><td class=""><span class="d">21</span></td><td class=""><span class="d">22</span></td><td class="wk"><span class="d">23</span></td><td class="wk"><span class="d">24</span></td><td class="wk"><span class="d">25</span></td></tr><tr><td class=""><span class="d">26</span></td><td class=""><span class="d">27</span></td><td class=""><span class="d">28</span></td><td class=""><span class="d">29</span></td><td class="wk"><span class="d">30</span><span class="p c" title="Hus C fre">Hus C fre</span></td><td class="wk"><span class="d">31</span><span class="p x" title="C: lør ✗">C: lør ✗</span></td><td class="out"></td></tr></tbody></table><figcaption>Fredag 30. juli – søndag 1. august er én helg. Forslaget: kvoten telles i datoens måned, men helgeregelen følger helgen (fre–søn).</figcaption></figure>
+<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> <b>Avklaring 3:</b> Kvoten følger datoens måned (fredag 30. juli teller som en juli-fredag, søndag 1. august som en august-søndag), mens helgeregelen følger helgen (fre–søn). Hus C kan derfor ikke også ta lørdag 31. juli eller søndag 1. august samme helg. (Kravet nevner eksempelet fre 31. juli + lør 1. aug, som gjelder 2026; i 2027 faller helgen på 30. juli–1. august.)</p></div>
 
 <h3 id="utenfor-sommer-september-mai">Utenfor sommer (september–mai)</h3>
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> <b>Avklaring 4:</b> Ingen begrensninger utover bookingvinduet på 3 måneder.</p></div>
+<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> <b>Avklaring 4:</b> Ingen begrensninger utover bookingvinduet på 3 måneder.</p></div>
 
 <h3 id="administrator-overstyrer">Administrator overstyrer</h3>
-<p>Administratorer (styreleder og nestleder) kan overstyre begrensningene. Alle overstyringer logges med hvem, når og kommentar. Vanlige brukere kan ikke overstyre.</p>
+<p>De to administratorene kan gjøre unntak fra begrensningene. Alle unntak logges med hvem, når og en kommentar. Vanlige brukere kan ikke gjøre unntak.</p>
 
 <h2 id="statistikk-hvordan-bruk-telles">Statistikk – hvordan bruk telles</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Periode</th><th>Perioder</th></tr></thead>
 <tbody><tr><td>08–14 (formiddag)</td><td>1</td></tr><tr><td>14–00 (ettermiddag/kveld)</td><td>1</td></tr><tr><td>Heldag</td><td>2</td></tr></tbody></table></div>
 <p>Panelet viser inneværende måned, inneværende sesong (juni–august) og inneværende år for <span class="hus a">Hus A</span> <span class="hus b">Hus B</span> <span class="hus c">Hus C</span> <span class="hus d">Hus D</span>. Fokus er åpenhet, ikke rangering.</p>
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> <b>Avklaring 7:</b> NOT_CONFIRMED vises separat (regnes ikke som bruk før bekreftet). CANCELLED_LATE teller i kvoten, men ikke som bruk.</p></div>
+<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> <b>Avklaring 7:</b> NOT_CONFIRMED vises separat (regnes ikke som bruk før bekreftet). CANCELLED_LATE teller i kvoten, men ikke som bruk.</p></div>
 
 <h2 id="oversikt-over-regelavklaringer">Oversikt over regelavklaringer</h2>
-<p>Alle ti avklaringer ble godkjent av Thomas Gude Svensrud <span class="badge-vedtatt">Vedtatt 25.10.2026</span>.</p>
+<p>Da reglene ble laget, dukket det opp ti spørsmål. Thomas har foreslått svar på alle <span class="badge-regel">Forslag – ikke godkjent av sameiet</span>. Svarene står også i forslaget til <a href="vedtekter.html#vedlegg-1">vedlegg 1</a>.</p>
 <div class="table-wrap"><table>
-<thead><tr><th>#</th><th>Spørsmål</th><th>Vedtatt 25.10.2026</th></tr></thead>
+<thead><tr><th>#</th><th>Spørsmål</th><th>Forslag</th></tr></thead>
 <tbody>
 <tr><td>1</td><td>7-dagersregel vs. kvote</td><td>Booking &lt; 7 dager før teller ikke mot kvote; helgebegrensning oppheves også.</td></tr>
 <tr><td>2</td><td>Spontan innsjekk</td><td>Teller i statistikk, ikke i kvote.</td></tr>
@@ -252,11 +256,49 @@ flowchart TD
 <tr><td>7</td><td>Statistikk</td><td>NOT_CONFIRMED separat; CANCELLED_LATE i kvote, ikke bruk.</td></tr>
 <tr><td>10</td><td>Tid</td><td>00:00 = 24:00 Europe/Oslo, inkl. sommertid.</td></tr>
 </tbody></table></div>
-<p>Avklaring 8 (ADMIN_CORRECTED) og 9 (personvern) og alle detaljer: se <a href="beslutninger.html">Beslutninger</a>.</p>
-<div class="callout info"><p><b>Avventer:</b> Om reglene i tillegg må godkjennes av styret/sameiermøtet er ikke avklart – det avventer sameiets vedtekter.</p></div>
+<p>Avklaring 8 (ADMIN_CORRECTED) er et teknisk valg, og avklaring 9 (personvern) står i vedlegg 1 punkt 11. Alle detaljer: se <a href="beslutninger.html">Hva må godkjennes?</a></p>
+<h2 id="slik-endrer-vi-reglene">Slik endrer vi reglene</h2>
+<p>Reglene skal passe for oss – og det finner vi best ut av ved å prøve dem. Derfor er det lagt opp til en enkel runde der alle kan komme med forslag, og der vi tar en prat om badehuset minst én gang i året.</p>
+<figure>
+<svg viewBox="0 0 880 330" role="img" aria-label="Seks steg for å endre reglene for badehuset, i en sirkel">
+  <defs><marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#64748b"/></marker></defs>
+  <g font-family="system-ui,Segoe UI,Arial">
+    <g transform="translate(20 20)"><rect width="250" height="112" rx="16" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/><circle cx="30" cy="30" r="17" fill="#0891b2"/><text x="30" y="36" text-anchor="middle" fill="#fff" font-weight="800" font-size="16">1</text>
+      <text x="58" y="28" font-weight="800" font-size="15" fill="#0f172a">Noen har et forslag</text><text x="20" y="64" font-size="12.5" fill="#334155">Hvem som helst av naboene,</text><text x="20" y="82" font-size="12.5" fill="#334155">når som helst – på e-post</text><text x="20" y="100" font-size="12.5" fill="#334155">eller over hekken.</text></g>
+    <g transform="translate(315 20)"><rect width="250" height="112" rx="16" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/><circle cx="30" cy="30" r="17" fill="#0891b2"/><text x="30" y="36" text-anchor="middle" fill="#fff" font-weight="800" font-size="16">2</text>
+      <text x="58" y="28" font-weight="800" font-size="15" fill="#0f172a">Thomas samler</text><text x="20" y="64" font-size="12.5" fill="#334155">Thomas (eller den som er</text><text x="20" y="82" font-size="12.5" fill="#334155">administrator) noterer og tar</text><text x="20" y="100" font-size="12.5" fill="#334155">det med til neste møte.</text></g>
+    <g transform="translate(610 20)"><rect width="250" height="112" rx="16" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/><circle cx="30" cy="30" r="17" fill="#ea580c"/><text x="30" y="36" text-anchor="middle" fill="#fff" font-weight="800" font-size="16">3</text>
+      <text x="58" y="28" font-weight="800" font-size="15" fill="#0f172a">Fast punkt på møtet</text><text x="20" y="64" font-size="12.5" fill="#334155">«Badehuset – regler og</text><text x="20" y="82" font-size="12.5" fill="#334155">erfaringer», minst én gang i</text><text x="20" y="100" font-size="12.5" fill="#334155">året (f.eks. etter sommeren).</text></g>
+    <g transform="translate(610 190)"><rect width="250" height="112" rx="16" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/><circle cx="30" cy="30" r="17" fill="#ea580c"/><text x="30" y="36" text-anchor="middle" fill="#fff" font-weight="800" font-size="16">4</text>
+      <text x="58" y="28" font-weight="800" font-size="15" fill="#0f172a">Vi bestemmer</text><text x="20" y="64" font-size="12.5" fill="#334155">Regler (vedlegg 1): vanlig</text><text x="20" y="82" font-size="12.5" fill="#334155">flertall, § 6. Vedtektsteksten</text><text x="20" y="100" font-size="12.5" fill="#334155">(§ 10): 3 av 4, § 13.</text></g>
+    <g transform="translate(315 190)"><rect width="250" height="112" rx="16" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><circle cx="30" cy="30" r="17" fill="#16a34a"/><text x="30" y="36" text-anchor="middle" fill="#fff" font-weight="800" font-size="16">5</text>
+      <text x="58" y="28" font-weight="800" font-size="15" fill="#0f172a">Thomas oppdaterer</text><text x="20" y="64" font-size="12.5" fill="#334155">rules.json, dokumentasjonen</text><text x="20" y="82" font-size="12.5" fill="#334155">og loggen over hva som er</text><text x="20" y="100" font-size="12.5" fill="#334155">bestemt.</text></g>
+    <g transform="translate(20 190)"><rect width="250" height="112" rx="16" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><circle cx="30" cy="30" r="17" fill="#16a34a"/><text x="30" y="36" text-anchor="middle" fill="#fff" font-weight="800" font-size="16">6</text>
+      <text x="58" y="28" font-weight="800" font-size="15" fill="#0f172a">Alle får beskjed</text><text x="20" y="64" font-size="12.5" fill="#334155">Alle naboene får vite om</text><text x="20" y="82" font-size="12.5" fill="#334155">endringen før den gjelder</text><text x="20" y="100" font-size="12.5" fill="#334155">(vedlegg 1 punkt 13).</text></g>
+    <path d="M274 76h36" stroke="#64748b" stroke-width="3" marker-end="url(#arp)"/>
+    <path d="M569 76h36" stroke="#64748b" stroke-width="3" marker-end="url(#arp)"/>
+    <path d="M735 136v48" stroke="#64748b" stroke-width="3" marker-end="url(#arp)"/>
+    <path d="M606 246h-36" stroke="#64748b" stroke-width="3" marker-end="url(#arp)"/>
+    <path d="M311 246h-36" stroke="#64748b" stroke-width="3" marker-end="url(#arp)"/>
+    <path d="M145 186v-48" stroke="#64748b" stroke-width="3" stroke-dasharray="6 5" marker-end="url(#arp)"/>
+    <text x="155" y="166" font-size="12" fill="#64748b" font-style="italic">og så videre …</text>
+  </g>
+</svg>
+<figcaption>Slik endrer vi reglene for badehuset. Den stiplede pila: nye erfaringer og forslag kommer hele tiden.</figcaption>
+</figure>
+<ol class="steps">
+  <li><b>Noen har et forslag</b>Hvem som helst kan foreslå en endring, når som helst. Send en e-post eller si det til Thomas (eller den som er administrator).</li>
+  <li><b>Forslagene samles</b>Administrator noterer forslagene og tar dem med til neste møte i sameiet.</li>
+  <li><b>Fast punkt på møtene</b>«Badehuset – regler og erfaringer» står fast på sakslista når sameiet møtes, og vi tar det minst én gang i året – gjerne etter sommeren, når erfaringene er ferske.</li>
+  <li><b>Vi bestemmer sammen</b>Endringer i reglene (vedlegg 1) avgjøres med vanlig flertall etter vedtektene § 6. Skal selve vedtektsteksten (§ 10) endres, trengs 3 av 4 stemmer etter § 13.</li>
+  <li><b>Thomas oppdaterer</b>Endringen legges inn i <code>rules.json</code>, dokumentasjonen oppdateres, og det føres i <a href="beslutninger.html#logg">loggen</a>.</li>
+  <li><b>Alle får beskjed</b>Alle naboene får vite om endringen før den begynner å gjelde.</li>
+</ol>
+<div class="callout info"><p><b>Hva trenger ikke denne runden?</b> Tekniske ting – hvordan løsningen er bygget, hvor den ligger og hvem som har kontoene – ordner Thomas. Det er bare vedtektene (§ 10) og reglene for bruk av badehuset (vedlegg 1) sameiet må godkjenne. Se <a href="beslutninger.html">Hva må godkjennes?</a></p></div>
+<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> Prosessen over er også et forslag. Den bygger på det som står i <a href="vedtekter.html">forslaget til vedtekter</a> (§ 10 og vedlegg 1 punkt 13). Datoen for neste møte står i <a href="../index.html#arshjul">årshjulet</a>.</p></div>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="lld.html"><small>← Forrige</small>LLD – Low Level Design</a><a class="next" href="brukermanual.html"><small>Neste →</small>Brukermanual – beboer</a></nav>
-      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.3 · 25.10.2026). Systemet er ikke bygget ennå. Arkitektur og regelavklaringer er <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Detaljer merket <span class="badge-forslag">Forslag – detaljdesign</span> er utdypinger som kan justeres ved bygging. Alle navn er eksempler.</p>
+      <p class="footer">Badehus Booking System – dokumentasjon av en <b>planlagt</b> løsning (v0.4 · 25.10.2026). Den er ikke bygget ennå. Thomas Gude Svensrud lager den på oppdrag fra sameiet, og <b>ingenting er godkjent av sameiet ennå</b>. Merkene betyr: <span class="badge-regel">Forslag – ikke godkjent av sameiet</span> = regler som sameiet skal ta stilling til · <span class="badge-teknisk">Teknisk valg (Thomas)</span> = praktiske og tekniske valg som ikke trenger godkjenning · <span class="badge-forslag">Forslag – detaljdesign</span> = detaljer som kan justeres når løsningen bygges. Alle navn er eksempler.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
   </div>
