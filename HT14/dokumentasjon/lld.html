@@ -55,7 +55,7 @@
   <div class="eyebrow">Teknisk · Detaljdesign</div>
   <h1>LLD – Low Level Design</h1>
   <p>Detaljert design for utviklere og for den som skal drifte eller videreutvikle løsningen: filer, dataformater, API, regelmotor, statuser og flyt.</p>
-  <div class="meta"><span class="chip">⏱ Ca. 18 min lesetid</span></div>
+  <div class="meta"><span class="chip">⏱ Ca. 19 min lesetid</span></div>
 </section>
 
 <p class="note">Arkitekturen er Thomas sitt tekniske valg. Regelavklaringene er forslag som vi tar på sameiemøtet (se <a href="hld.html">HLD</a> og <a href="beslutninger.html">Hva må godkjennes?</a>). Detaljdesignet på denne siden – filnavn, feltnavn, endepunkter, feilkoder, CSV-oppsett og detaljer i nattlig jobb – er assistentens utdyping og kan justeres ved bygging. Felter som hører til en avklaring, er merket med nummeret (f.eks. <b>Å1</b>).</p>
@@ -365,7 +365,7 @@ erDiagram
 <tr><td><code>Max-Age</code></td><td><code>31536000</code> (365 dager)</td><td>Man holder seg innlogget i ca. ett år.</td></tr>
 <tr><td>Fornying</td><td>Glidende</td><td>Når økten brukes og er eldre enn ett døgn siden sist fornyet, settes ny utløpstid (nå + 365 dager) og cookien sendes på nytt. Maks én KV-skriving per økt per døgn.</td></tr>
 </tbody></table></div>
-<p class="note">For at en <code>SameSite=Strict</code>-cookie skal følge med kallene, må Workeren ligge på samme nettsted som Badehusappen, f.eks. på et eget underdomene som <code>api.fluxreveal.com</code> (Worker custom domain), og ikke på <code>*.workers.dev</code>. Frontend kaller med <code>fetch(url, { credentials: "include" })</code>.</p>
+<p class="note">For at en <code>SameSite=Strict</code>-cookie skal følge med kallene, må Workeren ligge på samme nettsted som sidene til Badehusappen. To måter (se <a href="adminmanual.html#slik-setter-vi-opp-badehusappen-fra-start">oppsettet i adminmanualen</a>): <b>Vei A (anbefalt)</b> – DNS for fluxreveal.com flyttes til Cloudflare (gratis), og Workeren får eget underdomene <code>api.fluxreveal.com</code> (Worker Custom Domain); sidene blir liggende på GitHub Pages og kaller med <code>fetch(url, { credentials: "include" })</code>. <b>Vei B (reserve)</b> – Workeren serverer både sidene (static assets) og <code>/api/</code> fra <code>badehusappen.&lt;navn&gt;.workers.dev</code>; da er alt samme opprinnelse, og cookien kan stå uendret. Å ha sidene på fluxreveal.com og bare API-et på <code>*.workers.dev</code> fungerer ikke godt: <code>workers.dev</code> står på Public Suffix List, så cookien blir tredjeparts (<code>SameSite=None; Secure</code> + CSRF-token), og Safari på iPhone blokkerer slike som standard.</p>
 
 <h3 id="oktliste-workers-kv">Øktliste (Workers KV)</h3>
 <pre><code>// KV-nøkkel: sess:&lt;sha256(økt-nøkkel + pepper)&gt;
@@ -720,7 +720,7 @@ sequenceDiagram
 <pre class="mermaid">
 sequenceDiagram
   autonumber
-  participant C as Cron (UTC)
+  participant C as Cron (Europe/Oslo)
   participant A as Actions-runner
   participant R as Data-repo
   C->>A: Starter nightly.yml (kan være forsinket)
@@ -744,7 +744,8 @@ sequenceDiagram
 name: nightly
 on:
   schedule:
-    - cron: "15 1 * * *"     # 01:15 UTC ≈ 02:15/03:15 i Oslo
+    - cron: "17 3 * * *"     # 03:17 norsk tid, utenom hel time
+      timezone: "Europe/Oslo"
   workflow_dispatch: {}      # kan kjøres manuelt av admin
 permissions:
   contents: write
@@ -752,9 +753,9 @@ jobs:
   freeze-and-archive:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version: 24 }
       - run: node scripts/nightly.mjs
       - run: |
           git config user.name  "badehus-nightly"
@@ -762,7 +763,7 @@ jobs:
           git add -A
           git diff --cached --quiet || git commit -m "nattlig: status + arkiv"
           git push
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with: { name: backup, path: ".", retention-days: 90 }</code></pre>
 
 <h2 id="csv-format">CSV-format</h2>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brukermanual – administrator – Badehusappen</title>
-<meta name="description" content="Brukermanual for administratorene: brukere, passord, utlogging av mistet mobil, regler, overstyring, korrigering, import/eksport, årsarkiv, backup, feilsøking og overlevering.">
+<meta name="description" content="Brukermanual for administratorene: brukere, passord, utlogging av mistet mobil, regler, overstyring, korrigering, import/eksport, årsarkiv, backup, feilsøking, overlevering og oppsett fra start.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
@@ -55,10 +55,10 @@
   <div class="eyebrow">Manual · For administratorene</div>
   <h1>Brukermanual – administrator</h1>
   <p>For de to som passer på Badehusappen: slik ordner du brukere og regler, retter feil, tar vare på dataene og gir stafettpinnen videre – uten å være utvikler.</p>
-  <div class="meta"><span class="chip">⏱ Ca. 11 min lesetid</span><span class="chip">2 administratorer</span><span class="chip">Alle adminhandlinger logges</span></div>
+  <div class="meta"><span class="chip">⏱ Ca. 23 min lesetid</span><span class="chip">2 administratorer</span><span class="chip">Alle adminhandlinger logges</span></div>
 </section>
 
-<div class="callout info"><p>Manualen beskriver den <b>planlagte</b> Badehusappen med arkitekturen Thomas har valgt (GitHub Pages + Cloudflare Worker + privat data-repo + GitHub Actions). Skjermbildene er skisser. Detaljer om filer og felt står i <a href="lld.html">LLD</a>.</p></div>
+<div class="callout info"><p>Manualen beskriver den <b>planlagte</b> Badehusappen med arkitekturen Thomas har valgt (GitHub Pages + Cloudflare Worker + privat data-repo + GitHub Actions). Skjermbildene er skisser. Detaljer om filer og felt står i <a href="lld.html">LLD</a>. Skal Badehusappen settes opp for første gang, se <a href="#slik-setter-vi-opp-badehusappen-fra-start">Slik setter vi opp Badehusappen fra start</a>.</p></div>
 
 <h2 id="roller-og-ansvar">Roller og ansvar</h2>
 <div class="grid c2">
@@ -319,6 +319,212 @@ flowchart LR
   <li><b>Test og loggfør</b>Logg inn, book og avbestill en testdato, sjekk historikk og eksport, og før overføringen inn i <a href="beslutninger.html#logg">beslutningsloggen</a>.</li>
 </ol>
 <div class="callout info"><p>Ved overføring får løsningen en ny adresse (i dag <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a>). Gi beboerne den nye adressen, og la gjerne <code>HT14/index.html</code> på fluxreveal.com lenke videre en periode.</p></div>
+
+<h2 id="slik-setter-vi-opp-badehusappen-fra-start">Slik setter vi opp Badehusappen fra start</h2>
+<p>Dette er oppskriften for første gang Badehusappen skal settes opp – fra null Cloudflare-konto til at alle fire husene kan logge inn på mobilen. Ta det i ro og mak; mye er bare å klikke seg gjennom, og ingenting her er vanskeligere enn å sette opp en ny e-postkonto. Stegene er sjekket mot den offisielle dokumentasjonen til Cloudflare og GitHub (25.10.2026). Knapper og menyer får av og til nye navn, så der det står «omtrent», er det målet som er viktig, ikke nøyaktig ordlyd.</p>
+<p><b>Hvem gjør hva:</b> Alt som handler om kontoer, passord og tokens gjør <b>Thomas</b> selv. Noen av de mer tekniske stegene (kommandoer i terminalen) kan <b>HT14-assistenten</b> eventuelt gjøre fra sin maskin, hvis Thomas lager en egen, begrenset API-nøkkel til det. Det er bare et tilbud – alt kan like gjerne gjøres av Thomas selv, enten i nettleseren eller i terminalen.</p>
+
+<h3 id="hva-koster-det">Hva koster det?</h3>
+<p><b>0 kr.</b> Alt kjører på gratisplanene. Sjekket 25.10.2026: Cloudflare Workers Free gir 100 000 forespørsler per døgn og 10 ms CPU-tid per forespørsel; Workers KV Free gir 100 000 lesinger og 1 000 skrivinger per døgn og 1 GB lagring; Cloudflare-planen for domenet (vei A) er gratis; GitHub Free gir 2 000 Actions-minutter i måneden for private repoer (nattjobben bruker omtrent ett minutt per natt). Fire hus som booker badstue kommer aldri i nærheten av grensene. Domenet fluxreveal.com betaler Thomas for allerede hos Domeneshop – det endres ikke.</p>
+
+<h3 id="oversikt-over-rekkefolgen">Oversikt over rekkefølgen</h3>
+<figure>
+<pre class="mermaid">
+flowchart TD
+  S1["1. Cloudflare-konto + 2FA<br/>(Thomas)"] --> S2["2. Privat data-repo<br/>badehus-data (Thomas)"]
+  S2 --> S3["3. Fine-grained GitHub-token<br/>kun data-repoet (Thomas)"]
+  S3 --> S4["4. KV-lager for økter<br/>(Thomas eller assistenten)"]
+  S4 --> S5["5. Deploy Workeren + secrets<br/>(Thomas, evt. assistenten)"]
+  S5 --> S6{"6. Domene"}
+  S6 -->|"Vei A (anbefalt)"| S6A["fluxreveal.com til Cloudflare<br/>api.fluxreveal.com"]
+  S6 -->|"Vei B (reserve)"| S6B["Hele appen på<br/>*.workers.dev"]
+  S6A --> S7["7. Første administratorer<br/>+ test på mobil"]
+  S6B --> S7
+  S7 --> S8["8. Nattjobb i GitHub Actions"]
+  S8 --> S9["9. Løpende stell:<br/>token, backup, plan B"]
+  classDef s fill:#ecfeff,stroke:#0891b2,color:#0f172a;
+  class S1,S2,S3,S4,S5,S6,S6A,S6B,S7,S8,S9 s;
+</pre>
+<figcaption>Steg 6 kan gjerne startes tidlig (DNSSEC må slås av et døgn før navnetjenerne byttes), mens resten gjøres.</figcaption>
+</figure>
+
+<h3 id="steg-1-cloudflare-konto-med-totrinnsinnlogging">Steg 1 – Cloudflare-konto med totrinnsinnlogging</h3>
+<p><b>Hvem:</b> Thomas.</p>
+<ol class="steps">
+  <li><b>Lag kontoen</b>Gå til <a href="https://dash.cloudflare.com/sign-up">dash.cloudflare.com/sign-up</a> og registrer deg med FluxReveal-e-posten og et sterkt passord (gjerne generert og lagret i passordbehandleren). Velg gratisplanen hvis du blir spurt.</li>
+  <li><b>Bekreft e-posten</b>Klikk på lenken Cloudflare sender. Dette må gjøres <i>før</i> totrinn slås på – ellers kan du låse deg ute.</li>
+  <li><b>Slå på totrinnsinnlogging (2FA)</b>I dashboardet: <b>My Profile</b> → <b>Authentication</b> → <b>Add</b> ved «Mobile App Authentication» (en kode-app) eller «Security Key Authentication» (f.eks. Touch ID/Face ID-nøkkel). Cloudflare anbefaler minst to metoder.</li>
+  <li><b>Ta vare på reservekodene</b>Du får reservekoder («backup codes») til slutt. Lagre dem i passordbehandleren – de er redningen hvis mobilen blir borte.</li>
+</ol>
+
+<h3 id="steg-2-privat-data-repo">Steg 2 – Privat data-repo</h3>
+<p><b>Hvem:</b> Thomas (på github.com, logget inn som FluxReveal).</p>
+<ol class="steps">
+  <li><b>Nytt repo</b>Øverst til høyre på github.com: <b>+</b> → <b>New repository</b>. Eier: <code>FluxReveal</code>. Navn: <code>badehus-data</code>. Velg <b>Private</b>. Huk gjerne av for en README, så repoet ikke er tomt.</li>
+  <li><b>Legg inn startfilene</b>Med <b>Add file</b> → <b>Create new file</b> lager du filene under. Skriv mappenavnet med skråstrek i filnavnet (f.eks. <code>bookings/2026.json</code>), så lages mappen automatisk. Bytt ut 2026 med året dere starter.</li>
+</ol>
+<pre><code>badehus-data/
+├── users.json          {"schemaVersion": 1, "users": []}
+├── rules.json          (kopier eksempelet fra LLD-en og juster)
+├── bookings/2026.json  {"schemaVersion": 1, "year": 2026, "bookings": []}
+└── audit/2026.jsonl    (tom fil – én hendelse per linje kommer senere)</code></pre>
+<p class="note">Feltene i filene er beskrevet i <a href="lld.html">LLD</a>. Første bruker legges inn i steg 7. Nye år (<code>bookings/2027.json</code> osv.) lager Workeren selv når noen booker for et nytt år.</p>
+
+<h3 id="steg-3-github-token-som-bare-nar-data-repoet">Steg 3 – GitHub-token som bare når data-repoet</h3>
+<p><b>Hvem:</b> Thomas. Tokenet er nøkkelen Workeren bruker for å lagre bookinger, så det skal bare finnes i Cloudflare (steg 5) – aldri i kode, i et repo eller i en chat.</p>
+<ol class="steps">
+  <li><b>Åpne token-siden</b>Profilbildet øverst til høyre → <b>Settings</b> → <b>Developer settings</b> (nederst i venstremenyen) → <b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b>.</li>
+  <li><b>Fyll ut</b>Navn: <code>badehusappen-worker</code>. Resource owner: <code>FluxReveal</code>. Expiration: velg en dato, f.eks. ett år fram i tid (maks er 366 dager). Repository access: <b>Only select repositories</b> → <code>badehus-data</code>.</li>
+  <li><b>Tilganger</b>Under repository permissions: <b>Contents</b> = <b>Read and write</b>. «Metadata: read» kommer automatisk. Ingenting annet trengs.</li>
+  <li><b>Kopier tokenet</b>Trykk <b>Generate token</b> og kopier verdien rett inn i passordbehandleren. Den vises bare én gang.</li>
+  <li><b>Kalenderpåminnelse</b>Legg inn en påminnelse i kalenderen to uker før utløpsdatoen: «Forny Badehusappen-tokenet». Slik fornyer du: lag et nytt token på samme måte, legg det inn som secret i Workeren (steg 5), test at booking fungerer, og slett det gamle. GitHub sender også e-post før et token går ut.</li>
+</ol>
+
+<h3 id="steg-4-kv-lager-for-okter-og-feil-teller">Steg 4 – KV-lager for økter og feil-teller</h3>
+<p><b>Hvem:</b> Thomas, eller HT14-assistenten hvis du vil (se <a href="#hvis-assistenten-skal-hjelpe">nederst</a>). Her lagres innloggings-øktene og telleren for feil passord – ikke bookinger.</p>
+<ol class="steps">
+  <li><b>I nettleseren</b>Cloudflare-dashboardet → finn <b>Workers KV</b> i menyen (ligger omtrent under lagring/databaser) → <b>Create instance</b>. Navn: <code>badehusappen-okter</code>.</li>
+  <li><b>Eller i terminalen</b>I mappen <code>HT14/worker/</code>: <code>npx wrangler kv namespace create OKTER</code>. Kommandoen skriver ut en <code>id</code> som limes inn i <code>wrangler.toml</code> (se under).</li>
+</ol>
+<p class="note">Gratisplanen tåler 1 000 KV-skrivinger per døgn. Badehusappen skriver bare ved innlogging, utlogging, feil passord og maks én fornying per økt per døgn, så det holder med god margin.</p>
+
+<h3 id="steg-5-workeren-og-hemmelighetene">Steg 5 – Workeren og hemmelighetene</h3>
+<p><b>Hvem:</b> Thomas, eventuelt HT14-assistenten for selve opplastingen. Forutsetter at Worker-koden i <code>HT14/worker/</code> er skrevet. Hemmelighetene (GitHub-tokenet og «pepper»-nøkkelen for økter) legger Thomas inn selv.</p>
+<ol class="steps">
+  <li><b>Installer og logg inn (én gang)</b>Krever Node.js på Mac-en. I <code>HT14/worker/</code>: <code>npm i -D wrangler@latest</code> og deretter <code>npx wrangler login</code> (åpner nettleseren, du godkjenner).</li>
+  <li><b>Sjekk wrangler.toml</b>Navn, KV-binding og domene (se eksempelet under). Filen inneholder ingen hemmeligheter og kan ligge i det offentlige repoet.</li>
+  <li><b>Last opp</b><code>npx wrangler deploy</code>. Uten terminal går det også i dashboardet (<b>Workers &amp; Pages</b> → <b>Create application</b>), men da må koden limes inn for hånd – terminalen er enklest i lengden.</li>
+  <li><b>Legg inn hemmelighetene</b><code>npx wrangler secret put GH_DATA_TOKEN</code> (lim inn tokenet fra steg 3) og <code>npx wrangler secret put SESSION_PEPPER</code> (lim inn en lang, tilfeldig streng, f.eks. fra <code>openssl rand -base64 32</code>). I dashboardet: Workeren → <b>Settings</b> → <b>Variables and Secrets</b> → <b>Add</b> → type <b>Secret</b>. Hemmeligheter kan ikke leses ut igjen etterpå – det er meningen.</li>
+  <li><b>Koble til KV</b>Gjøres av <code>wrangler.toml</code>. Brukes dashboardet: Workeren → <b>Bindings</b> → <b>Add binding</b> → KV namespace, variabelnavn <code>OKTER</code>.</li>
+</ol>
+<pre><code># HT14/worker/wrangler.toml – ingen hemmeligheter her
+name = "badehusappen"
+main = "src/index.js"
+compatibility_date = "2026-10-25"
+
+# Vei A: eget underdomene (krever at fluxreveal.com ligger hos Cloudflare)
+routes = [
+  { pattern = "api.fluxreveal.com", custom_domain = true }
+]
+
+[[kv_namespaces]]
+binding = "OKTER"
+id = "&lt;id-en fra steg 4&gt;"
+
+# Hemmeligheter legges inn med «wrangler secret put», aldri her:
+#   GH_DATA_TOKEN, SESSION_PEPPER
+# Lokal testing: .dev.vars (står i .gitignore, committes aldri)</code></pre>
+
+<h3 id="steg-6-domenet">Steg 6 – Domenet</h3>
+<p><b>Slik er det i dag</b> (sjekket 25.10.2026): fluxreveal.com er registrert hos <b>Domeneshop</b>, og DNS ligger på Domeneshops navnetjenere (<code>ns1.hyp.net</code>, <code>ns2.hyp.net</code>, <code>ns3.hyp.net</code>) med <b>DNSSEC påslått</b>. Nettsiden ligger på GitHub Pages, og e-posten går via iCloud. Det finnes ingen <code>api.fluxreveal.com</code> ennå.</p>
+<div class="table-wrap"><table><thead><tr><th>Navn</th><th>Type</th><th>Verdi</th><th>Brukes til</th></tr></thead><tbody>
+<tr><td><code>fluxreveal.com</code></td><td>A (4 stk.)</td><td><code>185.199.108.153</code>, <code>185.199.109.153</code>, <code>185.199.110.153</code>, <code>185.199.111.153</code></td><td>GitHub Pages (nettsiden og HT14)</td></tr>
+<tr><td><code>www</code></td><td>CNAME</td><td><code>fluxreveal.github.io</code></td><td>GitHub Pages</td></tr>
+<tr><td><code>fluxreveal.com</code></td><td>MX</td><td><code>1 mx01.mail.icloud.com</code>, <code>2 mx02.mail.icloud.com</code></td><td>E-post (iCloud)</td></tr>
+<tr><td><code>fluxreveal.com</code></td><td>TXT</td><td><code>v=spf1 include:icloud.com ~all</code></td><td>E-post (SPF)</td></tr>
+<tr><td><code>fluxreveal.com</code></td><td>TXT</td><td><code>apple-domain=…</code></td><td>Apple-bekreftelse av domenet</td></tr>
+<tr><td><code>sig1._domainkey</code></td><td>CNAME</td><td><code>sig1.dkim.fluxreveal.com.at.icloudmailadmin.com</code></td><td>E-post (DKIM-signatur)</td></tr>
+</tbody></table></div>
+
+<h4>Vei A (anbefalt): flytt DNS for fluxreveal.com til Cloudflare og bruk api.fluxreveal.com</h4>
+<p><b>Hvem:</b> Thomas (Domeneshop og Cloudflare). Domenet blir fortsatt registrert og betalt hos Domeneshop – det er bare «telefonkatalogen» (DNS) som flyttes til Cloudflare, gratis. Nettsiden blir liggende på GitHub Pages og e-posten på iCloud.</p>
+<ol class="steps">
+  <li><b>Slå av DNSSEC hos Domeneshop – minst ett døgn før</b>Domeneshop → domenet → fanen for navnetjenere → fjern haken for «Bruk DNSSEC». Vent minst 24 timer før neste punkt med navnetjenerne. Hopper du over dette, kan domenet (også e-posten) slutte å virke en stund.</li>
+  <li><b>Legg domenet inn i Cloudflare</b>Cloudflare-dashboardet → <b>Onboard a domain</b> (eller «Add a domain») → skriv <code>fluxreveal.com</code> → velg <b>Free</b>.</li>
+  <li><b>Sjekk at alle DNS-oppføringene er med</b>Cloudflare prøver å hente dem automatisk, men kan bomme. Sammenlign med tabellen over: de fire A-oppføringene, <code>www</code>, begge MX, begge TXT og DKIM-oppføringen. Mangler noe, legg det til. Sett GitHub Pages-oppføringene og e-postoppføringene til <b>DNS only</b> (grå sky), ikke «Proxied» (oransje sky) – da oppfører alt seg nøyaktig som i dag.</li>
+  <li><b>Bytt navnetjenere hos Domeneshop</b>Cloudflare viser to navnetjenere (noe som <code>xxx.ns.cloudflare.com</code>). Hos Domeneshop: domenet → endre navnetjenere / bruk egendefinerte navnetjenere → erstatt <code>ns1–ns3.hyp.net</code> med de to fra Cloudflare. Står domenet med registrar-lås, kan det hende låsen må av en kort stund. Det tar vanligvis noen timer, men kan ta opptil 24–48 timer. Cloudflare sender e-post når domenet er aktivt.</li>
+  <li><b>Test at alt virker som før</b>Åpne <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a>, send en e-post til og fra FluxReveal-adressen.</li>
+  <li><b>Koble api.fluxreveal.com til Workeren</b>Med <code>routes</code> i <code>wrangler.toml</code> skjer det ved neste <code>npx wrangler deploy</code>. Eller i dashboardet: Workeren → <b>Settings</b> → <b>Domains &amp; Routes</b> → <b>Add</b> → <b>Custom Domain</b> → <code>api.fluxreveal.com</code>. Cloudflare lager DNS-oppføringen og sertifikatet selv. Det må ikke ligge en CNAME på <code>api</code> fra før.</li>
+  <li><b>Slå på DNSSEC igjen – via Cloudflare</b>Når alt har virket et døgn eller to: slå på DNSSEC i Cloudflare (under DNS-innstillingene for domenet). Cloudflare viser en DS-verdi som legges inn hos Domeneshop.</li>
+</ol>
+<p class="note">Hvorfor ikke bare lage <code>api.fluxreveal.com</code> som en CNAME hos Domeneshop som peker til Workeren? Fordi et eget domene på en Worker krever at domenet ligger hos Cloudflare. Det er derfor navnetjener-byttet er hovedveien.</p>
+
+<h4>Vei B (reserve): hele Badehusappen på *.workers.dev</h4>
+<p><b>Hvem:</b> Thomas eller assistenten. Hvis vi ikke vil røre DNS-en til fluxreveal.com, kan Workeren servere <i>hele</i> Badehusappen – både sidene og <code>/api/</code> – fra en gratis adresse som <code>badehusappen.&lt;dittnavn&gt;.workers.dev</code> (Cloudflares «static assets»). Underdomenet velges under <b>Workers &amp; Pages</b> → <b>Change</b> ved «Your subdomain». På <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a> legger vi bare en knapp som lenker dit.</p>
+<pre><code># tillegg i wrangler.toml for vei B (og fjern routes-linjene)
+[assets]
+directory = "./public"          # kopi av sidene til Badehusappen
+run_worker_first = ["/api/*"]   # /api/ går til Workeren, resten er filer</code></pre>
+<div class="table-wrap"><table><thead><tr><th></th><th>Vei A: api.fluxreveal.com</th><th>Vei B: *.workers.dev</th></tr></thead><tbody>
+<tr><td>Adresse beboerne bruker</td><td>fluxreveal.com/HT14/…</td><td>badehusappen.&lt;navn&gt;.workers.dev</td></tr>
+<tr><td>Innlogging på iPhone og Android</td><td>Virker, cookie som planlagt (<code>SameSite=Strict</code>)</td><td>Virker, fordi sider og API ligger på samme adresse – cookien er den samme</td></tr>
+<tr><td>Arbeid med DNS</td><td>Navnetjener-bytte én gang, ca. ett døgn med venting</td><td>Ingen</td></tr>
+<tr><td>Ulempe</td><td>Litt mer jobb første gang</td><td>Lang, litt «teknisk» adresse. Cloudflare anbefaler eget domene for ting som skal brukes fast</td></tr>
+</tbody></table></div>
+<p class="note">Hvorfor ikke la sidene ligge på fluxreveal.com og bare API-et på workers.dev? Da blir cookien en «tredjeparts-cookie» (<code>SameSite=None; Secure</code> + ekstra CSRF-vern), og Safari på iPhone blokkerer slike som standard. Innloggingen ville da ikke holdt seg på iPhone, så den varianten bruker vi ikke.</p>
+
+<h3 id="steg-7-forste-administratorer-og-test-pa-mobil">Steg 7 – Første administratorer og test på mobil</h3>
+<p><b>Hvem:</b> Thomas, sammen med nestleder (eller den andre administratoren).</p>
+<ol class="steps">
+  <li><b>Første admin (Thomas/styreleder)</b>Siden ingen kan logge inn før det finnes en bruker, legges den første inn for hånd: et lite hjelpeskript i <code>HT14/worker/</code> lager en bruker-linje med passord-hash for et midlertidig passord, og den limes inn i <code>users.json</code> på github.com (blyant-ikonet → <b>Commit changes</b>). Sett <code>"role": "admin"</code> og <code>"mustChangePassword": true</code>.</li>
+  <li><b>Logg inn og bytt passord</b>Logg inn med det midlertidige passordet, velg nytt passord og la mobilen lagre det.</li>
+  <li><b>Andre admin (nestleder)</b>Opprett nestleder fra adminsiden med rolle <code>admin</code> (se <a href="#brukere">Brukere</a>). Resten av beboerne kan legges inn etter testen.</li>
+  <li><b>Test på iPhone (Safari) og Android (Chrome)</b>Logg inn → godta at nettleseren lagrer passordet → legg Badehusappen på hjemskjermen → åpne fra hjemskjermen og se at du fortsatt er logget inn → book en testdato → avbestill den.</li>
+  <li><b>Sjekk data-repoet</b>På github.com → <code>badehus-data</code> → <b>Commits</b>: bookingen og avbestillingen skal dukke opp som commits, og linjene skal stå i <code>audit/&lt;år&gt;.jsonl</code>.</li>
+</ol>
+
+<h3 id="steg-8-nattjobb-i-github-actions">Steg 8 – Nattjobb i GitHub Actions</h3>
+<p><b>Hvem:</b> Thomas, eller assistenten som forslag Thomas legger inn. Jobben fryser status på avsluttede bookinger og lager CSV-arkivet. Den bruker GitHubs innebygde token for repoet, så det trengs ikke noe nytt token.</p>
+<ol class="steps">
+  <li><b>Legg inn filene</b>I <code>badehus-data</code>: <code>scripts/nightly.mjs</code> og <code>.github/workflows/nightly.yml</code> (se under).</li>
+  <li><b>Kjør den manuelt første gang</b>Fanen <b>Actions</b> → <b>nightly</b> → <b>Run workflow</b>. Se at den blir grønn og at <code>archive/&lt;år&gt;.csv</code> dukker opp.</li>
+</ol>
+<pre><code># badehus-data/.github/workflows/nightly.yml
+name: nightly
+on:
+  schedule:
+    - cron: "17 3 * * *"          # 03:17 hver natt, litt utenom hel time
+      timezone: "Europe/Oslo"
+  workflow_dispatch: {}           # «Run workflow»-knappen
+permissions:
+  contents: write
+jobs:
+  freeze-and-archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version: 24 }
+      - run: node scripts/nightly.mjs
+      - run: |
+          git config user.name  "badehus-nightly"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "nattlig: status + arkiv"
+          git push</code></pre>
+<p class="note">GitHub kjører planlagte jobber bare fra hovedgrenen, og de kan bli litt forsinket – derfor et skjevt minutt. At GitHub slår av planlagte jobber etter 60 dager uten aktivitet gjelder bare offentlige repoer, ikke dette private.</p>
+
+<h3 id="steg-9-lopende-stell">Steg 9 – Løpende stell</h3>
+<ul>
+  <li><b>Token-fornying (ca. én gang i året):</b> Når kalenderpåminnelsen kommer: nytt fine-grained token (steg 3) → <code>npx wrangler secret put GH_DATA_TOKEN</code> eller via dashboardet → test en booking → slett det gamle tokenet.</li>
+  <li><b>Backup:</b> Data-repoet <i>er</i> backupen – hver booking er en commit med full historikk. Vil du ha en ekstra kopi, kan du av og til laste ned repoet som ZIP (<b>Code</b> → <b>Download ZIP</b>) eller eksportere CSV fra adminsiden. Se også <a href="#backup">Backup</a>.</li>
+  <li><b>Hvis Cloudflare endrer gratisvilkårene:</b> Ingen panikk – bookingene ligger i Git, ikke hos Cloudflare. Worker-koden er vanlig JavaScript og kan flyttes til en annen tjeneste med små endringer. Det eneste som går tapt, er øktlisten, så alle må logge inn én gang til (mobilen husker passordet).</li>
+  <li><b>Hvis innloggingen blir treg eller feiler:</b> Passord-sjekken (PBKDF2) bruker litt regnetid. Cloudflare tillater at gratisgrensen på 10 ms overskrides innimellom, og innlogging skjer sjelden. Skulle det likevel bli et problem, kan antall runder justeres i Worker-koden.</li>
+</ul>
+
+<h3 id="hvis-assistenten-skal-hjelpe">Hvis HT14-assistenten skal hjelpe</h3>
+<p>Vil du slippe terminalen, kan HT14-assistenten gjøre steg 4, 5 (selve opplastingen) og 6 (Custom Domain) fra sin maskin – hvis du lager en API-nøkkel til den. Det er et tilbud, ikke et løfte, og du bestemmer selv.</p>
+<ol class="steps">
+  <li><b>Lag nøkkelen</b>Cloudflare → <b>My Profile</b> → <b>API Tokens</b> → <b>Create Token</b> → malen <b>Edit Cloudflare Workers</b>. Begrens den til FluxReveal-kontoen og (vei A) sonen <code>fluxreveal.com</code>, og sett gjerne en utløpsdato (TTL).</li>
+  <li><b>Gi den videre trygt</b>Del den på en trygg måte, ikke i en vanlig e-post. Assistenten bruker den bare til <code>wrangler</code> og lagrer den ikke i noe repo.</li>
+  <li><b>Hemmelighetene legger du inn selv</b>GitHub-tokenet og pepper-nøkkelen (steg 5) legger Thomas inn direkte i Cloudflare, så de aldri går via assistenten.</li>
+  <li><b>Slett nøkkelen etterpå</b>Når oppsettet er ferdig, slett API-nøkkelen igjen under API Tokens.</li>
+</ol>
+
+<h3 id="sjekkliste">Sjekkliste</h3>
+<div class="table-wrap"><table><thead><tr><th></th><th>Hva</th><th>Hvem</th></tr></thead><tbody>
+<tr><td>☐</td><td>Cloudflare-konto med FluxReveal-e-post, e-post bekreftet, 2FA på, reservekoder lagret</td><td>Thomas</td></tr>
+<tr><td>☐</td><td>Privat repo <code>FluxReveal/badehus-data</code> med <code>users.json</code>, <code>rules.json</code>, <code>bookings/&lt;år&gt;.json</code>, <code>audit/&lt;år&gt;.jsonl</code></td><td>Thomas</td></tr>
+<tr><td>☐</td><td>Fine-grained token: kun <code>badehus-data</code>, Contents read/write, utløpsdato satt, kalenderpåminnelse lagt inn</td><td>Thomas</td></tr>
+<tr><td>☐</td><td>KV-lager <code>OKTER</code> opprettet og id lagt i <code>wrangler.toml</code></td><td>Thomas / assistenten</td></tr>
+<tr><td>☐</td><td>Worker deployet, secrets <code>GH_DATA_TOKEN</code> og <code>SESSION_PEPPER</code> lagt inn</td><td>Thomas (secrets) / assistenten (deploy)</td></tr>
+<tr><td>☐</td><td>Vei A: DNSSEC av ≥ 24 t → domenet i Cloudflare → alle DNS-oppføringer sjekket → navnetjenere byttet → nettside og e-post testet → <code>api.fluxreveal.com</code> koblet til → DNSSEC på igjen. <i>Eller</i> vei B: workers.dev-adresse valgt og lenket fra HT14</td><td>Thomas</td></tr>
+<tr><td>☐</td><td>Første admin lagt inn, passord byttet; nestleder opprettet</td><td>Thomas</td></tr>
+<tr><td>☐</td><td>Test på iPhone og Android: innlogging, lagret passord, hjemskjerm, booke, avbestille, commit i data-repoet</td><td>Thomas + nestleder</td></tr>
+<tr><td>☐</td><td>Nattjobb lagt inn og kjørt manuelt én gang</td><td>Thomas</td></tr>
+<tr><td>☐</td><td>Eventuell API-nøkkel til assistenten slettet</td><td>Thomas</td></tr>
+<tr><td>☐</td><td>Resten av beboerne lagt inn og fått beskjed</td><td>Administratorene</td></tr>
+</tbody></table></div>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="brukermanual.html"><small>← Forrige</small>Brukermanual – beboer</a><a class="next" href="beslutninger.html"><small>Neste →</small>Hva må godkjennes?</a></nav>
       <p class="footer">Badehusappen – dokumentasjon av bookingløsningen for badehuset vårt. Den er ikke bygget ennå, og alle navn i eksemplene er oppdiktet. Spørsmål eller ideer? Si fra til Thomas.</p>
