@@ -61,8 +61,9 @@
 <p><span class="badge-forslag">Forslag – detaljdesign</span></p>
 <div class="two">
 <div>
-<h3 id="frontend-repo-github-pages">Frontend-repo (GitHub Pages)</h3>
-<pre><code>badehus/                     ← offentlig, publiseres på Pages
+<h3 id="frontend-fluxreveal-fluxreveal-website">Frontend (FluxReveal/fluxreveal-website)</h3>
+<p style="font-size:.88rem;color:var(--muted)">Ligger i mappen <code>Badehus/</code> og publiseres på <b>https://fluxreveal.com/Badehus/</b> <span class="badge-vedtatt">Vedtatt 25.10.2026</span></p>
+<pre><code>fluxreveal-website/Badehus/  ← offentlig, fluxreveal.com/Badehus/
 ├── index.html               innlogging
 ├── kalender.html            månedskalender + detaljvisning
 ├── historikk.html           all historikk (filter/eksport)
@@ -86,12 +87,11 @@
 │   └── wrangler.toml        Worker-oppsett (ikke secrets)
 ├── tests/
 │   └── rules-engine.test.js
-└── docs/
-    ├── README.md            teknisk drift
-    ├── USER_GUIDE.md        brukere
-    ├── ADMIN_GUIDE.md       styret
-    ├── RULES.md             alle regler
-    └── ARCHITECTURE.md</code></pre>
+└── dokumentasjon/           denne nettsiden:
+    ├── index.html …         fluxreveal.com/Badehus/dokumentasjon/
+    └── (README, USER_GUIDE, ADMIN_GUIDE,
+         RULES, ARCHITECTURE)</code></pre>
+<div class="callout warn" style="font-size:.88rem"><p>Alt i <code>Badehus/</code> er offentlig på fluxreveal.com. Worker-koden og <code>wrangler.toml</code> kan ligge her fordi de <b>ikke</b> inneholder hemmeligheter – token og nøkler finnes kun som Worker-secrets. Dagens <code>Badehus/index.html</code> (lenke til dokumentasjonen) erstattes av innloggingssiden når appen bygges.</p></div>
 </div>
 <div>
 <h3 id="data-repo-privat">Data-repo (privat)</h3>
@@ -299,6 +299,18 @@ erDiagram
 
 <h2 id="worker-api">Worker-API</h2>
 <p><span class="badge-forslag">Forslag – detaljdesign</span></p>
+<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> Frontend kjører på <code>https://fluxreveal.com/Badehus/</code>. Workeren tillater derfor kun kall fra origin <code>https://fluxreveal.com</code> (CORS).</p></div>
+<pre><code>// CORS i Workeren (utkast)
+const ALLOWED_ORIGIN = "https://fluxreveal.com";
+function cors(req, res) {
+  if (req.headers.get("Origin") === ALLOWED_ORIGIN) {
+    res.headers.set("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
+    res.headers.set("Access-Control-Allow-Headers", "Authorization, Content-Type");
+    res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, OPTIONS");
+    res.headers.set("Vary", "Origin");
+  }
+  return res;          // andre origins får ingen CORS-header → nettleseren blokkerer
+}</code></pre>
 <p>Alle kall går til Workeren over HTTPS med JSON. Unntatt <code>/api/login</code> krever alle kall headeren <code>Authorization: Bearer <token></code>. Tokenet er kortlevd og signert av Workeren.</p>
 <div class="table-wrap"><table><thead><tr><th>Metode</th><th>Endepunkt</th><th>Rolle</th><th>Beskrivelse</th></tr></thead><tbody>
 <tr><td><b>POST</b></td><td><code>/api/login</code></td><td>alle</td><td>Brukernavn + passord → token, bruker, utløpstid</td></tr>

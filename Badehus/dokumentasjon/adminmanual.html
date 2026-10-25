@@ -66,9 +66,9 @@
 <h3 id="kontoer-og-tilganger-styret-ma-ha">Kontoer og tilganger styret må ha</h3>
 <div class="table-wrap"><table><thead><tr><th>Tjeneste</th><th>Hva den brukes til</th><th>Hvem bør ha tilgang</th></tr></thead><tbody>
 <tr><td>Admin-bruker i Badehus-appen</td><td>Daglig administrasjon via adminsiden</td><td>Styreleder og nestleder</td></tr>
-<tr><td>GitHub (frontend-repo og privat data-repo)</td><td>Kode, data, historikk, Actions, eventuell manuell redigering</td><td>Eies av Thomas via FluxReveal-kontoene <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Tilgang for styreleder/nestleder <span class="badge-forslag">Forslag – detaljdesign</span></td></tr>
+<tr><td>GitHub (FluxReveal/fluxreveal-website med <code>Badehus/</code>, og privat data-repo)</td><td>Kode, data, historikk, Actions, eventuell manuell redigering</td><td>Eies av Thomas via FluxReveal-kontoene <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Tilgang for styreleder/nestleder <span class="badge-forslag">Forslag – detaljdesign</span></td></tr>
 <tr><td>Cloudflare (Worker)</td><td>Innlogging/skriving, hemmeligheter (token)</td><td>Eies av Thomas via FluxReveal-kontoene <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Tilgang for styreleder/nestleder <span class="badge-forslag">Forslag – detaljdesign</span></td></tr>
-<tr><td>Domene (valgfritt)</td><td>Egen adresse for nettsiden</td><td>Den som eier domenet</td></tr>
+<tr><td>Adresse</td><td>Løsning: <a href="https://fluxreveal.com/Badehus/">fluxreveal.com/Badehus/</a> · Dokumentasjon: <a href="https://fluxreveal.com/Badehus/dokumentasjon/">fluxreveal.com/Badehus/dokumentasjon/</a></td><td>Domenet fluxreveal.com hører til FluxReveal-nettstedet <span class="badge-vedtatt">Vedtatt 25.10.2026</span></td></tr>
 </tbody></table></div>
 
 <h2 id="adminsiden">Adminsiden</h2>
@@ -233,7 +233,7 @@ flowchart LR
 <tr><td>Statuser blir ikke «frosset» / CSV oppdateres ikke</td><td>Nattlig Actions-jobb har feilet eller er forsinket</td><td>Data-repoet → Actions → se rød jobb og feilmelding. Kjør jobben manuelt («Run workflow»). Merk: brukerne ser likevel riktig status, fordi den beregnes fra klokka.</td></tr>
 <tr><td>«Mange endringer akkurat nå» (<code>CONFLICT_RETRY</code>)</td><td>Flere skrev samtidig</td><td>Be beboeren prøve igjen om litt. Ingen data går tapt.</td></tr>
 <tr><td>Feil i en booking</td><td>Feilregistrering</td><td>Korriger med kommentar (se <a href="#korrigere-historikk">Korrigere historikk</a>).</td></tr>
-<tr><td>Nettsiden vises ikke</td><td>GitHub Pages-problem</td><td>Frontend-repoet → Settings → Pages: sjekk at Pages er aktivert. Ingen data er berørt.</td></tr>
+<tr><td>Nettsiden vises ikke</td><td>GitHub Pages-problem</td><td>FluxReveal/fluxreveal-website → Settings → Pages: sjekk at Pages er aktivert og at domenet er fluxreveal.com. Ingen data er berørt.</td></tr>
 </tbody></table></div>
 
 <h2 id="overlevering-til-ny-styreleder">Overlevering til ny styreleder</h2>
@@ -253,7 +253,7 @@ flowchart LR
 </figure>
 <div class="table-wrap"><table><thead><tr><th>✓</th><th>Oppgave</th><th>Detaljer</th></tr></thead><tbody>
 <tr><td>☐</td><td>Gi ny styreleder rollen <code>admin</code> i appen</td><td>Adminsiden → Brukere → endre rolle. Logges.</td></tr>
-<tr><td>☐</td><td>Gi tilgang til frontend-repo og data-repo i GitHub</td><td>Repo → Settings → Collaborators (eller organisasjon).</td></tr>
+<tr><td>☐</td><td>Gi tilgang til fluxreveal-website (mappen Badehus/) og data-repo i GitHub</td><td>Repo → Settings → Collaborators (eller organisasjon).</td></tr>
 <tr><td>☐</td><td>Gi tilgang til Cloudflare-kontoen med Workeren</td><td>Cloudflare → Members.</td></tr>
 <tr><td>☐</td><td>Lag nytt fine-grained GitHub-token og legg det inn som Worker-secret</td><td>Kun tilgang til data-repoet. Slett det gamle tokenet.</td></tr>
 <tr><td>☐</td><td>Fjern admin-rolle og tilganger for avtroppende (hvis de ikke skal fortsette)</td><td>App, GitHub og Cloudflare.</td></tr>
@@ -277,13 +277,13 @@ flowchart LR
 </pre>
 </figure>
 <ol class="steps">
-  <li><b>Overfør GitHub-repoene</b>For både frontend-repoet og det private data-repoet: repoet på github.com → <b>Settings</b> → nederst under «Danger Zone» → <b>Transfer</b> → skriv inn sameiets GitHub-konto eller organisasjon. GitHub videresender gamle adresser til ny eier. Sjekk etterpå at GitHub Pages fortsatt er aktivert, og at Actions-jobben (nattlig) kjører.</li>
-  <li><b>Flytt Cloudflare Worker og secrets til ny konto</b>Opprett Workeren på sameiets Cloudflare-konto med samme kode (fra <code>worker/</code> i frontend-repoet). Hemmeligheter kan ikke leses ut og kopieres – de må legges inn på nytt i den nye kontoen (se neste steg). Oppdater Worker-URL-en i <code>js/config.js</code> hvis den endres. Slett den gamle Workeren når den nye er testet.</li>
+  <li><b>Overfør GitHub-repoene</b><b>Data-repoet:</b> repoet på github.com → <b>Settings</b> → nederst under «Danger Zone» → <b>Transfer</b> → skriv inn sameiets GitHub-konto eller organisasjon. Sjekk at Actions-jobben (nattlig) kjører etterpå. <b>Frontend:</b> den ligger i mappen <code>Badehus/</code> i FluxReveal/fluxreveal-website, som også inneholder resten av FluxReveal-nettstedet – hele det repoet skal normalt ikke overføres. Kopier i stedet mappen <code>Badehus/</code> til et nytt repo hos sameiet, slå på GitHub Pages der og velg ny adresse.</li>
+  <li><b>Flytt Cloudflare Worker og secrets til ny konto</b>Opprett Workeren på sameiets Cloudflare-konto med samme kode (fra <code>worker/</code> i frontend-repoet). Hemmeligheter kan ikke leses ut og kopieres – de må legges inn på nytt i den nye kontoen (se neste steg). Oppdater Worker-URL-en i <code>js/config.js</code> hvis den endres, og sett Workerens CORS-origin til den nye adressen (i dag <code>https://fluxreveal.com</code>). Slett den gamle Workeren når den nye er testet.</li>
   <li><b>Roter tokens</b>Lag et nytt fine-grained GitHub-token fra sameiets konto med tilgang kun til data-repoet, og legg det inn som Worker-secret. Lag også en ny nøkkel for signering av sesjonstoken (alle blir logget ut én gang). Slett de gamle tokenene fra FluxReveal-kontoen.</li>
   <li><b>Oppdater admin-kontakter</b>Sett riktige administratorer i appen (rolle <code>admin</code>), riktige medlemmer/eiere i GitHub og Cloudflare, og kontaktinformasjon for brukerstøtte. Fjern tilganger som ikke lenger trengs.</li>
   <li><b>Test og loggfør</b>Logg inn, book og avbestill en testdato, sjekk historikk og eksport, og før overføringen inn i <a href="beslutninger.html#beslutningslogg">beslutningsloggen</a>.</li>
 </ol>
-<div class="callout info"><p>Har løsningen eget domene, må også domenet (DNS) flyttes eller pekes på nytt – se gjenstående beslutning om adresse/domene på <a href="beslutninger.html">Beslutninger</a>.</p></div>
+<div class="callout info"><p>Ved overføring får løsningen en ny adresse (i dag <a href="https://fluxreveal.com/Badehus/">fluxreveal.com/Badehus/</a>). Gi beboerne den nye adressen, og la gjerne <code>Badehus/index.html</code> på fluxreveal.com lenke videre en periode.</p></div>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="brukermanual.html"><small>← Forrige</small>Brukermanual – beboer</a><a class="next" href="beslutninger.html"><small>Neste →</small>Beslutninger</a></nav>
       <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.3 · 25.10.2026). Systemet er ikke bygget ennå. Arkitektur og regelavklaringer er <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Detaljer merket <span class="badge-forslag">Forslag – detaljdesign</span> er utdypinger som kan justeres ved bygging. Alle navn er eksempler.</p>

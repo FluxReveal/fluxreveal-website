@@ -51,15 +51,15 @@
 <section class="hero">
   <div class="eyebrow">Styring · Beslutninger</div>
   <h1>Beslutninger og beslutningslogg</h1>
-  <p>25.10.2026 godkjente Thomas Gude Svensrud den anbefalte arkitekturen og alle ti foreslåtte regelavklaringer. Kontoeierskap er også avklart. To beslutninger gjenstår.</p>
-  <div class="meta"><span class="chip draft">v0.3 · 25.10.2026</span><span class="chip ok">10 av 10 vedtatt</span><span class="chip">2 gjenstående</span></div>
+  <p>25.10.2026 godkjente Thomas Gude Svensrud den anbefalte arkitekturen og alle ti foreslåtte regelavklaringer. Kontoeierskap og adresse er også avklart. Én beslutning gjenstår.</p>
+  <div class="meta"><span class="chip draft">v0.3 · 25.10.2026</span><span class="chip ok">10 av 10 vedtatt</span><span class="chip">1 gjenstående</span></div>
 </section>
 
 <div class="grid c4">
   <div class="card"><div class="stat" style="color:var(--ok)">10</div>regelavklaringer vedtatt</div>
   <div class="card"><div class="stat" style="color:var(--ok)">✓</div>arkitektur vedtatt</div>
-  <div class="card"><div class="stat" style="color:var(--ok)">✓</div>kontoeierskap avklart</div>
-  <div class="card"><div class="stat" style="color:var(--warn)">2</div>gjenstående beslutninger</div>
+  <div class="card"><div class="stat" style="color:var(--ok)">✓</div>kontoeierskap og adresse avklart</div>
+  <div class="card"><div class="stat" style="color:var(--warn)">1</div>gjenstående beslutning</div>
 </div>
 
 <h2 id="slik-behandles-en-beslutning">Slik behandles en beslutning</h2>
@@ -79,10 +79,11 @@ flowchart LR
 <figcaption>25.10.2026 ble alle ti forslag godtatt som foreslått.</figcaption>
 </figure>
 
-<h2 id="arkitektur">Arkitektur</h2>
+<h2 id="arkitektur-eierskap-og-adresse">Arkitektur, eierskap og adresse</h2>
 <div class="card" style="margin:14px 0;border-left:6px solid var(--ok)">
   <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Anbefalt arkitektur</b><span><span class="badge-vedtatt">Vedtatt 25.10.2026</span></span></div>
   <p style="margin:.5rem 0">GitHub Pages (statisk frontend) + én Cloudflare Worker (innlogging, regelvalidering, skriving) + privat GitHub data-repo (JSON/JSONL/CSV, Git som revisjonsspor) + GitHub Actions (nattlig frysing av status, CSV-arkiv og backup). Alternativet «100 % GitHub med Issues/konto per bruker» er forkastet.</p>
+  <p style="margin:.5rem 0"><b>Eierskap:</b> Thomas eier GitHub- og Cloudflare-kontoene via FluxReveal-kontoene sine. <b>Adresse:</b> <a href="https://fluxreveal.com/Badehus/">fluxreveal.com/Badehus/</a> (dokumentasjon: <a href="https://fluxreveal.com/Badehus/dokumentasjon/">fluxreveal.com/Badehus/dokumentasjon/</a>).</p>
   <p style="margin:0;color:var(--muted);font-size:.9rem">Detaljdesignet i <a href="lld.html">LLD</a> (filnavn, felt, endepunkter, feilkoder, CSV-oppsett, nattlig jobb) er fortsatt <span class="badge-forslag">Forslag – detaljdesign</span>.</p>
 </div>
 
@@ -161,11 +162,7 @@ flowchart LR
 
 <h2 id="gjenstaende-beslutninger">Gjenstående beslutninger</h2>
 <div class="card" style="margin:14px 0;border-left:6px solid var(--warn)">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>G1 · Adresse/domene for løsningen</b><span class="badge">Status: Åpen</span></div>
-  <p style="margin:.5rem 0">Hvilken nettadresse skal beboerne bruke? Eget domene er valgfritt og kan ha en egen kostnad.</p>
-</div>
-<div class="card" style="margin:14px 0;border-left:6px solid var(--warn)">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>G2 · Om styret/sameiermøtet må godkjenne reglene</b><span class="badge">Status: Avventer vedtekter</span></div>
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>G1 · Om styret/sameiermøtet må godkjenne reglene</b><span class="badge">Status: Avventer vedtekter</span></div>
   <p style="margin:.5rem 0">Sameiets vedtekter er ikke tilgjengelige ennå. Når de foreligger, avklares det om bookingreglene også må vedtas av styret eller sameiermøtet.</p>
 </div>
 
@@ -184,6 +181,7 @@ flowchart LR
 <tr><td>25.10.2026</td><td>Dokumentasjonsside v0.2 utkast publisert.</td><td>–</td><td><span class="badge">Dokumentasjon</span></td></tr>
 <tr><td><b>25.10.2026</b></td><td><b>Arkitektur og alle 10 regelavklaringer godkjent av Thomas.</b> I tillegg: en bekreftet NOT_CONFIRMED-booking blir COMPLETED.</td><td>Thomas Gude Svensrud</td><td><span class="badge-vedtatt">Vedtatt 25.10.2026</span></td></tr>
 <tr><td><b>25.10.2026</b></td><td><b>Eierskap til kontoer:</b> Thomas eier GitHub- og Cloudflare-kontoene via FluxReveal-kontoene sine. (Overføring til sameiet ved behov: se <a href="adminmanual.html#overforing-til-sameiet-ved-behov">administratormanualen</a>.)</td><td>Thomas Gude Svensrud</td><td><span class="badge-vedtatt">Vedtatt 25.10.2026</span></td></tr>
+<tr><td><b>25.10.2026</b></td><td><b>Adresse/domene:</b> Løsningen skal ligge på fluxreveal.com/Badehus/ (dokumentasjonen på fluxreveal.com/Badehus/dokumentasjon/). Workerens CORS-origin er https://fluxreveal.com.</td><td>Thomas Gude Svensrud</td><td><span class="badge-vedtatt">Vedtatt 25.10.2026</span></td></tr>
 <tr><td>25.10.2026</td><td>Dokumentasjonsside v0.3 publisert med vedtatte beslutninger.</td><td>–</td><td><span class="badge">Dokumentasjon</span></td></tr>
 <tr><td style="color:var(--muted)">–</td><td style="color:var(--muted)"><i>Neste beslutning føres her …</i></td><td></td><td></td></tr>
 </tbody></table></div>

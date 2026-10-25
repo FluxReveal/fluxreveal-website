@@ -141,11 +141,14 @@
 <figcaption>Nettsiden (Pages) inneholder ingen data. All lesing og skriving av personopplysninger går gjennom Workeren, som er den eneste med nøkkel til det private data-repoet.</figcaption>
 </figure>
 
+<h2 id="adresse">Adresse</h2>
+<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> Løsningen skal ligge på <a href="https://fluxreveal.com/Badehus/">fluxreveal.com/Badehus/</a>, og dokumentasjonen på <a href="https://fluxreveal.com/Badehus/dokumentasjon/">fluxreveal.com/Badehus/dokumentasjon/</a>. Workerens CORS-origin er <code>https://fluxreveal.com</code>.</p></div>
+
 <h2 id="komponenter">Komponenter</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Komponent</th><th>Teknologi</th><th>Ansvar</th><th>Kostnad</th></tr></thead>
 <tbody>
-<tr><td><b>Frontend</b></td><td>Statisk HTML, CSS, JavaScript på GitHub Pages</td><td>Brukergrensesnitt: innlogging, månedskalender, detaljvisning, booking, avbestilling, innsjekk, bekreftelse, historikk, statistikk, adminsider. Beregner visningsstatus fra klokka (Europe/Oslo).</td><td>0 kr</td></tr>
+<tr><td><b>Frontend</b></td><td>Statisk HTML, CSS, JavaScript på GitHub Pages: <code>https://fluxreveal.com/Badehus/</code> (mappen <code>Badehus/</code> i FluxReveal/fluxreveal-website)</td><td>Brukergrensesnitt: innlogging, månedskalender, detaljvisning, booking, avbestilling, innsjekk, bekreftelse, historikk, statistikk, adminsider. Beregner visningsstatus fra klokka (Europe/Oslo).</td><td>0 kr</td></tr>
 <tr><td><b>Skrive-/auth-ledd</b></td><td>Én Cloudflare Worker (gratis plan)</td><td>Verifiserer passord (hash, f.eks. PBKDF2 via WebCrypto), utsteder kortlevd sesjonstoken, validerer alle regler <b>server-side</b> mot <code>rules.json</code>, committer endringer til data-repo via GitHub API. Optimistisk låsing via fil-SHA.</td><td>0 kr</td></tr>
 <tr><td><b>Data</b></td><td>Privat GitHub-repo med JSON/JSONL/CSV</td><td><code>users.json</code> (uten klartekstpassord), <code>bookings/<år>.json</code>, <code>audit/<år>.jsonl</code>, <code>rules.json</code>. Git-historikken er revisjonssporet.</td><td>0 kr</td></tr>
 <tr><td><b>Planlagte jobber</b></td><td>GitHub Actions (cron, nattlig)</td><td>Skriver endelig status (COMPLETED / NOT_CONFIRMED) til Git, genererer <code>archive/<år>.csv</code> og backup.</td><td>0 kr</td></tr>
@@ -199,6 +202,7 @@ flowchart LR
 <tr><td>Dobbeltbooking ved samtidige forespørsler</td><td>Optimistisk låsing via fil-SHA i GitHub API.</td></tr>
 <tr><td>Selvregistrering / ukjente brukere</td><td>Ingen selvregistrering. Administrator oppretter brukere og setter/resetter passord.</td></tr>
 <tr><td>Skjulte endringer</td><td>Hver endring er en commit, og logges i <code>audit/<år>.jsonl</code> med hvem, når, fra, til og kommentar. Alle adminhandlinger logges.</td></tr>
+<tr><td>Kall fra fremmede nettsider</td><td>Workeren tillater kun origin <code>https://fluxreveal.com</code> (CORS), i tillegg til token-krav.</td></tr>
 <tr><td>Token med for vide rettigheter</td><td>Fine-grained token, lagret som Worker-secret (aldri i kode).</td></tr>
 </tbody></table></div>
 
@@ -215,7 +219,7 @@ flowchart LR
   <div class="card"><b>GitHub Pages</b><div class="stat">0 kr</div></div>
   <div class="card"><b>Cloudflare Worker</b><div class="stat">0 kr</div><small style="color:var(--muted)">gratis plan, 100 000 forespørsler/døgn</small></div>
   <div class="card"><b>Privat repo + Actions</b><div class="stat">0 kr</div></div>
-  <div class="card"><b>Eget domene</b><div class="stat" style="font-size:1.3rem">valgfritt</div><small style="color:var(--muted)">evt. egen kostnad</small></div>
+  <div class="card"><b>Adresse</b><div class="stat" style="font-size:1.15rem">fluxreveal.com/Badehus/</div><small style="color:var(--muted)">eksisterende domene, vedtatt 25.10.2026</small></div>
 </div>
 
 <h2 id="arkitekturvalg">Arkitekturvalg</h2>
@@ -242,7 +246,7 @@ flowchart LR
   <li>Avhengig av gratisplanene til GitHub og Cloudflare.</li>
   <li>Actions-cron kan være forsinket (håndtert ved at status beregnes fra klokka).</li>
   <li>Token i Worker må fornyes/roteres – se <a href="adminmanual.html">administratormanualen</a>.</li>
-  <li>To beslutninger gjenstår (adresse/domene og om reglene må godkjennes av styret/sameiermøtet) – se <a href="beslutninger.html">Beslutninger</a>.</li>
+  <li>Én beslutning gjenstår: om reglene må godkjennes av styret/sameiermøtet (avventer vedtekter) – se <a href="beslutninger.html">Beslutninger</a>.</li>
 </ul>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="beskrivelse.html"><small>← Forrige</small>Overordnet beskrivelse</a><a class="next" href="lld.html"><small>Neste →</small>LLD – Low Level Design</a></nav>
