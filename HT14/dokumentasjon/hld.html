@@ -55,10 +55,10 @@
   <div class="eyebrow">Teknisk · Arkitektur</div>
   <h1>HLD – High Level Design</h1>
   <p>Overordnet arkitektur for Badehusappen: hvilke deler den består av, hvordan data flyter, og hvorfor den er bygget slik.</p>
-  <div class="meta"><span class="chip">⏱ Ca. 8 min lesetid</span></div>
+  <div class="meta"><span class="chip">⏱ Ca. 9 min lesetid</span></div>
 </section>
 
-<p class="note">Arkitekturen på denne siden (GitHub Pages + én Cloudflare Worker + privat data-repo + GitHub Actions) er valgt av Thomas Gude Svensrud, som lager Badehusappen på oppdrag fra sameiet. Tekniske valg som dette trenger ikke godkjenning av sameiet. GitHub- og Cloudflare-kontoene eies av Thomas via FluxReveal-kontoene hans. Reglene Badehusappen håndhever er derimot bare forslag til vi blir enige om dem på sameiemøtet – se <a href="regler.html">Bookingregler</a>.</p>
+<p class="note">Arkitekturen på denne siden (én Cloudflare Worker som serverer hele Badehusappen + privat data-repo + GitHub Actions, mens startsiden og dokumentasjonen ligger på GitHub Pages) er valgt av Thomas Gude Svensrud, som lager Badehusappen på oppdrag fra sameiet. Tekniske valg som dette trenger ikke godkjenning av sameiet. GitHub- og Cloudflare-kontoene eies av Thomas via FluxReveal-kontoene hans. Reglene Badehusappen håndhever er derimot bare forslag til vi blir enige om dem på sameiemøtet – se <a href="regler.html">Bookingregler</a>.</p>
 
 <h2 id="mal-og-foringer">Mål og føringer</h2>
 <div class="grid c2">
@@ -75,11 +75,11 @@
   <li>Alt som publiseres på Pages er offentlig – selv fra et privat repo – og bookingdata er personopplysninger.</li>
 </ul>
 </div>
-<p>Derfor anbefales ett lite, gratis «skrive- og innloggingsledd» mellom nettsiden og dataene: en Cloudflare Worker.</p>
+<p>Derfor ligger Badehusappen i en liten, gratis Cloudflare Worker: den serverer selve sidene og står for innlogging og skriving. GitHub Pages brukes fortsatt til startsiden og dokumentasjonen på fluxreveal.com/HT14/.</p>
 
 <h2 id="systemkontekst">Systemkontekst</h2>
 <figure>
-<svg viewBox="0 0 900 470" role="img" aria-label="Arkitekturdiagram">
+<svg viewBox="0 0 900 410" role="img" aria-label="Arkitekturdiagram">
   <defs>
     <marker id="h1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#475569"/></marker>
     <linearGradient id="gw" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff7ed"/><stop offset="1" stop-color="#ffedd5"/></linearGradient>
@@ -97,22 +97,34 @@
     <!-- Pages -->
     <g transform="translate(270 20)">
       <rect width="250" height="120" rx="16" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
-      <text x="125" y="28" text-anchor="middle" font-weight="800" fill="#0e7490">GitHub Pages</text>
-      <text x="125" y="50" text-anchor="middle" fill="#0f172a">Badehusappen: HTML/CSS/JS (PWA)</text>
+      <text x="125" y="28" text-anchor="middle" font-weight="800" fill="#0e7490">Badehusappen-sidene</text>
+      <text x="125" y="50" text-anchor="middle" fill="#0f172a">statiske filer i Workeren (PWA)</text>
       <text x="125" y="72" text-anchor="middle" fill="#334155">ukekalender · booking · innsjekk</text>
       <text x="125" y="92" text-anchor="middle" fill="#334155">historikk · statistikk · admin</text>
-      <text x="125" y="110" text-anchor="middle" fill="#64748b" font-size="10">inneholder ingen data og ingen hemmeligheter</text>
+      <text x="125" y="110" text-anchor="middle" fill="#64748b" font-size="10">ingen data og ingen hemmeligheter i filene</text>
     </g>
     <!-- Worker -->
     <g transform="translate(270 200)">
       <rect width="250" height="140" rx="16" fill="url(#gw)" stroke="#ea580c" stroke-width="2"/>
-      <text x="125" y="28" text-anchor="middle" font-weight="800" fill="#c2410c">Cloudflare Worker</text>
+      <text x="125" y="28" text-anchor="middle" font-weight="800" fill="#c2410c">Cloudflare Worker · /api/</text>
       <text x="125" y="48" text-anchor="middle" fill="#64748b" font-size="11">gratis plan · 100 000 forespørsler/døgn</text>
       <text x="125" y="72" text-anchor="middle" fill="#0f172a">e-post + passord (PBKDF2)</text>
       <text x="125" y="92" text-anchor="middle" fill="#0f172a">økt-cookie 365 d · KV-øktliste</text>
       <text x="125" y="112" text-anchor="middle" fill="#0f172a">regelvalidering mot rules.json</text>
       <text x="125" y="130" text-anchor="middle" fill="#0f172a">commit via GitHub API</text>
     </g>
+    <!-- Felles adresse -->
+    <rect x="260" y="8" width="270" height="344" rx="20" fill="none" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="6 5"/>
+    <text x="395" y="176" text-anchor="middle" fill="#0e7490" font-size="10.5" font-weight="700">samme adresse: badehusappen.fluxreveal.workers.dev</text>
+    <!-- GitHub Pages -->
+    <g transform="translate(20 300)">
+      <rect width="170" height="100" rx="14" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="85" y="24" text-anchor="middle" font-weight="800" fill="#334155">GitHub Pages</text>
+      <text x="85" y="46" text-anchor="middle" fill="#334155" font-size="11">fluxreveal.com/HT14/</text>
+      <text x="85" y="64" text-anchor="middle" fill="#334155" font-size="11">startside + dokumentasjon</text>
+      <text x="85" y="84" text-anchor="middle" fill="#64748b" font-size="10">lenker til Badehusappen</text>
+    </g>
+    <path d="M105 300 V185" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3"/>
     <!-- Secret -->
     <g transform="translate(300 360)"><rect width="190" height="40" rx="10" fill="#fff" stroke="#ea580c" stroke-dasharray="5 4"/><text x="95" y="25" text-anchor="middle" fill="#9a3412" font-size="12">🔑 fine-grained token som Worker-secret</text></g>
     <!-- Data repo -->
@@ -136,23 +148,24 @@
     <!-- arrows -->
     <path d="M190 80 H265" stroke="#475569" stroke-width="2" marker-end="url(#h1)"/><text x="228" y="72" text-anchor="middle" fill="#475569" font-size="11">laster side</text>
     <path d="M190 140 C230 140 230 270 265 270" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#h1)"/><text x="212" y="236" text-anchor="end" fill="#475569" font-size="11">HTTPS-API</text><text x="212" y="250" text-anchor="end" fill="#475569" font-size="11">(fetch)</text>
-    <path d="M520 270 H605" stroke="#475569" stroke-width="2" marker-end="url(#h1)"/><text x="562" y="262" text-anchor="middle" fill="#475569" font-size="11">les / commit</text>
+    <path d="M520 270 H605" stroke="#475569" stroke-width="2" marker-end="url(#h1)"/><text x="568" y="262" text-anchor="middle" fill="#475569" font-size="11">les / commit</text>
     <path d="M745 116 V145" stroke="#475569" stroke-width="2" marker-end="url(#h1)"/><text x="752" y="132" fill="#475569" font-size="11">commit</text>
     <path d="M395 360 V345" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="4 3"/>
   </g>
 </svg>
-<figcaption>Nettsiden (Pages) inneholder ingen data. All lesing og skriving av personopplysninger går gjennom Workeren, som er den eneste med nøkkel til det private data-repoet.</figcaption>
+<figcaption>Sidene og API-et ligger på samme adresse, så det trengs ingen CORS og ingen tredjeparts-cookie. Sidene inneholder ingen data. All lesing og skriving av personopplysninger går gjennom Workeren, som er den eneste med nøkkel til det private data-repoet.</figcaption>
 </figure>
 
 <h2 id="adresse">Adresse</h2>
-<p class="note">Badehusappen skal ligge på <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a>, og dokumentasjonen på <a href="https://fluxreveal.com/HT14/dokumentasjon/">fluxreveal.com/HT14/dokumentasjon/</a>. Workerens CORS-origin er <code>https://fluxreveal.com</code>.</p>
+<p class="note">Badehusappen får en gratis adresse hos Cloudflare, foreslått <code>https://badehusappen.fluxreveal.workers.dev/</code> (det endelige navnet velges når Cloudflare-kontoen lages). Startsiden <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a> og dokumentasjonen på <a href="https://fluxreveal.com/HT14/dokumentasjon/">fluxreveal.com/HT14/dokumentasjon/</a> blir liggende på GitHub Pages, og startsiden lenker til Badehusappen. Domenet fluxreveal.com flyttes ikke. Vil vi senere ha Badehusappen på eget domene, kan den flyttes uten at noe i dataene endres – bare adressen og innloggingen (alle logger inn én gang til).</p>
 
 <h2 id="komponenter">Komponenter</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>Komponent</th><th>Teknologi</th><th>Ansvar</th><th>Kostnad</th></tr></thead>
 <tbody>
-<tr><td><b>Frontend</b></td><td>Statisk HTML, CSS, JavaScript på GitHub Pages: <code>https://fluxreveal.com/HT14/</code> (mappen <code>HT14/</code> i FluxReveal/fluxreveal-website)</td><td>Badehusappen: innlogging, mobilvennlig ukekalender (månedsvisning valgfritt), detaljvisning, booking, avbestilling, innsjekk, bekreftelse, historikk, statistikk, adminsider. Beregner visningsstatus fra klokka (Europe/Oslo). Web app-manifest og ikon, så den kan legges på Hjem-skjermen.</td><td>0 kr</td></tr>
-<tr><td><b>Skrive-/auth-ledd</b></td><td>Én Cloudflare Worker (gratis plan)</td><td>Egen innlogging med e-post og passord (PBKDF2-hash via WebCrypto), setter en lang økt-cookie (HttpOnly, Secure, SameSite=Strict, ca. 365 dager, fornyes ved bruk), holder øktliste og teller feil forsøk i Workers KV, validerer alle regler <b>server-side</b> mot <code>rules.json</code>, committer endringer til data-repo via GitHub API. Optimistisk låsing via fil-SHA.</td><td>0 kr</td></tr>
+<tr><td><b>Frontend</b></td><td>Statisk HTML, CSS, JavaScript som Workerens statiske filer («static assets»): <code>https://badehusappen.fluxreveal.workers.dev/</code>. Kildekoden ligger i <code>HT14/badehusappen/</code> i FluxReveal/fluxreveal-website.</td><td>Badehusappen: innlogging, mobilvennlig ukekalender (månedsvisning valgfritt), detaljvisning, booking, avbestilling, innsjekk, bekreftelse, historikk, statistikk, adminsider. Beregner visningsstatus fra klokka (Europe/Oslo). Web app-manifest og ikon, så den kan legges på Hjem-skjermen.</td><td>0 kr</td></tr>
+<tr><td><b>Skrive-/auth-ledd</b></td><td>Én Cloudflare Worker (gratis plan)</td><td>Egen innlogging med e-post og passord (PBKDF2-hash via WebCrypto), setter en lang økt-cookie (HttpOnly, Secure, SameSite=Lax, ca. 365 dager, fornyes ved bruk), holder øktliste og teller feil forsøk i Workers KV, validerer alle regler <b>server-side</b> mot <code>rules.json</code>, committer endringer til data-repo via GitHub API. Optimistisk låsing via fil-SHA.</td><td>0 kr</td></tr>
+<tr><td><b>Startside og dokumentasjon</b></td><td>GitHub Pages: <code>https://fluxreveal.com/HT14/</code></td><td>Årshjul, dokumentasjon og en knapp «Åpne Badehusappen». Ingen innlogging og ingen data.</td><td>0 kr</td></tr>
 <tr><td><b>Data</b></td><td>Privat GitHub-repo med JSON/JSONL/CSV</td><td><code>users.json</code> (uten klartekstpassord), <code>bookings/&lt;år&gt;.json</code>, <code>audit/&lt;år&gt;.jsonl</code>, <code>rules.json</code>. Git-historikken er revisjonssporet.</td><td>0 kr</td></tr>
 <tr><td><b>Planlagte jobber</b></td><td>GitHub Actions (cron, nattlig)</td><td>Skriver endelig status (COMPLETED / NOT_CONFIRMED) til Git, genererer <code>archive/&lt;år&gt;.csv</code> og backup.</td><td>0 kr</td></tr>
 <tr><td><b>Økter</b></td><td>Cloudflare Workers KV (gratis plan)</td><td>Aktive økter (bare hash av økt-nøkkelen), og teller for feil innloggingsforsøk. Admin kan slette økter.</td><td>0 kr</td></tr>
@@ -164,8 +177,8 @@
 <figure>
 <pre class="mermaid">
 flowchart LR
-  U["Beboer<br/>(nettleser)"] -->|1. åpner side| P["GitHub Pages<br/>statisk frontend"]
-  U -->|2. innlogging / booking<br/>med økt-cookie| W["Cloudflare Worker"]
+  U["Beboer<br/>(nettleser)"] -->|1. åpner side| P["Badehusappen-sidene<br/>(statiske filer i Workeren)"]
+  U -->|2. innlogging / booking<br/>med økt-cookie, samme adresse| W["Cloudflare Worker<br/>/api/"]
   W -->|sjekker og fornyer økt| K[("Workers KV<br/>øktliste")]
   W -->|3. leser rules.json,<br/>bookings, users| D[("Privat data-repo<br/>badehus-data")]
   W -->|4. validerer regler<br/>server-side| W
@@ -183,7 +196,7 @@ flowchart LR
 
 <h3 id="hvor-bor-hva">Hvor bor hva?</h3>
 <div class="grid c3">
-  <div class="card" style="border-top:5px solid #0891b2"><h4>Offentlig (Pages)</h4><p style="margin:0;color:var(--muted)">Kode for grensesnittet, stilark, ikoner. Ingen navn, ingen bookinger, ingen nøkler.</p></div>
+  <div class="card" style="border-top:5px solid #0891b2"><h4>Offentlig (kode og sider)</h4><p style="margin:0;color:var(--muted)">Kode for grensesnittet, stilark, ikoner, startsiden og dokumentasjonen. Ingen navn, ingen bookinger, ingen nøkler.</p></div>
   <div class="card" style="border-top:5px solid #ea580c"><h4>Hemmelig (Worker-secrets)</h4><p style="margin:0;color:var(--muted)">Fine-grained GitHub-token med tilgang kun til data-repoet, og en hemmelig «pepper» som blandes inn i hashen av økt-nøkler.</p></div>
   <div class="card" style="border-top:5px solid #7c3aed"><h4>Privat (data-repo)</h4><p style="margin:0;color:var(--muted)">Brukere (med passord-hash), bookinger, revisjonslogg, regler og CSV-arkiv.</p></div>
 </div>
@@ -200,7 +213,7 @@ flowchart LR
 sequenceDiagram
   autonumber
   actor B as Beboer (mobil)
-  participant P as Badehusappen (Pages)
+  participant P as Badehusappen (sidene)
   participant W as Cloudflare Worker
   participant K as Økter (Workers KV)
   participant D as Data-repo (users.json)
@@ -219,7 +232,7 @@ sequenceDiagram
     W->>D: Hent PBKDF2-hash
     W->>W: Sammenlign hash
     W->>K: Lagre ny økt (365 dager)
-    W-->>P: Set-Cookie (HttpOnly, Secure, SameSite=Strict)
+    W-->>P: Set-Cookie (HttpOnly, Secure, SameSite=Lax)
     P-->>B: Kalenderen
   end
 </pre>
@@ -231,7 +244,7 @@ sequenceDiagram
 
 <h2 id="badehusappen-pa-mobilen">Badehusappen på mobilen</h2>
 <ul>
-  <li><b>Hjem-skjerm (PWA):</b> Badehusappen har et web app-manifest og et ikon. Velger man «Legg til på Hjem-skjerm», åpner den rett i kalenderen (<code>start_url</code> er kalenderen, <code>display: standalone</code>) – uten adressefelt, som en vanlig app.</li>
+  <li><b>Hjem-skjerm (PWA):</b> Badehusappen har et web app-manifest og et ikon på sin egen adresse (badehusappen.fluxreveal.workers.dev). Velger man «Legg til på Hjem-skjerm», åpner den rett i kalenderen (<code>start_url</code> er kalenderen, <code>display: standalone</code>) – uten adressefelt, som en vanlig app. På iPhone har Hjem-skjerm-appen sine egne cookies; er man logget inn i Safari når man legger den til, blir innloggingen med (iOS 17.2 og nyere). Ellers logger man inn én gang i appen.</li>
   <li><b>Rett til kalenderen:</b> Er man allerede innlogget, hopper Badehusappen over innloggingen og viser kalenderen med en gang.</li>
   <li><b>Mobil først:</b> Ukevisning er standard, med store trykkflater. Trykk på en dag for å booke heldag, formiddag eller kveld. Månedsvisning kan velges.</li>
   <li><b>Senere idé:</b> passkeys, slik at de som vil, kan logge inn med Face ID helt uten passord. Det er ikke med nå.</li>
@@ -240,7 +253,7 @@ sequenceDiagram
 <h2 id="tid-og-status">Tid og status</h2>
 <ul>
   <li>Status beregnes fra klokka i tidssonen <b>Europe/Oslo</b> når noe vises (f.eks. «pågår», «ferdig»).</li>
-  <li>GitHub Actions-cron kjører i UTC og kan bli forsinket. Den brukes derfor <b>kun</b> til å skrive endelig status i Git – ikke til å bestemme hva brukerne ser i øyeblikket.</li>
+  <li>GitHub Actions-cron kan bli forsinket. Den brukes derfor <b>kun</b> til å skrive endelig status i Git – ikke til å bestemme hva brukerne ser i øyeblikket.</li>
   <li>Automatisk utsjekk ved periodens slutt: 08–14 → 14:00, 14–00 → 00:00.</li>
 </ul>
 <p class="note">00:00 betyr slutten av dagen (24:00) i Europe/Oslo, inkludert sommertid. Se avklaring 10.</p>
@@ -249,22 +262,22 @@ sequenceDiagram
 <div class="table-wrap"><table>
 <thead><tr><th>Trussel / behov</th><th>Tiltak i valgt arkitektur</th></tr></thead>
 <tbody>
-<tr><td>Uvedkommende leser bookingdata</td><td>Data ligger i privat repo; kun Workeren har token. Pages-output inneholder ingen data.</td></tr>
+<tr><td>Uvedkommende leser bookingdata</td><td>Data ligger i privat repo; kun Workeren har token. De statiske sidene inneholder ingen data.</td></tr>
 <tr><td>Passord på avveie</td><td>Kun hash lagres (PBKDF2 via WebCrypto, med salt). Ingen klartekstpassord i <code>users.json</code>.</td></tr>
 <tr><td>Gjetting av passord</td><td>Begrensning på antall forsøk: etter flere feil passord i strekk blir e-postadressen (og IP-adressen) midlertidig stengt i noen minutter, og pausen øker ved flere feil.</td></tr>
 <tr><td>Manipulert klient omgår regler</td><td>Alle regler valideres server-side i Workeren mot <code>rules.json</code>.</td></tr>
-<tr><td>Stjålet eller mistet mobil</td><td>Økten ligger i en <code>HttpOnly</code>-cookie (kan ikke leses av JavaScript), <code>Secure</code> (bare HTTPS) og <code>SameSite=Strict</code>. Hver økt står i øktlisten, så en administrator kan logge ut én mobil eller alle økter for en bruker. Bytte av passord logger ut alle andre økter.</td></tr>
-<tr><td>Innlogging fra andre nettsider (CSRF)</td><td><code>SameSite=Strict</code>-cookie, i tillegg til CORS-sjekk av origin.</td></tr>
+<tr><td>Stjålet eller mistet mobil</td><td>Økten ligger i en <code>HttpOnly</code>-cookie (kan ikke leses av JavaScript), <code>Secure</code> (bare HTTPS) og <code>SameSite=Lax</code>. Hver økt står i øktlisten, så en administrator kan logge ut én mobil eller alle økter for en bruker. Bytte av passord logger ut alle andre økter.</td></tr>
+<tr><td>Innlogging fra andre nettsider (CSRF)</td><td><code>SameSite=Lax</code>-cookie (sendes ikke med skjema eller kall fra andre nettsider), og Workeren godtar bare endringer når <code>Origin</code> er Badehusappens egen adresse og innholdet er JSON.</td></tr>
 <tr><td>Dobbeltbooking ved samtidige forespørsler</td><td>Optimistisk låsing via fil-SHA i GitHub API.</td></tr>
 <tr><td>Selvregistrering / ukjente brukere</td><td>Ingen selvregistrering. Administrator oppretter brukere og setter/resetter passord.</td></tr>
 <tr><td>Skjulte endringer</td><td>Hver endring er en commit, og logges i <code>audit/&lt;år&gt;.jsonl</code> med hvem, når, fra, til og kommentar. Alle adminhandlinger logges.</td></tr>
-<tr><td>Kall fra fremmede nettsider</td><td>Workeren tillater kun origin <code>https://fluxreveal.com</code> (CORS), i tillegg til gyldig økt.</td></tr>
+<tr><td>Kall fra fremmede nettsider</td><td>Sidene og API-et har samme adresse, så Workeren sender ingen CORS-headere. Nettleseren lar derfor ikke andre nettsider lese svarene, og alle kall krever gyldig økt.</td></tr>
 <tr><td>Token med for vide rettigheter</td><td>Fine-grained token, lagret som Worker-secret (aldri i kode).</td></tr>
 </tbody></table></div>
 
 <h2 id="personvern">Personvern</h2>
 <ul>
-  <li>Bookingdata (navn, husstand, tidspunkt) er personopplysninger. De publiseres derfor ikke på GitHub Pages.</li>
+  <li>Bookingdata (navn, husstand, tidspunkt) er personopplysninger. De ligger derfor aldri i de offentlige filene, verken på GitHub Pages eller blant Workerens statiske filer.</li>
   <li>Innsyn: alle innloggede beboere kan se all historikk (krav om åpenhet).</li>
   <li>Kravet «ingen data slettes permanent» står i spenning mot retten til sletting.</li>
 </ul>
@@ -273,9 +286,9 @@ sequenceDiagram
 <h2 id="kostnad">Kostnad</h2>
 <div class="grid c4">
   <div class="card"><b>GitHub Pages</b><div class="stat">0 kr</div></div>
-  <div class="card"><b>Cloudflare Worker</b><div class="stat">0 kr</div><small style="color:var(--muted)">gratis plan, 100 000 forespørsler/døgn</small></div>
+  <div class="card"><b>Cloudflare Worker</b><div class="stat">0 kr</div><small style="color:var(--muted)">gratis plan, 100 000 API-kall/døgn; statiske filer er gratis og uten grense</small></div>
   <div class="card"><b>Privat repo + Actions</b><div class="stat">0 kr</div></div>
-  <div class="card"><b>Adresse</b><div class="stat" style="font-size:1.15rem">fluxreveal.com/HT14/</div><small style="color:var(--muted)">eksisterende domene, teknisk valg (Thomas)</small></div>
+  <div class="card"><b>Adresse</b><div class="stat" style="font-size:1.15rem">*.workers.dev</div><small style="color:var(--muted)">gratis adresse hos Cloudflare, teknisk valg (Thomas)</small></div>
 </div>
 
 <h2 id="arkitekturvalg">Arkitekturvalg</h2>
@@ -283,7 +296,8 @@ sequenceDiagram
 <div class="table-wrap"><table>
 <thead><tr><th>Beslutning</th><th>Begrunnelse</th></tr></thead>
 <tbody>
-<tr><td>Statisk frontend på GitHub Pages</td><td>Gratis og enkel – og det var ønsket fra start.</td></tr>
+<tr><td>Badehusappen (sider + API) i én Worker på workers.dev</td><td>Gratis, og sider og API på samme adresse gjør innloggingen enkel og robust på iPhone. Domenet fluxreveal.com trenger ikke flyttes.</td></tr>
+<tr><td>Startside og dokumentasjon på GitHub Pages</td><td>Gratis og enkel – og det var ønsket fra start.</td></tr>
 <tr><td>Én Cloudflare Worker som skrive-/auth-ledd</td><td>Eneste måten å få sikker innlogging og skriving uten egen server og uten kostnad. Liten og avgrenset.</td></tr>
 <tr><td>Git (privat repo) som «database»</td><td>Ingen database å drifte; hver endring er en commit = gratis revisjonsspor og historikk.</td></tr>
 <tr><td>JSON for data, CSV for arkiv/eksport</td><td>Lesbart for mennesker, kan åpnes i Excel, i tråd med ønsket teknologi.</td></tr>
@@ -297,12 +311,13 @@ sequenceDiagram
 <div class="grid c2">
   <div class="card" style="border-left:5px solid var(--danger)"><h4>100 % GitHub med Issues og konto per bruker</h4><p style="margin:0;color:var(--muted)">Hver beboer måtte hatt egen GitHub-konto og brukt GitHub Issues. Forkastet: urealistisk for 20 ikke-tekniske naboer.</p></div>
   <div class="card" style="border-left:5px solid var(--danger)"><h4>Kun GitHub Pages med passord/nøkkel i JavaScript</h4><p style="margin:0;color:var(--muted)">Forkastet fordi skrivenøkkel i JS er lesbar for alle, passordsjekk i JS kan omgås, og alt i Pages-output er offentlig.</p></div>
+  <div class="card" style="border-left:5px solid var(--danger)"><h4>Sidene på fluxreveal.com, bare API-et på workers.dev</h4><p style="margin:0;color:var(--muted)">Forkastet fordi innloggings-cookien da blir en tredjeparts-cookie, og Safari på iPhone blokkerer slike som standard. Å flytte DNS for fluxreveal.com til Cloudflare (for et eget api-underdomene) ble også valgt bort.</p></div>
   <div class="card" style="border-left:5px solid var(--danger)"><h4>Cloudflare Access foran Badehusappen</h4><p style="margin:0;color:var(--muted)">Forkastet fordi en Access-økt varer maks 30 dager og bruker engangskoder på e-post, som ikke kan lagres på mobilen. Det blir for mye styr for naboene.</p></div>
 </div>
 
 <h2 id="risiko-og-avhengigheter">Risiko og avhengigheter</h2>
 <ul>
-  <li>Avhengig av gratisplanene til GitHub og Cloudflare.</li>
+  <li>Avhengig av gratisplanene til GitHub og Cloudflare. Endrer Cloudflare vilkårene, kan Workeren flyttes; dataene ligger i Git.</li>
   <li>Actions-cron kan være forsinket (håndtert ved at status beregnes fra klokka).</li>
   <li>Token i Worker må fornyes/roteres – se <a href="adminmanual.html">administratormanualen</a>.</li>
   <li>Reglene i <code>rules.json</code> er forslag til vi har bestemt dem på sameiemøtet (vedtektene § 10 og vedlegg 1) – se <a href="beslutninger.html">Hva må godkjennes?</a></li>
