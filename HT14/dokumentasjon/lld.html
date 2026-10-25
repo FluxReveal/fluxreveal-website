@@ -25,6 +25,8 @@
     <ul id="sok-resultat" class="search-results" aria-live="polite"></ul>
   </div>
   <ul class="nav">
+<li class="nav-label">Sameiet</li>
+<li><a href="../index.html#arshjul"><span class="num">⌂</span>Sameiets årshjul</a></li>
 <li class="nav-label">Start</li>
 <li><a href="index.html"><span class="num">1</span>Oversikt</a></li>
 <li class="nav-label">For alle</li>
@@ -38,12 +40,12 @@
 <li><a href="brukermanual.html"><span class="num">6</span>Brukermanual – beboer</a></li>
 <li><a href="adminmanual.html"><span class="num">7</span>Brukermanual – administrator</a></li>
 <li class="nav-label">Styring</li>
-<li><a href="beslutninger.html"><span class="num">8</span>Beslutninger</a></li>
+<li><a href="beslutninger.html"><span class="num">8</span>Hva må godkjennes?</a></li>
 <li><a href="vedtekter.html"><span class="num">9</span>Forslag til vedtekter</a></li>
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
-    Planlagt løsning · v0.3 · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
+    Planlagt løsning · v0.4 · 25.10.2026<br>Laget av Thomas på oppdrag fra sameiet – ingenting er godkjent ennå.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
   </div>
 </nav>
 <main class="main" id="innhold">
@@ -53,19 +55,21 @@
   <div class="eyebrow">Teknisk · Detaljdesign</div>
   <h1>LLD – Low Level Design</h1>
   <p>Detaljert design for utviklere og for den som skal drifte eller videreutvikle løsningen: filer, dataformater, API, regelmotor, statuser og flyt.</p>
-  <div class="meta"><span class="chip draft">v0.3 · 25.10.2026</span><span class="chip ok">Bygger på vedtatt arkitektur</span></div>
+  <div class="meta"><span class="chip draft">v0.4 · 25.10.2026</span><span class="chip teknisk">Bygger på Thomas sine tekniske valg</span></div>
 </section>
 
-<div class="callout forslag"><p><span class="badge-forslag">Forslag – detaljdesign</span> Arkitekturen og de ti regelavklaringene er <span class="badge-vedtatt">Vedtatt 25.10.2026</span> (se <a href="hld.html">HLD</a> og <a href="beslutninger.html">Beslutninger</a>). Detaljdesignet på denne siden – filnavn, feltnavn, endepunkter, feilkoder, CSV-oppsett og detaljer i nattlig jobb – er assistentens utdyping og kan justeres ved bygging. Felter som implementerer en vedtatt avklaring er merket med nummeret (f.eks. <b>Å1</b>).</p></div>
+<div class="callout forslag"><p><span class="badge-forslag">Forslag – detaljdesign</span> Arkitekturen er <span class="badge-teknisk">Teknisk valg (Thomas)</span>. Regelavklaringene er <span class="badge-regel">Forslag – ikke godkjent av sameiet</span> (se <a href="hld.html">HLD</a> og <a href="beslutninger.html">Hva må godkjennes?</a>). Detaljdesignet på denne siden – filnavn, feltnavn, endepunkter, feilkoder, CSV-oppsett og detaljer i nattlig jobb – er assistentens utdyping og kan justeres ved bygging. Felter som hører til en avklaring, er merket med nummeret (f.eks. <b>Å1</b>).</p></div>
 
 <h2 id="filstruktur">Filstruktur</h2>
 <p><span class="badge-forslag">Forslag – detaljdesign</span></p>
 <div class="two">
 <div>
 <h3 id="frontend-fluxreveal-fluxreveal-website">Frontend (FluxReveal/fluxreveal-website)</h3>
-<p style="font-size:.88rem;color:var(--muted)">Ligger i mappen <code>HT14/</code> og publiseres på <b>https://fluxreveal.com/HT14/</b> <span class="badge-vedtatt">Vedtatt 25.10.2026</span></p>
+<p style="font-size:.88rem;color:var(--muted)">Ligger i mappen <code>HT14/</code> og publiseres på <b>https://fluxreveal.com/HT14/</b> <span class="badge-teknisk">Teknisk valg (Thomas)</span></p>
 <pre><code>fluxreveal-website/HT14/  ← offentlig, fluxreveal.com/HT14/
-├── index.html               innlogging
+├── index.html               startside for sameiet (årshjul)
+│                            + lenke til innlogging
+├── logg-inn.html            innlogging
 ├── kalender.html            månedskalender + detaljvisning
 ├── historikk.html           all historikk (filter/eksport)
 ├── statistikk.html          måned / sesong / år
@@ -118,7 +122,7 @@
 </div>
 
 <h2 id="datamodell">Datamodell</h2>
-<p><span class="badge-forslag">Forslag – detaljdesign</span> Filene <code>users.json</code>, <code>bookings/&lt;år&gt;.json</code>, <code>audit/&lt;år&gt;.jsonl</code> og <code>rules.json</code> er del av vedtatt arkitektur; feltnavnene er detaljdesign.</p>
+<p><span class="badge-forslag">Forslag – detaljdesign</span> Filene <code>users.json</code>, <code>bookings/&lt;år&gt;.json</code>, <code>audit/&lt;år&gt;.jsonl</code> og <code>rules.json</code> er del av arkitekturen Thomas har valgt; feltnavnene er detaljdesign.</p>
 <figure>
 <pre class="mermaid">
 erDiagram
@@ -195,10 +199,10 @@ erDiagram
 <div class="table-wrap"><table><thead><tr><th>Felt</th><th>Type</th><th>Regel</th></tr></thead><tbody>
 <tr><td><code>id</code></td><td>string</td><td>Unik, endres aldri (brukes i bookinger og audit).</td></tr>
 <tr><td><code>household</code></td><td>"A"|"B"|"C"|"D"</td><td>Hver bruker tilhører nøyaktig én husstand.</td></tr>
-<tr><td><code>role</code></td><td>"user"|"admin"</td><td>To administratorer: styreleder og nestleder.</td></tr>
+<tr><td><code>role</code></td><td>"user"|"admin"</td><td>To administratorer (f.eks. styreleder og nestleder).</td></tr>
 <tr><td><code>active</code></td><td>bool</td><td>Deaktivert bruker kan ikke logge inn, men beholdes i historikken.</td></tr>
 <tr><td><code>pw</code></td><td>objekt</td><td>Aldri klartekst. Salt per bruker.</td></tr>
-<tr><td><code>anonymized</code></td><td>bool (valgfri)</td><td><b>Å9</b> <span class="badge-vedtatt">Vedtatt 25.10.2026</span> navn erstattes med «Tidligere beboer Hus A».</td></tr>
+<tr><td><code>anonymized</code></td><td>bool (valgfri)</td><td><b>Å9</b> <span class="badge-regel">Forslag – ikke godkjent av sameiet</span> navn erstattes med «Tidligere beboer Hus A».</td></tr>
 </tbody></table></div>
 
 <h3 id="bookings-ar-json">bookings/&lt;år&gt;.json</h3>
@@ -300,7 +304,7 @@ erDiagram
 
 <h2 id="worker-api">Worker-API</h2>
 <p><span class="badge-forslag">Forslag – detaljdesign</span></p>
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> Frontend kjører på <code>https://fluxreveal.com/HT14/</code>. Workeren tillater derfor kun kall fra origin <code>https://fluxreveal.com</code> (CORS).</p></div>
+<div class="callout teknisk"><p><span class="badge-teknisk">Teknisk valg (Thomas)</span> Frontend kjører på <code>https://fluxreveal.com/HT14/</code>. Workeren tillater derfor kun kall fra origin <code>https://fluxreveal.com</code> (CORS).</p></div>
 <pre><code>// CORS i Workeren (utkast)
 const ALLOWED_ORIGIN = "https://fluxreveal.com";
 function cors(req, res) {
@@ -435,7 +439,7 @@ flowchart TD
 
 <h3 id="statistikk">Statistikk</h3>
 <p>Bruk måles i perioder: <code>AM</code> = 1, <code>PM</code> = 1, <code>FULL</code> = 2 (<code>rules.periods[*].units</code>). Tellingen gjøres for inneværende måned, inneværende sesong (jun–aug) og inneværende år, per husstand.</p>
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> <b>Å7:</b> COMPLETED og CHECKED_IN teller som bruk. NOT_CONFIRMED vises separat (ikke bruk før bekreftet). CANCELLED_LATE teller i kvote, ikke som bruk. <b>Å2:</b> spontan innsjekk teller i statistikken, men ikke i kvoten.</p></div>
+<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> <b>Å7:</b> COMPLETED og CHECKED_IN teller som bruk. NOT_CONFIRMED vises separat (ikke bruk før bekreftet). CANCELLED_LATE teller i kvote, ikke som bruk. <b>Å2:</b> spontan innsjekk teller i statistikken, men ikke i kvoten.</p></div>
 
 <h2 id="statusmaskin">Statusmaskin</h2>
 <figure>
@@ -458,16 +462,16 @@ stateDiagram-v2
     ikke nødvendigvis ubrukt
   end note
 </pre>
-<figcaption>Statuser fra kravspesifikasjonen. Admin kan i tillegg korrigere en status (se under). Overgangen NOT_CONFIRMED → COMPLETED ved bekreftelse er vedtatt 25.10.2026.</figcaption>
+<figcaption>Statuser fra kravspesifikasjonen. Admin kan i tillegg korrigere en status (se under). Overgangen NOT_CONFIRMED → COMPLETED ved bekreftelse er en del av regelforslaget (vedlegg 1 punkt 9).</figcaption>
 </figure>
 <div class="table-wrap"><table><thead><tr><th>Status</th><th>Betydning</th><th>Opptar perioden?</th><th>Teller i kvote?</th><th>Teller som bruk?</th></tr></thead><tbody>
 <tr><td><span class="st st-BOOKED">BOOKED</span></td><td>Reservert, ikke startet / ikke sjekket inn</td><td class="pill-yes">Ja</td><td class="pill-yes">Ja*</td><td>–</td></tr>
 <tr><td><span class="st st-CHECKED_IN">CHECKED_IN</span></td><td>Sjekket inn, perioden pågår</td><td class="pill-yes">Ja</td><td class="pill-yes">Ja*</td><td class="pill-yes">Ja</td></tr>
 <tr><td><span class="st st-COMPLETED">COMPLETED</span></td><td>Brukt (utsjekket automatisk eller bekreftet)</td><td class="pill-yes">Ja</td><td class="pill-yes">Ja*</td><td class="pill-yes">Ja</td></tr>
-<tr><td><span class="st st-NOT_CONFIRMED">NOT_CONFIRMED</span></td><td>Perioden er over uten innsjekk</td><td class="pill-yes">Ja</td><td class="pill-yes">Ja*</td><td><span class="badge-vedtatt">Å7: separat</span></td></tr>
+<tr><td><span class="st st-NOT_CONFIRMED">NOT_CONFIRMED</span></td><td>Perioden er over uten innsjekk</td><td class="pill-yes">Ja</td><td class="pill-yes">Ja*</td><td><span class="badge-regel">Å7: separat</span></td></tr>
 <tr><td><span class="st st-CANCELLED">CANCELLED</span></td><td>Tidlig avbestilt (mer enn 7 dager før)</td><td class="pill-no">Nei</td><td class="pill-no">Nei</td><td class="pill-no">Nei</td></tr>
-<tr><td><span class="st st-CANCELLED_LATE">CANCELLED_LATE</span></td><td>Sent avbestilt (7 dager eller mindre før)</td><td class="pill-no">Nei</td><td class="pill-yes">Ja</td><td class="pill-no">Nei <span class="badge-vedtatt">Å7</span></td></tr>
-<tr><td><span class="st st-ADMIN_CORRECTED">ADMIN_CORRECTED</span></td><td>Korrigert av administrator</td><td colspan="3"><span class="badge-vedtatt">Å8 vedtatt</span> Ikke en egen status, men hendelsen <code>STATUS_CORRECTED</code> i audit + <code>corrected: true</code>; status forblir faktisk tilstand.</td></tr>
+<tr><td><span class="st st-CANCELLED_LATE">CANCELLED_LATE</span></td><td>Sent avbestilt (7 dager eller mindre før)</td><td class="pill-no">Nei</td><td class="pill-yes">Ja</td><td class="pill-no">Nei <span class="badge-regel">Å7</span></td></tr>
+<tr><td><span class="st st-ADMIN_CORRECTED">ADMIN_CORRECTED</span></td><td>Korrigert av administrator</td><td colspan="3"><span class="badge-teknisk">Å8 · teknisk valg</span> Ikke en egen status, men hendelsen <code>STATUS_CORRECTED</code> i audit + <code>corrected: true</code>; status forblir faktisk tilstand.</td></tr>
 </tbody></table></div>
 <p style="font-size:.88rem;color:var(--muted)">* Kun hvis bookingen har <code>quota: true</code>, dvs. sommer, fre/lør/søn og gjort minst 7 dager før (Å1, Å2).</p>
 
@@ -563,7 +567,7 @@ sequenceDiagram
 </figure>
 
 <h3 id="nattlig-github-actions-jobb">Nattlig GitHub Actions-jobb</h3>
-<p><span class="badge-forslag">Forslag – detaljdesign</span> Selve oppgaven (fryse status, lage CSV-arkiv og backup) er vedtatt; tidspunkt og oppsett er detaljdesign.</p>
+<p><span class="badge-forslag">Forslag – detaljdesign</span> Selve oppgaven (fryse status, lage CSV-arkiv og backup) er et teknisk valg; tidspunkt og oppsett er detaljdesign.</p>
 <figure>
 <pre class="mermaid">
 sequenceDiagram
@@ -634,7 +638,7 @@ b-2027-0051;2027-07-16;fredag;FULL;08:00;24:00;B;Ola Nordmann;CANCELLED_LATE;BOO
 <tr><td>400</td><td><code>INVALID_INPUT</code></td><td>Ugyldig dato/periode/felt</td><td>«Noe gikk galt med valget ditt. Prøv igjen.»</td></tr>
 <tr><td>401</td><td><code>UNAUTHENTICATED</code></td><td>Feil passord, manglende/utløpt token</td><td>«Feil brukernavn eller passord» / «Du er logget ut. Logg inn igjen.»</td></tr>
 <tr><td>403</td><td><code>FORBIDDEN</code></td><td>Ikke admin, eller ikke lov å endre bookingen</td><td>«Du har ikke tilgang til dette.»</td></tr>
-<tr><td>403</td><td><code>USER_INACTIVE</code></td><td>Deaktivert bruker</td><td>«Brukeren er deaktivert. Kontakt styret.»</td></tr>
+<tr><td>403</td><td><code>USER_INACTIVE</code></td><td>Deaktivert bruker</td><td>«Brukeren er deaktivert. Kontakt en administrator.»</td></tr>
 <tr><td>404</td><td><code>NOT_FOUND</code></td><td>Booking/bruker finnes ikke</td><td>«Fant ikke bookingen.»</td></tr>
 <tr><td>409</td><td><code>SLOT_TAKEN</code></td><td>Perioden ble tatt (evt. av en annen samtidig)</td><td>«Perioden ble akkurat booket av Hus B.»</td></tr>
 <tr><td>409</td><td><code>CONFLICT_RETRY</code></td><td>SHA-konflikt etter maks antall forsøk</td><td>«Mange endringer akkurat nå – prøv igjen om litt.»</td></tr>
@@ -645,7 +649,7 @@ b-2027-0051;2027-07-16;fredag;FULL;08:00;24:00;B;Ola Nordmann;CANCELLED_LATE;BOO
 <tr><td>422</td><td><code>NOT_CANCELLABLE</code></td><td>Status tillater ikke avbestilling</td><td>«Denne bookingen kan ikke avbestilles.»</td></tr>
 <tr><td>422</td><td><code>COMMENT_REQUIRED</code></td><td>Admin-overstyring/korrigering uten kommentar</td><td>«Skriv en kommentar.»</td></tr>
 <tr><td>429</td><td><code>RATE_LIMITED</code></td><td>For mange innloggingsforsøk</td><td>«For mange forsøk. Vent litt.»</td></tr>
-<tr><td>500</td><td><code>RULES_INVALID</code></td><td><code>rules.json</code> kan ikke leses/valideres</td><td>«Teknisk feil – kontakt styret.»</td></tr>
+<tr><td>500</td><td><code>RULES_INVALID</code></td><td><code>rules.json</code> kan ikke leses/valideres</td><td>«Teknisk feil – kontakt en administrator.»</td></tr>
 <tr><td>502</td><td><code>UPSTREAM_UNAVAILABLE</code></td><td>GitHub API svarer ikke</td><td>«Tjenesten er midlertidig utilgjengelig.»</td></tr>
 </tbody></table></div>
 <ul>
@@ -701,7 +705,7 @@ sequenceDiagram
 </ul>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="hld.html"><small>← Forrige</small>HLD – High Level Design</a><a class="next" href="regler.html"><small>Neste →</small>Bookingregler</a></nav>
-      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.3 · 25.10.2026). Systemet er ikke bygget ennå. Arkitektur og regelavklaringer er <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Detaljer merket <span class="badge-forslag">Forslag – detaljdesign</span> er utdypinger som kan justeres ved bygging. Alle navn er eksempler.</p>
+      <p class="footer">Badehus Booking System – dokumentasjon av en <b>planlagt</b> løsning (v0.4 · 25.10.2026). Den er ikke bygget ennå. Thomas Gude Svensrud lager den på oppdrag fra sameiet, og <b>ingenting er godkjent av sameiet ennå</b>. Merkene betyr: <span class="badge-regel">Forslag – ikke godkjent av sameiet</span> = regler som sameiet skal ta stilling til · <span class="badge-teknisk">Teknisk valg (Thomas)</span> = praktiske og tekniske valg som ikke trenger godkjenning · <span class="badge-forslag">Forslag – detaljdesign</span> = detaljer som kan justeres når løsningen bygges. Alle navn er eksempler.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
   </div>
