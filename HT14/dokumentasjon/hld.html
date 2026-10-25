@@ -25,6 +25,8 @@
     <ul id="sok-resultat" class="search-results" aria-live="polite"></ul>
   </div>
   <ul class="nav">
+<li class="nav-label">Sameiet</li>
+<li><a href="../index.html#arshjul"><span class="num">⌂</span>Sameiets årshjul</a></li>
 <li class="nav-label">Start</li>
 <li><a href="index.html"><span class="num">1</span>Oversikt</a></li>
 <li class="nav-label">For alle</li>
@@ -38,12 +40,12 @@
 <li><a href="brukermanual.html"><span class="num">6</span>Brukermanual – beboer</a></li>
 <li><a href="adminmanual.html"><span class="num">7</span>Brukermanual – administrator</a></li>
 <li class="nav-label">Styring</li>
-<li><a href="beslutninger.html"><span class="num">8</span>Beslutninger</a></li>
+<li><a href="beslutninger.html"><span class="num">8</span>Hva må godkjennes?</a></li>
 <li><a href="vedtekter.html"><span class="num">9</span>Forslag til vedtekter</a></li>
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
-    Planlagt løsning · v0.3 · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
+    Planlagt løsning · v0.4 · 25.10.2026<br>Laget av Thomas på oppdrag fra sameiet – ingenting er godkjent ennå.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
   </div>
 </nav>
 <main class="main" id="innhold">
@@ -53,15 +55,15 @@
   <div class="eyebrow">Teknisk · Arkitektur</div>
   <h1>HLD – High Level Design</h1>
   <p>Overordnet arkitektur for Badehus Booking System: hvilke deler løsningen består av, hvordan data flyter, og hvorfor den er bygget slik.</p>
-  <div class="meta"><span class="chip draft">v0.3 · 25.10.2026</span><span class="chip ok">Arkitektur vedtatt 25.10.2026</span></div>
+  <div class="meta"><span class="chip draft">v0.4 · 25.10.2026</span><span class="chip teknisk">Teknisk valg (Thomas) – trenger ikke godkjenning</span></div>
 </section>
 
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> Arkitekturen på denne siden (GitHub Pages + én Cloudflare Worker + privat data-repo + GitHub Actions) er godkjent av Thomas Gude Svensrud. GitHub- og Cloudflare-kontoene eies av Thomas via FluxReveal-kontoene hans.</p></div>
+<div class="callout teknisk"><p><span class="badge-teknisk">Teknisk valg (Thomas)</span> Arkitekturen på denne siden (GitHub Pages + én Cloudflare Worker + privat data-repo + GitHub Actions) er valgt av Thomas Gude Svensrud, som lager løsningen på oppdrag fra sameiet. Tekniske valg som dette trenger ikke godkjenning av sameiet. GitHub- og Cloudflare-kontoene eies av Thomas via FluxReveal-kontoene hans. Reglene løsningen håndhever er derimot bare forslag til sameiet ble enige om dem – se <a href="regler.html">Bookingregler</a>.</p></div>
 
 <h2 id="mal-og-foringer">Mål og føringer</h2>
 <div class="grid c2">
-  <div class="card"><h4>Ønsket fra oppdragsgiver</h4><ul style="margin:0"><li>GitHub Pages, GitHub Actions, HTML, CSS, JavaScript, JSON, CSV</li><li>Ingen database, ingen server</li><li>Ingen løpende kostnader</li><li>All historikk i Git, år for år</li><li>Alle data eksporterbare til CSV</li></ul></div>
-  <div class="card"><h4>Kvalitetskrav</h4><ul style="margin:0"><li>Responsiv: mobil og PC</li><li>Driftbar av sameiestyret uten utviklerkompetanse</li><li>Godt kommentert kode, lett å videreutvikle</li><li>Separasjon av regler, data og presentasjon</li><li>Regler i egen konfigurasjonsfil</li></ul></div>
+  <div class="card"><h4>Ønsker fra start</h4><ul style="margin:0"><li>GitHub Pages, GitHub Actions, HTML, CSS, JavaScript, JSON, CSV</li><li>Ingen database, ingen server</li><li>Ingen løpende kostnader</li><li>All historikk i Git, år for år</li><li>Alle data eksporterbare til CSV</li></ul></div>
+  <div class="card"><h4>Kvalitetskrav</h4><ul style="margin:0"><li>Responsiv: mobil og PC</li><li>Mulig å drifte for naboene uten utviklerkompetanse</li><li>Godt kommentert kode, lett å videreutvikle</li><li>Separasjon av regler, data og presentasjon</li><li>Regler i egen konfigurasjonsfil</li></ul></div>
 </div>
 
 <h3 id="den-viktige-begrensningen">Den viktige begrensningen</h3>
@@ -143,7 +145,7 @@
 </figure>
 
 <h2 id="adresse">Adresse</h2>
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> Løsningen skal ligge på <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a>, og dokumentasjonen på <a href="https://fluxreveal.com/HT14/dokumentasjon/">fluxreveal.com/HT14/dokumentasjon/</a>. Workerens CORS-origin er <code>https://fluxreveal.com</code>.</p></div>
+<div class="callout teknisk"><p><span class="badge-teknisk">Teknisk valg (Thomas)</span> Løsningen skal ligge på <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a>, og dokumentasjonen på <a href="https://fluxreveal.com/HT14/dokumentasjon/">fluxreveal.com/HT14/dokumentasjon/</a>. Workerens CORS-origin er <code>https://fluxreveal.com</code>.</p></div>
 
 <h2 id="komponenter">Komponenter</h2>
 <div class="table-wrap"><table>
@@ -190,11 +192,11 @@ flowchart LR
   <li>GitHub Actions-cron kjører i UTC og kan bli forsinket. Den brukes derfor <b>kun</b> til å skrive endelig status i Git – ikke til å bestemme hva brukerne ser i øyeblikket.</li>
   <li>Automatisk utsjekk ved periodens slutt: 08–14 → 14:00, 14–00 → 00:00.</li>
 </ul>
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> 00:00 betyr slutten av dagen (24:00) i Europe/Oslo, inkludert sommertid. Se avklaring 10.</p></div>
+<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> 00:00 betyr slutten av dagen (24:00) i Europe/Oslo, inkludert sommertid. Se avklaring 10.</p></div>
 
 <h2 id="sikkerhet">Sikkerhet</h2>
 <div class="table-wrap"><table>
-<thead><tr><th>Trussel / behov</th><th>Tiltak i vedtatt arkitektur</th></tr></thead>
+<thead><tr><th>Trussel / behov</th><th>Tiltak i valgt arkitektur</th></tr></thead>
 <tbody>
 <tr><td>Uvedkommende leser bookingdata</td><td>Data ligger i privat repo; kun Workeren har token. Pages-output inneholder ingen data.</td></tr>
 <tr><td>Passord på avveie</td><td>Kun hash lagres (f.eks. PBKDF2 via WebCrypto). Ingen klartekstpassord i <code>users.json</code>.</td></tr>
@@ -213,22 +215,22 @@ flowchart LR
   <li>Innsyn: alle innloggede beboere kan se all historikk (krav om åpenhet).</li>
   <li>Kravet «ingen data slettes permanent» står i spenning mot retten til sletting.</li>
 </ul>
-<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> «Ingen sletting» gjelder bookinger. Utflyttede brukere deaktiveres og kan anonymiseres (navn → «Tidligere beboer Hus A»); husstanden beholdes. Se avklaring 9.</p></div>
+<div class="callout regel"><p><span class="badge-regel">Forslag – ikke godkjent av sameiet</span> «Ingen sletting» gjelder bookinger. Utflyttede brukere deaktiveres og kan anonymiseres (navn → «Tidligere beboer Hus A»); husstanden beholdes. Se avklaring 9.</p></div>
 
 <h2 id="kostnad">Kostnad</h2>
 <div class="grid c4">
   <div class="card"><b>GitHub Pages</b><div class="stat">0 kr</div></div>
   <div class="card"><b>Cloudflare Worker</b><div class="stat">0 kr</div><small style="color:var(--muted)">gratis plan, 100 000 forespørsler/døgn</small></div>
   <div class="card"><b>Privat repo + Actions</b><div class="stat">0 kr</div></div>
-  <div class="card"><b>Adresse</b><div class="stat" style="font-size:1.15rem">fluxreveal.com/HT14/</div><small style="color:var(--muted)">eksisterende domene, vedtatt 25.10.2026</small></div>
+  <div class="card"><b>Adresse</b><div class="stat" style="font-size:1.15rem">fluxreveal.com/HT14/</div><small style="color:var(--muted)">eksisterende domene, teknisk valg (Thomas)</small></div>
 </div>
 
 <h2 id="arkitekturvalg">Arkitekturvalg</h2>
-<h3 id="valgt-vedtatt-25-10-2026">Valgt (vedtatt 25.10.2026)</h3>
+<h3 id="valgt-av-thomas-teknisk-valg">Valgt av Thomas (teknisk valg)</h3>
 <div class="table-wrap"><table>
 <thead><tr><th>Beslutning</th><th>Begrunnelse</th></tr></thead>
 <tbody>
-<tr><td>Statisk frontend på GitHub Pages</td><td>Gratis, enkel, ønsket av oppdragsgiver.</td></tr>
+<tr><td>Statisk frontend på GitHub Pages</td><td>Gratis og enkel – og det var ønsket fra start.</td></tr>
 <tr><td>Én Cloudflare Worker som skrive-/auth-ledd</td><td>Eneste måten å få sikker innlogging og skriving uten egen server og uten kostnad. Liten og avgrenset.</td></tr>
 <tr><td>Git (privat repo) som «database»</td><td>Ingen database å drifte; hver endring er en commit = gratis revisjonsspor og historikk.</td></tr>
 <tr><td>JSON for data, CSV for arkiv/eksport</td><td>Lesbart for mennesker, kan åpnes i Excel, i tråd med ønsket teknologi.</td></tr>
@@ -247,11 +249,11 @@ flowchart LR
   <li>Avhengig av gratisplanene til GitHub og Cloudflare.</li>
   <li>Actions-cron kan være forsinket (håndtert ved at status beregnes fra klokka).</li>
   <li>Token i Worker må fornyes/roteres – se <a href="adminmanual.html">administratormanualen</a>.</li>
-  <li>Én beslutning gjenstår: om reglene må godkjennes av styret/sameiermøtet (avventer vedtekter) – se <a href="beslutninger.html">Beslutninger</a>.</li>
+  <li>Reglene i <code>rules.json</code> er forslag til sameiet har godkjent dem (vedtektene § 10 og vedlegg 1) – se <a href="beslutninger.html">Hva må godkjennes?</a></li>
 </ul>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="beskrivelse.html"><small>← Forrige</small>Overordnet beskrivelse</a><a class="next" href="lld.html"><small>Neste →</small>LLD – Low Level Design</a></nav>
-      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.3 · 25.10.2026). Systemet er ikke bygget ennå. Arkitektur og regelavklaringer er <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Detaljer merket <span class="badge-forslag">Forslag – detaljdesign</span> er utdypinger som kan justeres ved bygging. Alle navn er eksempler.</p>
+      <p class="footer">Badehus Booking System – dokumentasjon av en <b>planlagt</b> løsning (v0.4 · 25.10.2026). Den er ikke bygget ennå. Thomas Gude Svensrud lager den på oppdrag fra sameiet, og <b>ingenting er godkjent av sameiet ennå</b>. Merkene betyr: <span class="badge-regel">Forslag – ikke godkjent av sameiet</span> = regler som sameiet skal ta stilling til · <span class="badge-teknisk">Teknisk valg (Thomas)</span> = praktiske og tekniske valg som ikke trenger godkjenning · <span class="badge-forslag">Forslag – detaljdesign</span> = detaljer som kan justeres når løsningen bygges. Alle navn er eksempler.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
   </div>
