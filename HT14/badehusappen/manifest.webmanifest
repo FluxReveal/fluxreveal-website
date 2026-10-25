@@ -5,7 +5,7 @@
   "lang": "nb",
   "id": "./",
   "start_url": "./?kilde=hjemskjerm",
-  "scope": "./",
+  "scope": "../",
   "display": "standalone",
   "background_color": "#ecfeff",
   "theme_color": "#0e7490",

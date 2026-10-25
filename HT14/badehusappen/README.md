@@ -7,6 +7,13 @@ Første prøveversjon av Badehusappen for Sameiet Halden Terrasse 14.
 - **Data lagres bare i nettleseren** (localStorage) på den enkelte enheten.
   «Nullstill prøvedata» under *Mer* sletter dem.
 - Ingen nøkler, tokens eller passord i koden.
+- **Dagen er delt i tre** (forslag): formiddag 10–14 (`AM`), ettermiddag 14–17 (`MID`) og kveld 17–24 (`PM`).
+  Man booker én eller flere; heldag = alle tre. Hver periode lagres som egen booking (felles `groupId`).
+  Gamle prøvedata (08–14 / 14–24 / heldag) gjøres om automatisk første gang appen åpnes.
+- **Tilpasset alle skjermer:** mobil (faner nederst), mobil liggende og nettbrett/PC (sidemeny, uka i 7 kolonner,
+  dialog midt på). Følger tekststørrelse (Dynamic Type) og mørk modus.
+- **Felles meny:** «‹ Sameiet HT14» øverst og under *Mer* går til startsiden. Manifestets `scope` er `../`,
+  så startsiden og dokumentasjonen åpnes i samme vindu når appen er lagt på Hjem-skjermen.
 
 ## Filer
 
@@ -19,7 +26,7 @@ Første prøveversjon av Badehusappen for Sameiet Halden Terrasse 14.
 | `js/app.js` | Brukergrensesnittet |
 | `rules.json` | Alle regler (kan endres uten kodeendring) |
 | `manifest.webmanifest`, `ikoner/` | Hjem-skjerm (PWA) |
-| `sw.js` | Enkel service worker, «nett først» |
+| `sw.js` | Enkel service worker, «nett først». Bytt navnet på `CACHE` ved hver oppdatering |
 | `tests/rules-engine.test.js` | Tester for regelmotoren |
 
 ## Teste
