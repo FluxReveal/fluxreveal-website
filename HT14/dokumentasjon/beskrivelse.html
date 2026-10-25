@@ -9,6 +9,7 @@
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 <script src="app.js" defer></script>
+<script type="module" src="mermaid-init.js"></script>
 </head>
 <body>
 <a href="#innhold" class="chip" style="position:absolute;left:-9999px" onfocus="this.style.left='8px'">Hopp til innhold</a>
@@ -60,7 +61,35 @@
 
 <h2 id="hva-er-det">Hva er det?</h2>
 <p><b>Badehusappen</b> er en nettside som oppfører seg som en app, der vi i Halden Terrasse 14 kan se når badehuset er ledig, reservere det, avbestille og krysse av for at vi har brukt det. Den virker på mobil, nettbrett og PC. Du trenger ikke laste ned noe – du kan bare legge den på Hjem-skjermen på mobilen.</p>
-<p>I dag holder vi styr på badehuset med e-post og en kalender som en av naboene oppdaterer for hånd. Det fungerer, men det blir fort mye frem og tilbake. Tanken er at alle skal se det samme, til enhver tid.</p>
+<p>I dag gjør vi det enkelt: vil du ha badehuset, sender du en e-post til en av naboene, og han svarer med en oversikt over de bookingene han vet om. Det har fungert fint takket være ham – men det blir mye e-post fram og tilbake, vi har ingen felles oversikt, og alt hviler på én person. Med Badehusappen ser alle den samme kalenderen, når som helst, og du kan booke selv.</p>
+
+<h3 id="slik-er-det-i-dag-og-slik-blir-det">Slik er det i dag – og slik blir det</h3>
+<div class="grid c2">
+  <div class="card"><h4>✉️ I dag</h4><ul style="margin:0"><li>Du sender en e-post til en nabo og spør om dagen er ledig.</li><li>Han svarer med oversikten over det han vet om.</li><li>E-post fram og tilbake, og ingen felles oversikt.</li><li>Alt avhenger av at én person har tid og husker alt.</li></ul></div>
+  <div class="card"><h4>📱 Med Badehusappen</h4><ul style="margin:0"><li>Du åpner Badehusappen på mobilen.</li><li>Alle ser den samme kalenderen, med husets farge på hver dag.</li><li>Du booker selv, og reglene sjekkes med en gang.</li><li>Ingen trenger å sitte med oversikten alene.</li></ul></div>
+</div>
+<figure>
+<pre class="mermaid">
+flowchart LR
+  subgraph IDAG["I dag"]
+    direction TB
+    N1["Nabo som vil booke"] -->|e-post: er lørdag ledig?| P["Én nabo med oversikten"]
+    P -->|e-post: oversikt over det han vet om| N1
+  end
+  subgraph NY["Med Badehusappen"]
+    direction TB
+    A["Hus A"] --> K["Felles kalender<br/>i Badehusappen"]
+    B["Hus B"] --> K
+    C["Hus C"] --> K
+    D["Hus D"] --> K
+  end
+  IDAG -.->|blir til| NY
+  classDef idag fill:#fff7ed,stroke:#ea580c,color:#7c2d12;
+  classDef ny fill:#ecfeff,stroke:#0891b2,color:#0f172a;
+  class N1,P idag; class A,B,C,D,K ny;
+</pre>
+<figcaption>I dag går alt via e-post til én nabo. Med Badehusappen ser alle fire husene det samme, og ingen trenger å være mellomledd.</figcaption>
+</figure>
 <div class="grid c3">
   <div class="card"><h4>📅 Én felles kalender</h4><p style="margin:0;color:var(--muted)">Laget for mobilen: du ser én uke om gangen og trykker på en dag for å booke. Hele måneden kan også vises. Hvert hus har sin farge, så du ser med en gang hvem som har badehuset.</p></div>
   <div class="card"><h4>⚖️ Rettferdige regler</h4><p style="margin:0;color:var(--muted)">Om sommeren passer Badehusappen på at fredager, lørdager og søndager fordeles mellom husene.</p></div>
