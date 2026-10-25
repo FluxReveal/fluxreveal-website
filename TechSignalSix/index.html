@@ -129,10 +129,12 @@ function xLength(text) {
   return text.replace(/https?:\/\/\S+/g, 'x'.repeat(23)).length;
 }
 
-function counterHtml(text) {
+function counterHtml(text, longform = false) {
   const n = xLength(text);
-  const over = n > 280;
-  return `<span class="counter ${over ? 'over' : ''}">${n} / 280${over ? ' · over limit' : ''}</span>`;
+  const limit = longform ? 25000 : 280;
+  const over = n > limit;
+  const label = longform ? '25,000 · long-form (X Premium)' : '280';
+  return `<span class="counter ${over ? 'over' : ''}">${n} / ${label}${over ? ' · over limit' : ''}</span>`;
 }
 
 // Fixed footer appended to every daily draft (Monday–Saturday)
@@ -144,10 +146,10 @@ function withFooter(text) {
 
 // ===================== DAILY POSTS (weekly, hard-coded) =====================
 // Same week as PINNED_POST. Monday–Friday = top 5 by Six Traction rank (#1 Monday … #5 Friday).
-// Saturday = one light, on-brand post built only from facts in signals.json.
+// Saturday = one long-form post (X Premium, longform: true) on the big lines across all themes; uses `text` instead of lead/why.
 // Each post: lead (rank + theme), a short "Why it matters", the theme link, then the fixed footer.
 // Rules: English, no score changes / rises / falls / week-over-week movement, no invented facts.
-// Must stay under 280 characters as X counts them (URL = 23). The counter flags overruns.
+// Must stay under 280 characters as X counts them (URL = 23), or 25,000 for longform posts. The counter flags overruns.
 // The theme link is taken from signals.json (absoluteUrl) when available.
 const DAILY_POSTS = [
   { day: 'Monday', id: 'agent-interoperability', title: 'Agent Interoperability Protocols',
@@ -165,9 +167,9 @@ const DAILY_POSTS = [
   { day: 'Friday', id: 'memory-safe-systems', title: 'Memory-Safe Systems Programming',
     lead: '#5: Memory-Safe Systems Programming. Memory-safe languages are the new default for systems code.',
     why: 'Why it matters: governments and major codebases back the shift.' },
-  { day: 'Saturday', id: 'agent-interoperability', title: 'Weekend photo finish',
-    lead: 'Weekend photo finish: #1 Agent Interoperability Protocols and #2 AI Coding Agents share one score: 76.',
-    why: 'Why it matters: agents and their wiring lead side by side.' }
+  { day: 'Saturday', id: 'all-themes', title: 'The big lines across all themes', longform: true,
+    // Long-form X Premium post. Full text below; withFooter() adds the footer once.
+    text: "The model is no longer the story. The system around it is.\n\nWe track nine technology themes on the Six Traction radar. Step back from the weekly ranking and four big lines show up.\n\n1. Agents are becoming a primary user of your stack.\nAgent Interoperability Protocols sits at #1 and AI Coding Agents at #2. But the signal runs wider: Vector Search & Agent Memory is about how agents remember, WebAssembly is spreading into sandboxes for AI-generated code, and Aspire now documents a setup so coding agents can start, inspect and debug an app. Builders: design APIs, permissions and docs for agents as well as humans.\n\n2. The bottleneck has moved from the model to the plumbing.\nRetrieval quality, not model choice, limits AI answers on your own data. Serving engines get several times the throughput from the same GPUs. Models small enough for laptops and phones now handle real production tasks. The edge comes from how you serve, retrieve and route, and it shows up directly in unit economics.\n\n3. Safety is moving into the defaults.\nMemory-safe languages are becoming the default for new systems code. Post-quantum migration is underway, driven by regulatory deadlines. Wasm offers isolation where containers are too slow or too risky. Coding agents ship sandboxing, OAuth and read-only workspaces. Security is now an architecture choice, not a later audit.\n\n4. Tools are ready. Standards are still forming.\nCoding agents, inference infrastructure, vector search and memory-safe languages sit at Adopt maturity. Agent protocols, small models, WebAssembly and post-quantum crypto are still Emerging. Use what works now, but keep the wiring swappable while the standards settle.\n\nThe takeaway for tech leaders: the competitive edge is shifting from which model you pick to how well your system connects, serves, remembers and contains it.\n\nAll themes: https://techsignalsix.com/themes/" }
 ];
 
 function themeUrl(id, signals = []) {
@@ -180,19 +182,21 @@ function generatePosts(data = {}) {
   return DAILY_POSTS.map(d => ({
     day: d.day,
     title: d.title,
-    text: withFooter(`${d.lead}\n\n${d.why}\n\n${themeUrl(d.id, signals)}`)
+    longform: !!d.longform,
+    text: d.text ? withFooter(d.text) : withFooter(`${d.lead}\n\n${d.why}\n\n${themeUrl(d.id, signals)}`)
   }));
 }
 // =================== END DAILY SPOTLIGHTS ===================
 
 function renderPosts(posts) {
-  return posts.map(p => `
+  return posts.map((p, i) => `
       <div class="post">
-        <div class="day">${p.day}</div>
+        <div class="day">${p.day}${p.longform ? ' <span class="pinned-tag" style="margin:0 0 0 0.4rem;padding:0.1rem 0.45rem;font-size:0.62rem;">Long-form</span>' : ''}</div>
         <h2>${escPinned(p.title)}</h2>
         <pre>${escPinned(p.text)}</pre>
+        ${p.longform ? `<button type="button" class="btn post-copy" data-idx="${i}">Copy</button>` : ''}
         <a class="btn" href="${buildIntent(p.text)}" target="_blank" rel="noopener">Open in X</a>
-        ${counterHtml(p.text)}
+        ${counterHtml(p.text, p.longform)}
       </div>`).join('');
 }
 
@@ -210,9 +214,21 @@ async function load() {
     meta.textContent = `Could not load signals.json (${err.message}). Showing drafts for ${PINNED_POST.week}.`;
   }
   const stale = data && data.week && data.week !== PINNED_POST.week;
+  const posts = generatePosts(data || {});
   content.innerHTML =
     (stale ? `<div class="error">Heads-up: signals.json is ${escPinned(data.week)}, but the prepared posts are for ${escPinned(PINNED_POST.week)}. Update PINNED_POST and DAILY_POSTS in this file.</div>` : '') +
-    renderPosts(generatePosts(data || {}));
+    renderPosts(posts);
+  content.querySelectorAll('button.post-copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(posts[Number(btn.dataset.idx)].text);
+        btn.textContent = 'Copied!';
+      } catch (e) {
+        btn.textContent = 'Copy failed';
+      }
+      setTimeout(() => { btn.textContent = 'Copy'; }, 1800);
+    });
+  });
 }
 
 renderPinned();
