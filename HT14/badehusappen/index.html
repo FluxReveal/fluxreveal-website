@@ -7,6 +7,7 @@
 <title>Badehusappen – HT14</title>
 <meta name="description" content="Badehusappen for Halden Terrasse 14 – book badehuset på mobilen.">
 <meta name="theme-color" content="#0e7490">
+<meta name="color-scheme" content="light dark">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="ikoner/ikon.svg" type="image/svg+xml">
 <!-- iOS bruker ikke SVG som Hjem-skjerm-ikon; derfor en liten PNG som data-URI. -->
@@ -14,12 +15,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Badehusappen">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="stylesheet" href="css/app.css?v=2">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="css/app.css?v=5">
 </head>
 <body>
 <header class="top">
-  <div class="brand"><img src="ikoner/ikon.svg" alt="" width="30" height="30"><span>Badehusappen</span></div>
+  <a class="brand" href="../" title="Til startsiden for Sameiet HT14"><img src="ikoner/ikon.svg" alt="" width="30" height="30"><span class="brand-txt"><small>‹ Sameiet HT14</small><span>Badehusappen</span></span></a>
   <button class="myhouse" id="myHouseBtn" type="button" aria-haspopup="dialog">Mitt hus: <b id="myHouseLabel">velg</b></button>
 </header>
 <p class="trial">Dette er en prøveversjon – bookingene lagres bare på din egen telefon foreløpig. <span id="clockNote"></span></p>
@@ -57,13 +58,20 @@
       <button class="nav" id="statNext" type="button" aria-label="Neste måned">›</button>
     </div>
     <div id="stats"></div>
-    <p class="muted">Bruk telles i perioder: formiddag = 1, kveld = 1, heldag = 2. Det er ikke for å rangere noen – bare så alle ser hvordan badehuset brukes. Den lyse delen av stolpen er «ikke bekreftet»: ingen sjekket inn, så det regnes ikke som bruk før noen bekrefter; trykk «Vi brukte badehuset» under Mine bookinger hvis dere var der.</p>
+    <p class="muted">Bruk telles i perioder: formiddag (10–14) = 1, ettermiddag (14–17) = 1, kveld (17–24) = 1, heldag = 3. Det er ikke for å rangere noen – bare så alle ser hvordan badehuset brukes. Den lyse delen av stolpen er «ikke bekreftet»: ingen sjekket inn, så det regnes ikke som bruk før noen bekrefter; trykk «Vi brukte badehuset» under Mine bookinger hvis dere var der.</p>
   </section>
 
   <section id="view-mer" class="view" hidden aria-labelledby="merTitle">
     <h1 id="merTitle">Mer</h1>
+    <h2>Sameiet HT14</h2>
+    <p class="links">
+      <a class="ghost linkbtn" href="../">⌂ Hjem – årshjul og hva er nytt</a>
+      <a class="ghost linkbtn" href="../dokumentasjon/">📖 Dokumentasjon</a>
+      <a class="ghost linkbtn" href="../dokumentasjon/regler.html">⚖️ Bookingreglene</a>
+    </p>
     <h2>Om prøveversjonen</h2>
     <p>Her kan du prøve hvordan Badehusappen skal fungere. Det er ingen innlogging ennå – du velger bare hvilket hus du booker for. Bookingene lagres bare i nettleseren på denne enheten, så naboene ser dem ikke. Reglene er Thomas sitt forslag, som vi tar på sameiemøtet.</p>
+    <p>Dagen er delt i tre: <b>formiddag 10–14</b>, <b>ettermiddag 14–17</b> og <b>kveld 17–24</b>. Du kan booke én eller flere – heldag er alle tre, og det er det vanligste valget. Badehuset åpner kl. 10. Også denne inndelingen er en del av forslaget til sameiemøtet.</p>
     <h2>Legg Badehusappen på Hjem-skjermen</h2>
     <p><b>iPhone:</b> åpne siden i Safari → Del-knappen → «Legg til på Hjem-skjerm».<br><b>Android:</b> Chrome → menyen ⋮ → «Legg til på startskjermen» eller «Installer app».</p>
     <h2>Administrator</h2>
@@ -71,7 +79,7 @@
     <h2>Prøvedata</h2>
     <p>Vil du begynne på nytt? Dette sletter bookingene på denne enheten.</p>
     <p><button type="button" class="danger" id="resetBtn">Nullstill prøvedata</button></p>
-    <p class="muted">Les mer i <a href="../dokumentasjon/">dokumentasjonen</a>, med <a href="../dokumentasjon/regler.html">bookingreglene</a> og <a href="../dokumentasjon/brukermanual.html">brukermanualen</a>.</p>
+    <p class="muted">Les mer i <a href="../dokumentasjon/brukermanual.html">brukermanualen</a> og <a href="../dokumentasjon/om-losningen.html">Slik fungerer Badehusappen</a>.</p>
   </section>
 </main>
 
@@ -89,8 +97,8 @@
 </dialog>
 <div id="toast" role="status" aria-live="polite"></div>
 
-<script src="js/rules-engine.js?v=2"></script>
-<script src="js/store.js?v=2"></script>
-<script src="js/app.js?v=2"></script>
+<script src="js/rules-engine.js?v=5"></script>
+<script src="js/store.js?v=5"></script>
+<script src="js/app.js?v=5"></script>
 </body>
 </html>

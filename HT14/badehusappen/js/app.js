@@ -13,8 +13,13 @@
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const HOUSES = ["A", "B", "C", "D"];
   const HOUSE_KEY = "ht14-badehusappen-hus", MODE_KEY = "ht14-badehusappen-visning", HINT_KEY = "ht14-badehusappen-har-booket";
-  const PLABEL = { FULL: "Heldag", AM: "Formiddag", PM: "Kveld" };
-  const PTIME = { FULL: "08–24", AM: "08–14", PM: "14–24" };
+  // Fylles fra rules.json i init(): AM = formiddag 10–14, MID = ettermiddag 14–17, PM = kveld 17–24
+  let PLABEL = {}, PTIME = {}, PKEYS = [], FULLDAY = [];
+  const hh = t => t === "24:00" ? "24" : t.slice(0, 2).replace(/^0/, "");
+  /** «heldag» / «formiddag og kveld» */
+  const periodsText = ps => FULLDAY.every(p => ps.includes(p)) ? "heldag"
+    : (a => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " og " + a[a.length - 1])(ps.map(p => PLABEL[p].toLowerCase()));
+  const periodsTime = ps => `${hh(rules.periods[ps[0]].start)}–${hh(rules.periods[ps[ps.length - 1]].end)}`;
   const STATUS = { BOOKED: "Booket", CHECKED_IN: "Sjekket inn", COMPLETED: "Brukt", NOT_CONFIRMED: "Ikke bekreftet",
     CANCELLED: "Avbestilt", CANCELLED_LATE: "Sent avbestilt" };
   const WD_SHORT = ["man", "tir", "ons", "tor", "fre", "lør", "søn"];
@@ -64,14 +69,16 @@
       let html = '<ol class="week">';
       for (let i = 0; i < 7; i++) {
         const date = R.addDays(from, i), act = activeOn(list, date);
-        const full = act.find(b => b.period === "FULL");
-        const past = R.hasEnded(rules, date, "PM", n);
-        const slot = (b, p) => b
-          ? `<span class="slot taken h${b.household}${b.displayStatus === "NOT_CONFIRMED" ? " nc" : ""}${p === "FULL" ? " full" : ""}"><span class="t">${PTIME[p]}</span> Hus ${b.household}${b.displayStatus !== "BOOKED" ? " · " + STATUS[b.displayStatus].toLowerCase() : ""}</span>`
-          : `<span class="slot${past || R.isOver(rules, date, p, n) ? "" : " free"}" ${past || R.isOver(rules, date, p, n) ? "" : `data-period="${p}"`}><span class="t">${PTIME[p]}</span> Ledig</span>`;
-        const slots = full ? slot(full, "FULL")
-          : slot(act.find(b => b.period === "AM"), "AM") + slot(act.find(b => b.period === "PM"), "PM");
-        const aria = full ? `heldag Hus ${full.household}` : ["AM", "PM"].map(p => { const b = act.find(x => x.period === p); return `${PLABEL[p].toLowerCase()} ${b ? "Hus " + b.household : "ledig"}`; }).join(", ");
+        const past = R.hasEnded(rules, date, PKEYS[PKEYS.length - 1], n);
+        // Tre rader per dag: formiddag, ettermiddag, kveld
+        const slot = (b, p) => {
+          if (b) return `<span class="slot taken h${b.household}${b.displayStatus === "NOT_CONFIRMED" ? " nc" : ""}"><span class="t">${PTIME[p]}</span> <span>Hus ${b.household}${b.displayStatus !== "BOOKED" ? " · " + STATUS[b.displayStatus].toLowerCase() : ""}</span></span>`;
+          const open = !R.hasStarted(rules, date, p, n);
+          const now = !open && !R.hasEnded(rules, date, p, n);
+          return `<span class="slot${open ? " free" : ""}" ${open ? `data-period="${p}"` : ""}><span class="t">${PTIME[p]}</span> <span>${open ? "Ledig" : now ? "Ledig nå" : "–"}</span></span>`;
+        };
+        const slots = PKEYS.map(p => slot(act.find(b => b.period === p), p)).join("");
+        const aria = PKEYS.map(p => { const b = act.find(x => x.period === p); return `${PLABEL[p].toLowerCase()} ${PTIME[p]} ${b ? "Hus " + b.household : "ledig"}`; }).join(", ");
         html += `<li><button type="button" class="day${date === n.date ? " today" : ""}${past ? " past" : ""}" data-date="${date}" aria-label="${esc(R.dateLabel(date))}${date === n.date ? " (i dag)" : ""}: ${esc(aria)}">
           <span class="dnum"><small>${WD_SHORT[i]}</small><b>${d2(date).d}</b></span><span class="slots">${slots}</span></button></li>`;
       }
@@ -84,12 +91,13 @@
       const list = await S.calendar({ from, to });
       let html = '<div class="month">' + WD_SHORT.map(w => `<div class="wd" aria-hidden="true">${w}</div>`).join("");
       for (let date = from; date <= to; date = R.addDays(date, 1)) {
-        const act = activeOn(list, date), full = act.find(b => b.period === "FULL");
-        const am = full || act.find(b => b.period === "AM"), pm = full || act.find(b => b.period === "PM");
-        const past = R.hasEnded(rules, date, "PM", now());
-        const aria = `${R.dateLabel(date)}: ` + (full ? `heldag Hus ${full.household}` : `formiddag ${am ? "Hus " + am.household : "ledig"}, kveld ${pm ? "Hus " + pm.household : "ledig"}`);
-        html += `<button type="button" class="mcell${date.slice(0, 7) !== first.slice(0, 7) ? " out" : ""}${date === now().date ? " today" : ""}${past ? " past" : ""}${am || pm ? " has" : ""}" data-date="${date}" aria-label="${esc(aria)}">
-          <span class="n">${d2(date).d}</span><span class="half${am ? " taken h" + am.household : ""}"></span><span class="half${pm ? " taken h" + pm.household : ""}"></span></button>`;
+        const act = activeOn(list, date), per = PKEYS.map(p => act.find(b => b.period === p));
+        const past = R.hasEnded(rules, date, PKEYS[PKEYS.length - 1], now());
+        const aria = `${R.dateLabel(date)}: ` + PKEYS.map((p, k) => `${PLABEL[p].toLowerCase()} ${per[k] ? "Hus " + per[k].household : "ledig"}`).join(", ");
+        // én stripe per periode; «Hus A» skrives bare der et nytt hus starter
+        const halves = per.map((b, k) => `<span class="half${b ? " taken h" + b.household : ""}">${b && (!k || !per[k - 1] || per[k - 1].household !== b.household) ? `<i aria-hidden="true">Hus ${b.household}</i>` : ""}</span>`).join("");
+        html += `<button type="button" class="mcell${date.slice(0, 7) !== first.slice(0, 7) ? " out" : ""}${date === now().date ? " today" : ""}${past ? " past" : ""}${per[0] ? " has" : ""}" data-date="${date}" aria-label="${esc(aria)}">
+          <span class="n">${d2(date).d}</span>${halves}</button>`;
       }
       $("#calendar").innerHTML = html + "</div>";
     }
@@ -146,49 +154,62 @@
   async function openDay(date, wanted) {
     const n = now(), all = await allBookings(), day = all.filter(b => b.date === date);
     const act = day.filter(b => R.isActive(b.displayStatus)), gone = day.filter(b => !R.isActive(b.displayStatus));
-    const types = ["FULL", "AM", "PM"].map(p => ({ p, free: !act.some(b => R.overlaps(rules, b.period, p)), ended: R.isOver(rules, date, p, n) }));
-    const can = types.filter(t => t.free && !t.ended);
-    const dayOver = R.hasEnded(rules, date, "PM", n);
+    // Hver periode: ledig? startet? (en periode kan bookes til den starter)
+    const types = PKEYS.map(p => ({ p, free: !act.some(b => R.overlaps(rules, b.period, p)), started: R.hasStarted(rules, date, p, n), ended: R.hasEnded(rules, date, p, n) }));
+    const can = types.filter(t => t.free && !t.started);
+    const dayOver = R.hasEnded(rules, date, PKEYS[PKEYS.length - 1], n);
+    const ongoingFree = types.find(t => t.free && t.started && !t.ended);
+    const fullOk = can.length === PKEYS.length && R.canBookFullDay(rules, date, n);
     const title = R.dateLabel(date).replace(/^./, c => c.toUpperCase()) + (date === n.date ? " · i dag" : "");
     let html = "", foot = "";
     // 1) Kort beskjed rett under datoen
     if (dayOver) html += `<p class="lead">Denne dagen er over, så den kan ikke bookes. Trykk › i kalenderen for å se kommende uker.</p>`;
     else if (date > lastBookable()) html += `<div class="msg no">Denne datoen kan ikke bookes ennå. Du kan booke maks ${rules.bookingWindow.months} måneder frem – den åpner ${R.dateLabel(R.addMonths(date, -rules.bookingWindow.months))}.</div>`;
-    else if (!can.length) html += `<p class="lead">Hele dagen er booket.</p>`;
-    else if (!act.length) html += `<p class="lead">${can.length === 3 ? "Ledig hele dagen" : "Ledig"} – velg hus og tid under.</p>`;
-    else html += `<p class="lead">${cap(can.filter(t => t.p !== "FULL").map(t => PLABEL[t.p].toLowerCase()).join(" og "))} er ledig – velg hus og tid under.</p>`;
-    // 2) Bookingskjema: hus først, så tid; «Book» står fast nederst
+    else if (!can.length) html += `<p class="lead">${ongoingFree ? `Det er ingen flere perioder å booke i dag, men ${PLABEL[ongoingFree.p].toLowerCase()} er ledig nå – bruk «Sjekk inn nå».` : "Hele dagen er booket."}</p>`;
+    else if (fullOk) html += `<p class="lead">Ledig hele dagen – velg hus og tid under.</p>`;
+    else html += `<p class="lead">${cap(periodsText(can.map(t => t.p)))} er ledig – velg hus og tid under.</p>`;
+    // 2) Bookingskjema: hus først, så perioder (kryss av én eller flere); «Book» står fast nederst
     if (!dayOver && date <= lastBookable() && can.length) {
-      const sel = (wanted && can.some(t => t.p === wanted)) ? wanted : can[0].p;
+      // Forhåndsvalg: perioden man trykket på, ellers heldag, ellers resten av dagen
+      const sel = (wanted && can.some(t => t.p === wanted)) ? [wanted] : can.map(t => t.p);
+      const fdTime = periodsTime(FULLDAY);
       html += `<h3 class="label">Hvilket hus?</h3><div class="pick" role="group" aria-label="Velg hus">${HOUSES.map(h =>
         `<button type="button" class="h${h}" data-house="${h}" aria-pressed="${h === myHouse}">Hus ${h}</button>`).join("")}</div>
-        <h3 class="label">Hvor lenge?</h3><div class="types" role="group" aria-label="Velg periode">${types.map(t =>
-        `<button type="button" data-type="${t.p}" aria-pressed="${t.p === sel}" ${t.free && !t.ended ? "" : "disabled"}><span>${PLABEL[t.p]}${t.p === "FULL" ? " (vanligst)" : ""}</span><span class="t">${PTIME[t.p]}${!t.free ? " · opptatt" : t.ended ? " · over" : ""}</span></button>`).join("")}</div>
+        <h3 class="label" id="whenLbl">Når? <span class="muted">Velg én eller flere</span></h3>
+        <div class="types" role="group" aria-labelledby="whenLbl">
+        <button type="button" class="fullday" data-full aria-pressed="${fullOk && sel.length === PKEYS.length}" ${fullOk ? "" : "disabled"}><span>Heldag (vanligst)</span><span class="t">${fdTime}${fullOk ? "" : R.canBookFullDay(rules, date, n) ? " · noe er opptatt" : ` · bare før kl. ${hh(rules.periods[FULLDAY[0]].start)}`}</span></button>
+        ${types.map(t => `<button type="button" role="checkbox" class="per" data-type="${t.p}" aria-checked="${sel.includes(t.p) && t.free && !t.started}" ${t.free && !t.started ? "" : "disabled"}><span><span class="box" aria-hidden="true"></span>${PLABEL[t.p]}</span><span class="t">${PTIME[t.p]}${!t.free ? " · opptatt" : t.ended ? " · over" : t.started ? " · har startet" : ""}</span></button>`).join("")}
+        </div>
         <div id="ruleMsg" aria-live="polite"></div>`;
       foot = `<button type="button" class="primary wide" id="bookBtn">Book</button>`;
     }
-    // 3) Det som allerede er booket denne dagen
-    if (act.length) html += `<h3 class="label">Booket denne dagen</h3><ul class="plist">${act.map(b => bookingItem(b, n)).join("")}</ul>`;
+    // 3) Det som allerede er booket denne dagen (hver periode kan avbestilles for seg)
+    if (act.length) html += `<h3 class="label">Booket denne dagen</h3><ul class="plist">${act.sort(byPeriod).map(b => bookingItem(b, n)).join("")}</ul>`;
     if (gone.length) html += `<p class="muted">Avbestilt: ${gone.map(b => `Hus ${b.household} ${PLABEL[b.period].toLowerCase()} (${STATUS[b.status].toLowerCase()})`).join(", ")}</p>`;
     if (dayOver && !act.length && !gone.length) html += `<p class="muted">Ingen brukte badehuset denne dagen.</p>`;
     openSheet(title, html, foot);
     wireDay(date, all);
   }
   const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  const byPeriod = (a, b) => PKEYS.indexOf(a.period) - PKEYS.indexOf(b.period);
 
   function wireDay(date, all) {
     const body = $("#sheetBody");
-    let house = myHouse, type = (body.querySelector('[data-type][aria-pressed="true"]') || {}).dataset?.type;
+    let house = myHouse;
+    const chosen = () => [...body.querySelectorAll('[data-type][aria-checked="true"]')].map(b => b.dataset.type);
+    const syncFull = () => { const f = body.querySelector("[data-full]"); if (f && !f.disabled) f.setAttribute("aria-pressed", PKEYS.every(p => chosen().includes(p))); };
     const check = () => {
       const box = $("#ruleMsg"), btn = $("#bookBtn"); if (!box) return;
+      const ps = chosen();
       if (!house) { box.innerHTML = `<div class="msg ok">Velg hvilket hus du booker for.</div>`; btn.disabled = true; btn.textContent = "Velg hus for å booke"; return; }
-      const res = R.validateBooking({ date, period: type, household: house }, all, rules, now());
+      if (!ps.length) { box.innerHTML = ""; btn.disabled = true; btn.textContent = "Velg minst én periode"; return; }
+      const res = R.validateBookingMulti({ date, periods: ps, household: house }, all, rules, now());
       btn.disabled = !res.ok;
-      btn.textContent = `Book ${PLABEL[type].toLowerCase()} for Hus ${house}`;
+      btn.textContent = `Book ${periodsText(ps)} for Hus ${house}`;
       if (!res.ok) { box.innerHTML = `<div class="msg no">${esc(res.message)}</div>`; return; }
       const wd = R.weekday(date), summer = rules.summer.months.includes(R.monthOf(date)) && rules.summer.weekendDays.includes(wd);
       const info = res.lifted ? (summer ? "Under 7 dager igjen – da er det førstemann til mølla, og bookingen teller ikke i sommerkvoten." : "Dette går fint.")
-        : res.quota ? `Dette går fint. Bookingen blir Hus ${house} sin ${R.WD_NB[wd]} i ${R.MONTHS[R.monthOf(date) - 1]}.`
+        : res.quota ? `Dette går fint. Dagen blir Hus ${house} sin ${R.WD_NB[wd]} i ${R.MONTHS[R.monthOf(date) - 1]} – uansett hvor mange perioder dere tar.`
         : "Dette går fint.";
       box.innerHTML = `<div class="msg ok">${esc(info)}</div>`;
     };
@@ -196,16 +217,23 @@
       house = b.dataset.house; body.querySelectorAll("[data-house]").forEach(x => x.setAttribute("aria-pressed", x === b)); check();
     }));
     body.querySelectorAll("[data-type]").forEach(b => b.addEventListener("click", () => {
-      type = b.dataset.type; body.querySelectorAll("[data-type]").forEach(x => x.setAttribute("aria-pressed", x === b)); check();
+      b.setAttribute("aria-checked", b.getAttribute("aria-checked") !== "true"); syncFull(); check();
     }));
+    const full = body.querySelector("[data-full]");
+    if (full) full.addEventListener("click", () => {
+      const on = full.getAttribute("aria-pressed") !== "true";
+      body.querySelectorAll("[data-type]:not(:disabled)").forEach(x => x.setAttribute("aria-checked", on));
+      full.setAttribute("aria-pressed", on); check();
+    });
     const bookBtn = $("#bookBtn");
     if (bookBtn) bookBtn.addEventListener("click", async () => {
       try {
         bookBtn.disabled = true;
-        const b = await S.createBooking({ date, period: type, household: house });
+        const r = await S.createBooking({ date, periods: chosen(), household: house });
         setMyHouse(house); localStorage.setItem(HINT_KEY, "1");
         closeSheet(); await refresh();
-        toast(`Booket! Hus ${b.household} · ${PLABEL[b.period].toLowerCase()} ${R.dateLabel(b.date)} 🎉`);
+        const contiguous = r.periods.every((p, k) => !k || rules.periods[r.periods[k - 1]].end === rules.periods[p].start);
+        toast(`Booket! Hus ${house} · ${periodsText(r.periods)}${contiguous ? ` ${periodsTime(r.periods)}` : ""} ${R.dateLabel(date)} 🎉`);
       } catch (e) { $("#ruleMsg").innerHTML = `<div class="msg no">${esc(e.message)}</div>`; bookBtn.disabled = false; }
     });
     check();
@@ -217,7 +245,7 @@
     scope.querySelectorAll("[data-act]").forEach(btn => btn.addEventListener("click", async () => {
       const id = btn.dataset.id, act = btn.dataset.act;
       try {
-        if (act === "checkin") { await S.checkIn(id, { household: myHouse }); toast("Sjekket inn – kos dere! ♨️"); }
+        if (act === "checkin") { const r = await S.checkIn(id, { household: myHouse }); toast(`Sjekket inn til kl. ${hh(r.until)} – kos dere! ♨️`); }
         if (act === "confirm") { await S.confirmUsage(id, { household: myHouse }); toast("Takk! Registrert som brukt."); }
         if (act === "cancel") {
           const { booking } = await S.getBooking(id);
@@ -242,27 +270,28 @@
   async function openCheckin() {
     const n = now(), all = await allBookings();
     const mineToday = all.filter(b => b.date === n.date && b.household === myHouse && R.validateCheckin(b, myHouse, rules, n).ok);
-    const opts = R.spontaneousOptions(all, rules, n);
+    const plans = R.spontaneousPlans(all, rules, n);       // f.eks. kl. 15: til 17, eller til 24
+    const opens = rules.periods[PKEYS[0]].start;
     let html = "";
-    if (mineToday.length) html += `<p>Dere har en booking nå:</p><ul class="plist">${mineToday.map(b => bookingItem(b, n)).join("")}</ul>`;
-    if (opts.length) {
+    if (mineToday.length) html += `<p>Dere har booket nå:</p><ul class="plist">${mineToday.sort(byPeriod).map(b => bookingItem(b, n)).join("")}</ul>`;
+    if (plans.length) {
       html += `<p>${mineToday.length ? "Eller sjekk inn" : "Er badehuset ledig og dere vil bruke det nå? Sjekk inn"} uten booking:</p>
         <h3 class="label">Hvem er dere?</h3><div class="pick" role="group" aria-label="Velg hus">${HOUSES.map(h => `<button type="button" class="h${h}" data-house="${h}" aria-pressed="${h === myHouse}">Hus ${h}</button>`).join("")}</div>
-        <h3 class="label">Hvor lenge?</h3><div class="types" role="group" aria-label="Velg periode">${opts.map((p, i) => `<button type="button" data-type="${p}" aria-pressed="${i === 0}"><span>${PLABEL[p]}</span><span class="t">${PTIME[p]}</span></button>`).join("")}</div>
-        <p class="muted">Spontan innsjekk teller i statistikken, men ikke i sommerkvoten. Dere sjekkes ut automatisk når perioden er over.</p>`;
+        <h3 class="label">Hvor lenge?</h3><div class="types" role="group" aria-label="Hvor lenge">${plans.map((ps, i) => `<button type="button" data-plan="${i}" aria-pressed="${i === 0}"><span>Til kl. ${hh(rules.periods[ps[ps.length - 1]].end)}</span><span class="t">${cap(periodsText(ps))}</span></button>`).join("")}</div>
+        <p class="muted">Spontan innsjekk teller i statistikken, men ikke i sommerkvoten. Dere sjekkes ut automatisk når tiden er ute (kl. 14, 17 eller 24).</p>`;
     } else if (!mineToday.length) {
-      html += n.minutes < 8 * 60 ? `<p>Badehuset kan brukes fra kl. 08:00. Kom tilbake da – eller book en dag i kalenderen.</p>`
-        : `<p>Akkurat nå er badehuset opptatt eller dagen er over. Se kalenderen for ledige dager.</p>`;
+      html += n.minutes < R.range(rules, PKEYS[0]).start ? `<p>Badehuset kan brukes fra kl. ${opens}. Kom tilbake da – eller book en dag i kalenderen.</p>`
+        : `<p>Akkurat nå er badehuset opptatt eller dagen er over. Se kalenderen for ledige tider.</p>`;
     }
-    openSheet("Sjekk inn nå", html, opts.length ? `<button type="button" class="primary wide" id="spontBtn">Sjekk inn</button>` : "");
+    openSheet("Sjekk inn nå", html, plans.length ? `<button type="button" class="primary wide" id="spontBtn">Sjekk inn</button>` : "");
     const body = $("#sheetBody");
-    let house = myHouse, type = opts[0];
+    let house = myHouse, plan = plans[0];
     body.querySelectorAll("[data-house]").forEach(b => b.addEventListener("click", () => { house = b.dataset.house; body.querySelectorAll("[data-house]").forEach(x => x.setAttribute("aria-pressed", x === b)); }));
-    body.querySelectorAll("[data-type]").forEach(b => b.addEventListener("click", () => { type = b.dataset.type; body.querySelectorAll("[data-type]").forEach(x => x.setAttribute("aria-pressed", x === b)); }));
+    body.querySelectorAll("[data-plan]").forEach(b => b.addEventListener("click", () => { plan = plans[+b.dataset.plan]; body.querySelectorAll("[data-plan]").forEach(x => x.setAttribute("aria-pressed", x === b)); }));
     const sb = $("#spontBtn");
     if (sb) sb.addEventListener("click", async () => {
       if (!house) { toast("Velg hvilket hus dere er."); return; }
-      try { const b = await S.spontaneousCheckIn({ period: type, household: house }); setMyHouse(house); closeSheet(); await refresh(); toast(`Sjekket inn til ${rules.periods[b.period].end === "24:00" ? "00:00" : rules.periods[b.period].end} – kos dere! ♨️`); }
+      try { const r = await S.spontaneousCheckIn({ periods: plan, household: house }); setMyHouse(house); closeSheet(); await refresh(); toast(`Sjekket inn til kl. ${hh(r.until)} – kos dere! ♨️`); }
       catch (e) { toast(e.message); }
     });
     wireActions(body, () => { closeSheet(); });
@@ -344,6 +373,8 @@
     try { rules = await S.getRules(); }
     catch (e) { $("#calendar").innerHTML = `<p class="msg no">${esc(e.message)}</p>`; return; }
     for (const h of HOUSES) document.documentElement.style.setProperty("--" + h, rules.households[h].color);
+    PKEYS = R.periodKeys(rules); FULLDAY = R.fullDayPeriods(rules);
+    for (const p of PKEYS) { PLABEL[p] = rules.periods[p].label; PTIME[p] = `${hh(rules.periods[p].start)}–${hh(rules.periods[p].end)}`; }
     $("#legend").innerHTML = HOUSES.map(h => `<span><span class="dot h${h}"></span>Hus ${h}</span>`).join("") + `<span>Stripete = ikke bekreftet</span>`;
     anchor = now().date;
     const p = d2(anchor); statAnchor = { y: p.y, m: p.m };
