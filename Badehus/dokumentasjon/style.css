@@ -247,3 +247,17 @@ pre.mermaid{background:transparent;color:var(--ink);box-shadow:none;padding:0;ma
 .callout.vedtatt{background:var(--ok-bg);border-color:#bbf7d0}
 .callout.vedtatt::before{content:"✓";background:var(--ok)}
 .chip.ok{background:var(--ok-bg);color:var(--ok);border-color:#bbf7d0}
+
+/* Juridisk dokumentstil – forslag til vedtekter */
+.draft-banner{margin-top:0;font-size:1rem}
+.legal{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:34px 40px;margin:24px 0;
+  font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:1.04rem;line-height:1.7;color:#1e293b;max-width:780px}
+.legal p,.legal li{max-width:68ch}
+.legal ul{padding-left:1.4em}.legal li{margin:.25em 0}
+.legal h2.legal-title{font-family:inherit;font-size:1.45rem;margin:.4rem 0 1rem;text-align:center;letter-spacing:.01em}
+.legal h2.legal-title::before{display:none}
+.legal .legal-kicker{text-align:center;font-size:.86rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 .2rem;font-family:system-ui,sans-serif;font-weight:700;max-width:none}
+.legal .legal-meta{text-align:center;font-style:italic;color:var(--muted);max-width:none}
+.legal h3{font-family:inherit;font-size:1.12rem;margin:1.8rem 0 .5rem;padding-top:1rem;border-top:1px solid var(--line);display:flex;gap:12px;align-items:baseline}
+.legal .legal-num{flex:none;display:inline-grid;place-items:center;min-width:30px;height:30px;border-radius:8px;background:var(--brand-bg);color:var(--brand);font-family:system-ui,sans-serif;font-weight:800;font-size:.9rem}
+@media (max-width:600px){.legal{padding:20px 18px;font-size:1rem}}

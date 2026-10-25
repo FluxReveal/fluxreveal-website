@@ -39,6 +39,7 @@
 <li><a href="adminmanual.html"><span class="num">7</span>Brukermanual – administrator</a></li>
 <li class="nav-label">Styring</li>
 <li><a href="beslutninger.html" aria-current="page"><span class="num">8</span>Beslutninger</a></li>
+<li><a href="vedtekter.html"><span class="num">9</span>Forslag til vedtekter</a></li>
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
@@ -93,14 +94,14 @@ flowchart LR
 <div class="card" style="margin:14px 0;border-left:6px solid var(--ok)">
   <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å1 · 7-dagersregel vs. kvote</b><span><span class="badge-vedtatt">Vedtatt 25.10.2026</span></span></div>
   <p style="margin:.5rem 0"><b>Spørsmål:</b> Teller en booking gjort mindre enn 7 dager før mot sommerkvoten? Gjelder helgebegrensningen da?</p>
-  <p style="margin:.5rem 0"><b>Vedtak:</b> Booking gjort < 7 dager før teller <b>ikke</b> mot kvote; helgebegrensning oppheves også.</p>
+  <p style="margin:.5rem 0"><b>Vedtak:</b> Booking gjort &lt; 7 dager før teller <b>ikke</b> mot kvote; helgebegrensning oppheves også.</p>
   <p style="margin:0;color:var(--muted);font-size:.9rem">Påvirker: <code>shortNoticeCountsTowardQuota</code>, regelmotor · <a href="regler.html#regel-5">Regler ⑤</a></p>
 </div>
 
 <div class="card" style="margin:14px 0;border-left:6px solid var(--ok)">
   <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å2 · Spontan innsjekk</b><span><span class="badge-vedtatt">Vedtatt 25.10.2026</span></span></div>
   <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvordan telles spontan innsjekk uten reservasjon?</p>
-  <p style="margin:.5rem 0"><b>Vedtak:</b> Teller i statistikk (bruk), ikke i kvote (skjer alltid < 7 dager før).</p>
+  <p style="margin:.5rem 0"><b>Vedtak:</b> Teller i statistikk (bruk), ikke i kvote (skjer alltid &lt; 7 dager før).</p>
   <p style="margin:0;color:var(--muted);font-size:.9rem">Påvirker: <code>spontaneousCheckinCountsTowardQuota</code>, statistikk · <a href="regler.html#innsjekk-utsjekk-og-bekreftelse">Regler: innsjekk</a></p>
 </div>
 
@@ -183,6 +184,7 @@ flowchart LR
 <tr><td><b>25.10.2026</b></td><td><b>Eierskap til kontoer:</b> Thomas eier GitHub- og Cloudflare-kontoene via FluxReveal-kontoene sine. (Overføring til sameiet ved behov: se <a href="adminmanual.html#overforing-til-sameiet-ved-behov">administratormanualen</a>.)</td><td>Thomas Gude Svensrud</td><td><span class="badge-vedtatt">Vedtatt 25.10.2026</span></td></tr>
 <tr><td><b>25.10.2026</b></td><td><b>Adresse/domene:</b> Løsningen skal ligge på fluxreveal.com/Badehus/ (dokumentasjonen på fluxreveal.com/Badehus/dokumentasjon/). Workerens CORS-origin er https://fluxreveal.com.</td><td>Thomas Gude Svensrud</td><td><span class="badge-vedtatt">Vedtatt 25.10.2026</span></td></tr>
 <tr><td>25.10.2026</td><td>Dokumentasjonsside v0.3 publisert med vedtatte beslutninger.</td><td>–</td><td><span class="badge">Dokumentasjon</span></td></tr>
+<tr><td><b>25.10.2026</b></td><td><b>Forslag til ny § 10 og vedlegg 1 (regler for badehuset) godkjent av Thomas som utkast til drøfting med naboene.</b> Se <a href="vedtekter.html">Forslag til vedtekter</a>.</td><td>Thomas Gude Svensrud</td><td><span class="badge">Utkast til drøfting</span></td></tr>
 <tr><td style="color:var(--muted)">–</td><td style="color:var(--muted)"><i>Neste beslutning føres her …</i></td><td></td><td></td></tr>
 </tbody></table></div>
 
@@ -193,7 +195,7 @@ Beslutning:  Forslag godtatt / Endret til: …
 Besluttet av: navn, rolle
 Konsekvens:  rules.json-nøkler, sider i dokumentasjonen, tester som må oppdateres</code></pre>
 
-<nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="adminmanual.html"><small>← Forrige</small>Brukermanual – administrator</a><span></span></nav>
+<nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="adminmanual.html"><small>← Forrige</small>Brukermanual – administrator</a><a class="next" href="vedtekter.html"><small>Neste →</small>Forslag til vedtekter</a></nav>
       <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.3 · 25.10.2026). Systemet er ikke bygget ennå. Arkitektur og regelavklaringer er <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Detaljer merket <span class="badge-forslag">Forslag – detaljdesign</span> er utdypinger som kan justeres ved bygging. Alle navn er eksempler.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>

@@ -21,6 +21,19 @@
   if (scrim) scrim.addEventListener("click", function () { setNav(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setNav(false); });
 
+  /* ---------- Menypunkt for nye sider ----------
+     Sider som er generert før «Forslag til vedtekter» kom til, mangler
+     menypunktet i HTML-en. Legg det til her (gjør ingenting når det finnes). */
+  var navList = document.querySelector(".nav");
+  if (navList && !navList.querySelector('a[href="vedtekter.html"]')) {
+    var after = navList.querySelector('a[href="beslutninger.html"]');
+    if (after) {
+      var li = document.createElement("li");
+      li.innerHTML = '<a href="vedtekter.html"><span class="num">9</span>Forslag til vedtekter</a>';
+      after.parentNode.parentNode.insertBefore(li, after.parentNode.nextSibling);
+    }
+  }
+
   /* ---------- Ankerlenker + innholdsfortegnelse ---------- */
   function slug(t) {
     return t.toLowerCase()
@@ -48,7 +61,9 @@
       li.className = h.tagName === "H3" ? "l3" : "l2";
       var l = document.createElement("a");
       l.href = "#" + h.id;
-      l.textContent = h.firstChild.textContent.trim();
+      var c = h.cloneNode(true), an = c.querySelector(".anchor");
+      if (an) an.remove();
+      l.textContent = c.textContent.replace(/\s+/g, " ").trim();
       li.appendChild(l); tocList.appendChild(li);
     }
   });
