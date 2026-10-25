@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overordnet beskrivelse – Badehus Booking System</title>
+<meta name="description" content="Overordnet beskrivelse av Badehus Booking System for ikke-tekniske beboere og styremedlemmer.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a href="#innhold" class="chip" style="position:absolute;left:-9999px" onfocus="this.style.left='8px'">Hopp til innhold</a>
+<header class="topbar">
+  <button class="hamburger" aria-label="Åpne meny" aria-expanded="false" aria-controls="sidemeny"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <b>Badehus · Dokumentasjon</b>
+</header>
+<div class="scrim"></div>
+<nav class="sidebar" id="sidemeny" aria-label="Hovedmeny">
+  <a class="brand" href="index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Badehus Booking</b><small>Sameiet Halden Terrasse 14</small></span></a>
+  <div class="search" role="search"><svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9cc3d1" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+    <input id="sok" type="search" placeholder="Søk i dokumentasjonen  ( / )" aria-label="Søk i dokumentasjonen" autocomplete="off">
+    <ul id="sok-resultat" class="search-results" aria-live="polite"></ul>
+  </div>
+  <ul class="nav">
+<li class="nav-label">Start</li>
+<li><a href="index.html"><span class="num">1</span>Oversikt</a></li>
+<li class="nav-label">For alle</li>
+<li><a href="beskrivelse.html" aria-current="page"><span class="num">2</span>Overordnet beskrivelse</a></li>
+<li class="nav-label">Teknisk</li>
+<li><a href="hld.html"><span class="num">3</span>HLD – High Level Design</a></li>
+<li><a href="lld.html"><span class="num">4</span>LLD – Low Level Design</a></li>
+<li class="nav-label">Regler</li>
+<li><a href="regler.html"><span class="num">5</span>Bookingregler</a></li>
+<li class="nav-label">Manualer</li>
+<li><a href="brukermanual.html"><span class="num">6</span>Brukermanual – beboer</a></li>
+<li><a href="adminmanual.html"><span class="num">7</span>Brukermanual – administrator</a></li>
+<li class="nav-label">Styring</li>
+<li><a href="beslutninger.html"><span class="num">8</span>Beslutninger</a></li>
+<li><a href="vedtekter.html"><span class="num">9</span>Forslag til vedtekter</a></li>
+  </ul>
+  <div class="side-foot">
+    <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
+    Planlagt løsning · v0.3 · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
+  </div>
+</nav>
+<main class="main" id="innhold">
+  <div class="content-wrap">
+    <article>
+<section class="hero">
+  <div class="eyebrow">For alle beboere · ingen teknikk</div>
+  <h1>Overordnet beskrivelse</h1>
+  <p>Hva er Badehus Booking System, hvorfor trenger vi det, og hvordan blir det å bruke det i hverdagen?</p>
+  <div class="meta"><span class="chip draft">v0.3 · 25.10.2026</span><span class="chip ok">Beslutninger vedtatt 25.10.2026</span><span class="chip">Planlagt løsning</span></div>
+</section>
+
+<h2 id="hva-er-det">Hva er det?</h2>
+<p>Badehus Booking System er en <b>nettside</b> der beboerne i Sameiet Halden Terrasse 14 kan se når det felles badehuset er ledig, reservere det, avbestille og registrere at de har brukt det. Den fungerer på mobil, nettbrett og PC – det er ingen app som må installeres.</p>
+<div class="grid c3">
+  <div class="card"><h4>📅 Én felles kalender</h4><p style="margin:0;color:var(--muted)">En vanlig månedskalender. Hver husstand har sin farge, så du ser med en gang hvem som har badehuset.</p></div>
+  <div class="card"><h4>⚖️ Rettferdige regler</h4><p style="margin:0;color:var(--muted)">Om sommeren passer systemet på at fredager, lørdager og søndager fordeles mellom husstandene.</p></div>
+  <div class="card"><h4>🔍 Full åpenhet</h4><p style="margin:0;color:var(--muted)">Alle kan se historikk og statistikk. Ingenting slettes i det stille.</p></div>
+</div>
+
+<h2 id="hvorfor">Hvorfor?</h2>
+<ul>
+  <li><b>Økt utnyttelse:</b> Historisk har badehuset blitt brukt hele dager. Nå kan man også booke en halv dag, slik at andre kan bruke resten av dagen.</li>
+  <li><b>Rettferdig fordeling</b> av de mest populære dagene om sommeren.</li>
+  <li><b>Åpenhet:</b> Det skal være lett å se om noen bruker badehuset vesentlig mer enn andre – uten rangering eller «shaming».</li>
+  <li><b>Enkel drift og null kostnad:</b> Styret skal kunne drifte løsningen uten utviklerkompetanse, og det skal ikke koste noe å ha den.</li>
+  <li><b>God dokumentasjon,</b> slik at ikke-tekniske kan overta drift og videreutvikling.</li>
+</ul>
+
+<h2 id="hvem-bruker-systemet">Hvem bruker systemet?</h2>
+<figure>
+<svg viewBox="0 0 820 250" role="img" aria-label="Fire husstander med brukere, og to administratorer">
+  <g font-family="system-ui,Segoe UI,Arial" text-anchor="middle">
+    <g transform="translate(20 20)"><rect width="170" height="140" rx="16" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="85" y="30" font-weight="800" fill="#1d4ed8" font-size="16">Hus A</text>
+      <circle cx="55" cy="70" r="14" fill="#2563eb"/><circle cx="115" cy="70" r="14" fill="#2563eb" opacity=".7"/><text x="85" y="112" font-size="12" fill="#1e3a8a">Per Hansen</text><text x="85" y="128" font-size="12" fill="#1e3a8a">Lise Hansen</text></g>
+    <g transform="translate(220 20)"><rect width="170" height="140" rx="16" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="85" y="30" font-weight="800" fill="#15803d" font-size="16">Hus B</text>
+      <circle cx="85" cy="70" r="14" fill="#16a34a"/><text x="85" y="112" font-size="12" fill="#14532d">Ola Nordmann</text><text x="85" y="128" font-size="12" fill="#14532d">…</text></g>
+    <g transform="translate(420 20)"><rect width="170" height="140" rx="16" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/><text x="85" y="30" font-weight="800" fill="#c2410c" font-size="16">Hus C</text>
+      <circle cx="55" cy="70" r="14" fill="#ea580c"/><circle cx="115" cy="70" r="14" fill="#ea580c" opacity=".7"/><text x="85" y="120" font-size="12" fill="#7c2d12">brukere …</text></g>
+    <g transform="translate(620 20)"><rect width="170" height="140" rx="16" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/><text x="85" y="30" font-weight="800" fill="#6d28d9" font-size="16">Hus D</text>
+      <circle cx="85" cy="70" r="14" fill="#7c3aed"/><text x="85" y="120" font-size="12" fill="#4c1d95">brukere …</text></g>
+    <g transform="translate(220 185)"><rect width="370" height="54" rx="14" fill="#0b2533"/><text x="185" y="24" fill="#fff" font-weight="700" font-size="14">Administratorer: styreleder og nestleder</text><text x="185" y="42" fill="#9cd3e2" font-size="12">er også vanlige beboere i sin husstand</text></g>
+  </g>
+</svg>
+<figcaption>Opptil 20 brukere totalt. Hver bruker tilhører én husstand. Navnene er eksempler.</figcaption>
+</figure>
+
+<div class="grid c2">
+  <div class="card"><h3 id="vanlig-bruker-kan">Vanlig bruker kan</h3>
+    <ul style="margin:0"><li>logge inn</li><li>se kalender</li><li>opprette booking</li><li>avbestille booking</li><li>sjekke inn</li><li>bekrefte at reservasjonen ble brukt</li><li>se all historikk</li><li>se statistikk</li></ul>
+    <p style="color:var(--muted);font-size:.9rem;margin-bottom:0"><b>Kan ikke:</b> endre regler, opprette brukere eller overstyre begrensninger.</p>
+  </div>
+  <div class="card"><h3 id="administrator-kan-i-tillegg">Administrator kan i tillegg</h3>
+    <ul style="margin:0"><li>opprette og deaktivere brukere</li><li>tilbakestille passord</li><li>endre regler</li><li>overstyre begrensninger</li><li>korrigere historikk</li><li>importere og eksportere data</li></ul>
+    <p style="color:var(--muted);font-size:.9rem;margin-bottom:0"><b>Alle</b> administratorhandlinger logges.</p>
+  </div>
+</div>
+
+<h2 id="slik-fungerer-det-i-hverdagen">Slik fungerer det i hverdagen</h2>
+<h3 id="tre-mater-a-reservere-en-dag-pa">Tre måter å reservere en dag på</h3>
+<figure>
+<svg viewBox="0 0 820 190" role="img" aria-label="Tidslinje for bookingtyper">
+  <g font-family="system-ui,Segoe UI,Arial" font-size="13">
+    <line x1="140" y1="20" x2="140" y2="170" stroke="#e2e8f0"/><line x1="440" y1="20" x2="440" y2="170" stroke="#e2e8f0"/><line x1="790" y1="20" x2="790" y2="170" stroke="#e2e8f0"/>
+    <text x="140" y="16" text-anchor="middle" fill="#64748b">08:00</text><text x="440" y="16" text-anchor="middle" fill="#64748b">14:00</text><text x="790" y="16" text-anchor="middle" fill="#64748b">00:00</text>
+    <text x="10" y="55" font-weight="700" fill="#0f172a">Heldag</text><text x="10" y="71" fill="#64748b" font-size="11">standardvalg</text>
+    <rect x="140" y="36" width="650" height="38" rx="9" fill="#2563eb"/><text x="465" y="60" text-anchor="middle" fill="#fff" font-weight="700">08:00 – 00:00 · 2 perioder</text>
+    <text x="10" y="107" font-weight="700" fill="#0f172a">Formiddag</text>
+    <rect x="140" y="88" width="300" height="38" rx="9" fill="#16a34a"/><text x="290" y="112" text-anchor="middle" fill="#fff" font-weight="700">08:00 – 14:00 · 1 periode</text>
+    <text x="10" y="155" font-weight="700" fill="#0f172a">Ettermiddag/</text><text x="10" y="170" font-weight="700" fill="#0f172a">kveld</text>
+    <rect x="440" y="140" width="350" height="38" rx="9" fill="#ea580c"/><text x="615" y="164" text-anchor="middle" fill="#fff" font-weight="700">14:00 – 00:00 · 1 periode</text>
+  </g>
+</svg>
+<figcaption>Heldag er standard, men halve dager gjør det mulig for to husstander å bruke badehuset samme dag.</figcaption>
+</figure>
+
+<h3 id="en-maned-i-kalenderen">En måned i kalenderen</h3>
+<figure><div style="font-weight:700;margin-bottom:6px">Juli 2027</div><table class="cal" aria-label="Kalender juli 2027"><thead><tr><th>Man</th><th>Tir</th><th>Ons</th><th>Tor</th><th>Fre</th><th>Lør</th><th>Søn</th></tr></thead><tbody><tr><td class="out"></td><td class="out"></td><td class="out"></td><td class=""><span class="d">1</span></td><td class="wk"><span class="d">2</span><span class="p a" title="Hus A">Hus A</span></td><td class="wk"><span class="d">3</span><span class="p b" title="Hus B">Hus B</span></td><td class="wk"><span class="d">4</span><span class="p c" title="Hus C">Hus C</span></td></tr><tr><td class=""><span class="d">5</span></td><td class=""><span class="d">6</span></td><td class=""><span class="d">7</span></td><td class=""><span class="d">8</span></td><td class="wk"><span class="d">9</span><span class="p d" title="Hus D">Hus D</span></td><td class="wk"><span class="d">10</span><span class="p a half" title="08–14 A">08–14 A</span><span class="p c half" title="14–00 C">14–00 C</span></td><td class="wk"><span class="d">11</span><span class="p b" title="Hus B">Hus B</span></td></tr><tr><td class=""><span class="d">12</span></td><td class=""><span class="d">13</span></td><td class=""><span class="d">14</span><span class="p c half" title="08–14 C">08–14 C</span></td><td class=""><span class="d">15</span></td><td class="wk"><span class="d">16</span><span class="p b" title="Hus B">Hus B</span></td><td class="wk"><span class="d">17</span><span class="p d" title="Hus D">Hus D</span></td><td class="wk"><span class="d">18</span><span class="p a" title="Hus A">Hus A</span></td></tr><tr><td class=""><span class="d">19</span></td><td class=""><span class="d">20</span></td><td class=""><span class="d">21</span><span class="p d half" title="14–00 D">14–00 D</span></td><td class=""><span class="d">22</span></td><td class="wk"><span class="d">23</span><span class="p c" title="Hus C">Hus C</span></td><td class="wk"><span class="d">24</span></td><td class="wk"><span class="d">25</span><span class="p d" title="Hus D">Hus D</span></td></tr><tr><td class=""><span class="d">26</span></td><td class=""><span class="d">27</span><span class="p b" title="Hus B">Hus B</span></td><td class=""><span class="d">28</span></td><td class=""><span class="d">29</span></td><td class="wk"><span class="d">30</span></td><td class="wk"><span class="d">31</span></td><td class="out"></td></tr></tbody></table><figcaption>Eksempel (fiktive data): fargen viser hvilken husstand som har dagen. Halve dager vises som to felt.</figcaption></figure>
+
+<h3 id="fire-hverdagssituasjoner">Fire hverdagssituasjoner</h3>
+<div class="grid c2">
+  <div class="card"><h4>«Vi vil ha badehuset lørdag om tre uker»</h4><p style="margin:0">Åpne kalenderen, trykk på lørdagen og velg <i>Heldag</i>. Systemet sjekker sommerreglene og bekrefter. Dagen blir farget med husstandens farge.</p></div>
+  <div class="card"><h4>«Badehuset er ledig nå – vi går ned!»</h4><p style="margin:0">Uten reservasjon kan du <b>sjekke inn</b> spontant hvis perioden er ledig. Du velger formiddag, ettermiddag eller hele dagen. Systemet registrerer tidspunkt, bruker og husstand.</p></div>
+  <div class="card"><h4>«Vi rakk ikke å sjekke inn»</h4><p style="margin:0">Det betyr ikke at badehuset var ubrukt. Bookingen får status «ikke bekreftet», og du kan senere trykke <i>«Vi brukte badehuset»</i>.</p></div>
+  <div class="card"><h4>«Planene endret seg»</h4><p style="margin:0">Avbestill i appen. Mer enn 7 dager før: bookingen fjernes fra kvoten. 7 dager eller mindre før: dagen frigjøres for andre, men teller fortsatt mot sommerkvoten.</p></div>
+</div>
+
+<h2 id="de-viktigste-reglene-kort-fortalt">De viktigste reglene – kort fortalt</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Regel</th><th>Kort forklart</th></tr></thead>
+<tbody>
+<tr><td>Bookingvindu</td><td>Du kan booke maks 3 måneder frem i tid.</td></tr>
+<tr><td>Sommerkvote (juni, juli, august)</td><td>Hver husstand kan ha maks 1 fredag, 1 lørdag og 1 søndag per måned. Det er dagen som teller – en halv fredag er også «en fredag».</td></tr>
+<tr><td>Helgebegrensning (sommer)</td><td>Maks én helgedag per helg per husstand (ikke fre+lør, lør+søn eller fre+søn samme helg).</td></tr>
+<tr><td>7-dagersregel</td><td>Når det er mindre enn 7 dager til datoen, gjelder ikke sommerbegrensningene. Da er det førstemann til mølla.</td></tr>
+<tr><td>Avbestilling</td><td>Tidlig (mer enn 7 dager før) eller sen (7 dager eller mindre før) – se <a href="regler.html">Regler</a>.</td></tr>
+</tbody></table></div>
+<p>Alle detaljer og eksempler står på siden <a href="regler.html">Bookingregler</a>.</p>
+
+<h2 id="statistikk-uten-rangering">Statistikk uten rangering</h2>
+<p>Statistikken viser hvor mye hver husstand har brukt badehuset denne måneden, denne sesongen (juni–august) og i år. Bruk måles i <b>perioder</b>: formiddag = 1, ettermiddag/kveld = 1, heldag = 2. Målet er åpenhet, ikke konkurranse.</p>
+<figure>
+<svg viewBox="0 0 820 200" role="img" aria-label="Eksempel på statistikkpanel">
+  <g font-family="system-ui,Segoe UI,Arial" font-size="13">
+    <text x="0" y="18" font-weight="700" fill="#0f172a">Inneværende sesong (juni–august) – eksempel med fiktive tall</text>
+    <g transform="translate(0 36)"><text x="0" y="22" font-weight="700" fill="#2563eb">Hus A</text><rect x="70" y="6" width="420" height="24" rx="6" fill="#2563eb"/><text x="500" y="23" fill="#334155">14 perioder</text></g>
+    <g transform="translate(0 76)"><text x="0" y="22" font-weight="700" fill="#16a34a">Hus B</text><rect x="70" y="6" width="360" height="24" rx="6" fill="#16a34a"/><text x="440" y="23" fill="#334155">12 perioder</text></g>
+    <g transform="translate(0 116)"><text x="0" y="22" font-weight="700" fill="#ea580c">Hus C</text><rect x="70" y="6" width="390" height="24" rx="6" fill="#ea580c"/><text x="470" y="23" fill="#334155">13 perioder</text></g>
+    <g transform="translate(0 156)"><text x="0" y="22" font-weight="700" fill="#7c3aed">Hus D</text><rect x="70" y="6" width="300" height="24" rx="6" fill="#7c3aed"/><text x="380" y="23" fill="#334155">10 perioder</text></g>
+  </g>
+</svg>
+<figcaption>Husstandene vises i fast rekkefølge A–D (ikke sortert etter mest bruk), i tråd med målet om åpenhet uten rangering. Tallene er fiktive.</figcaption>
+</figure>
+<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> Ikke bekreftede bookinger vises separat (regnes ikke som bruk før de er bekreftet), og sent avbestilte teller i kvoten, men ikke som bruk. Se <a href="beslutninger.html">Beslutninger</a>, avklaring 7.</p></div>
+
+<h2 id="trygghet-og-personvern">Trygghet og personvern</h2>
+<ul>
+  <li>Ingen kan registrere seg selv – styret oppretter brukere og setter passord.</li>
+  <li>Bookingdata er personopplysninger og skal derfor <b>ikke</b> ligge åpent på internett. Den vedtatte løsningen lagrer dataene i et privat lager (se <a href="hld.html">HLD</a>).</li>
+  <li>Passord lagres aldri i klartekst.</li>
+  <li>Ingen bookinger slettes permanent; alle endringer kan spores.</li>
+</ul>
+<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> Når noen flytter, deaktiveres brukeren og kan anonymiseres (f.eks. navnet byttes til «Tidligere beboer Hus A»), mens husstanden beholdes i historikken. Se avklaring 9.</p></div>
+
+<h2 id="hva-er-ikke-med-i-forste-versjon">Hva er ikke med i første versjon?</h2>
+<ul>
+  <li>Ingen varsler på e-post eller SMS i versjon 1 – det er en kandidat for versjon 2.</li>
+  <li>Sameiets vedtekter er ikke tilgjengelige ennå, og er ikke tatt hensyn til.</li>
+</ul>
+
+<nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="index.html"><small>← Forrige</small>Oversikt</a><a class="next" href="hld.html"><small>Neste →</small>HLD – High Level Design</a></nav>
+      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.3 · 25.10.2026). Systemet er ikke bygget ennå. Arkitektur og regelavklaringer er <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Detaljer merket <span class="badge-forslag">Forslag – detaljdesign</span> er utdypinger som kan justeres ved bygging. Alle navn er eksempler.</p>
+    </article>
+    <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
+  </div>
+</main>
+</body>
+</html>
