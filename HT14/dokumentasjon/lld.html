@@ -55,7 +55,7 @@
   <div class="eyebrow">Teknisk · Detaljdesign</div>
   <h1>LLD – Low Level Design</h1>
   <p>Detaljert design for utviklere og for den som skal drifte eller videreutvikle løsningen: filer, dataformater, API, regelmotor, statuser og flyt.</p>
-  <div class="meta"><span class="chip">⏱ Ca. 19 min lesetid</span></div>
+  <div class="meta"><span class="chip">⏱ Ca. 20 min lesetid</span></div>
 </section>
 
 <p class="note">Arkitekturen er Thomas sitt tekniske valg. Regelavklaringene er forslag som vi tar på sameiemøtet (se <a href="hld.html">HLD</a> og <a href="beslutninger.html">Hva må godkjennes?</a>). Detaljdesignet på denne siden – filnavn, feltnavn, endepunkter, feilkoder, CSV-oppsett og detaljer i nattlig jobb – er assistentens utdyping og kan justeres ved bygging. Felter som hører til en avklaring, er merket med nummeret (f.eks. <b>Å1</b>).</p>
@@ -89,7 +89,8 @@
     │   ├── admin.html       kun administratorer
     │   ├── css/style.css    husstandsfarger som CSS-variabler
     │   └── js/
-    │       ├── api.js       fetch mot /api/ (samme adresse)
+    │       ├── store.js     eneste datalag: fetch mot /api/
+│       │                (prøveversjon: localStorage)
     │       ├── auth.js      innlogging / utlogging
     │       ├── calendar.js  uke- og månedsvisning
     │       ├── booking.js   booke, avbestille, sjekke inn
@@ -98,7 +99,8 @@
     │       └── rules-engine.js  delt regelmotor
     └── tests/
         └── rules-engine.test.js</code></pre>
-<div class="callout warn" style="font-size:.88rem"><p>Alt i <code>HT14/</code> er offentlig. Koden og <code>wrangler.toml</code> kan ligge her fordi de <b>ikke</b> inneholder hemmeligheter – token og nøkler finnes kun som Worker-secrets. Kopien av <code>badehusappen/</code> som GitHub Pages også viser, er bare kildekode uten data og kan ikke logge inn; Badehusappen brukes på workers.dev-adressen.</p></div>
+<div class="callout warn" style="font-size:.88rem"><p>Alt i <code>HT14/</code> er offentlig. Koden og <code>wrangler.toml</code> kan ligge her fordi de <b>ikke</b> inneholder hemmeligheter – token og nøkler finnes kun som Worker-secrets. Kopien av <code>badehusappen/</code> som GitHub Pages også viser, har ingen data og ingen innlogging.</p></div>
+<p class="note"><b>Prøveversjonen nå:</b> En første utgave uten innlogging ligger på <a href="https://fluxreveal.com/HT14/badehusappen/">fluxreveal.com/HT14/badehusappen/</a>. For at adressen skal bli kort, ligger sidene foreløpig rett i <code>HT14/badehusappen/</code> (ikke i <code>public/</code>), og <code>js/store.js</code> lagrer bookingene i nettleseren (localStorage) på hver enkelt enhet. <code>store.js</code> har de samme async-funksjonene som Worker-API-et, så når Workeren kommer, byttes bare den fila ut og sidene flyttes til <code>public/</code>.</p>
 </div>
 <div>
 <h3 id="data-repo-privat">Data-repo (privat)</h3>
