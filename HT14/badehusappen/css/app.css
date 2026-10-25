@@ -73,16 +73,34 @@ main { max-width: 760px; margin: 0 auto; padding: 0 1rem; }
 .legend { display: flex; gap: .8rem; flex-wrap: wrap; font-size: .88rem; color: var(--muted); margin: .8rem 0; }
 .dot { display: inline-block; width: .8rem; height: .8rem; border-radius: 4px; vertical-align: -1px; margin-right: .25rem; }
 
-/* Ark (dialog) */
-dialog { border: 0; padding: 0; width: min(560px, 100%); max-height: 92vh; border-radius: 22px 22px 0 0; margin: auto auto 0;
-  box-shadow: 0 -10px 40px rgba(2,6,23,.25); color: var(--ink); }
-dialog::backdrop { background: rgba(15,23,42,.45); }
-@media (min-width: 640px) { dialog { border-radius: 22px; margin: auto; } }
-.sheet-head { position: sticky; top: 0; background: #fff; display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 1rem .4rem; z-index: 1; }
+/* Ark (dialog)
+ * Høyden følger den synlige skjermen (dvh), med vh som reserve for eldre
+ * Safari. Bare midtdelen ruller; overskrift og «Book»-knapp står fast.
+ * Virker også uten innebygd <dialog>-støtte (iOS før 15.4): da settes
+ * bare open-attributtet og arket vises med samme stil. */
+#sheet { display: none; position: fixed; left: 0; right: 0; bottom: 0; top: auto; z-index: 50;
+  border: 0; padding: 0; margin: 0 auto; width: min(560px, 100%); max-width: 100%;
+  max-height: 88vh; max-height: 88dvh; height: auto;
+  border-radius: 22px 22px 0 0; background: #fff; color: var(--ink); overflow: hidden;
+  box-shadow: 0 -10px 40px rgba(2,6,23,.25); flex-direction: column; }
+#sheet[open] { display: flex; }
+#sheet::backdrop { background: rgba(15,23,42,.45); }
+.sheet-fallback-backdrop { position: fixed; inset: 0; background: rgba(15,23,42,.45); z-index: 49; }
+@media (min-width: 640px) and (min-height: 600px) { #sheet { bottom: auto; top: 50%; transform: translateY(-50%); border-radius: 22px; } }
+html.sheet-open, html.sheet-open body { overflow: hidden; }
+.sheet-head { flex: 0 0 auto; background: #fff; display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1rem .4rem; }
 .sheet-head h2 { margin: 0; font-size: 1.2rem; }
-.close { width: 44px; height: 44px; border-radius: 50%; border: 0; background: #f1f5f9; font-size: 1.1rem; }
-#sheetBody { padding: 0 1rem calc(1.2rem + env(safe-area-inset-bottom)); }
+.close { width: 44px; height: 44px; border-radius: 50%; border: 0; background: #f1f5f9; font-size: 1.1rem; flex: 0 0 auto; }
+#sheetBody { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  padding: 0 1rem 1rem; }
+#sheet.nofoot #sheetBody { padding-bottom: calc(1rem + env(safe-area-inset-bottom)); }
+#sheetFoot { flex: 0 0 auto; background: #fff; border-top: 1px solid var(--line);
+  padding: .7rem 1rem calc(.7rem + env(safe-area-inset-bottom)); box-shadow: 0 -6px 16px rgba(2,6,23,.06); }
+#sheetFoot[hidden] { display: none; }
+.lead { margin: .1rem 0 .6rem; font-weight: 600; }
+.hint { margin: 0 0 .6rem; padding: .55rem .8rem; border-radius: 12px; background: var(--soft); color: var(--brand); font-weight: 600; font-size: .95rem; }
+.slot.free { cursor: pointer; }
 .plist { list-style: none; padding: 0; margin: .2rem 0 .8rem; display: grid; gap: .4rem; }
 .pitem { border: 1px solid var(--line); border-radius: 14px; padding: .6rem .7rem; }
 .pitem .row { display: flex; align-items: center; gap: .5rem; }
@@ -130,3 +148,11 @@ dialog::backdrop { background: rgba(15,23,42,.45); }
   opacity: 0; pointer-events: none; transition: opacity .25s; z-index: 20; }
 #toast.show { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+@media (max-height: 500px) {
+  .pick button { min-height: 46px; padding: .45rem .2rem; }
+  .types { grid-template-columns: repeat(3, 1fr); }
+  .types button { min-height: 46px; padding: .45rem .6rem; flex-direction: column; align-items: flex-start; }
+  .sheet-head { padding: .6rem 1rem .2rem; }
+  #sheet { max-height: 96vh; max-height: 96dvh; }
+}
