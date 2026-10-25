@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLD – Low Level Design – Badehus Booking System</title>
+<meta name="description" content="Low Level Design for Badehus Booking System: filstruktur, JSON-skjemaer, API, regelmotor, statusmaskin, sekvensdiagrammer, CSV og samtidighet.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+<script type="module" src="mermaid-init.js"></script>
+</head>
+<body>
+<a href="#innhold" class="chip" style="position:absolute;left:-9999px" onfocus="this.style.left='8px'">Hopp til innhold</a>
+<header class="topbar">
+  <button class="hamburger" aria-label="Åpne meny" aria-expanded="false" aria-controls="sidemeny"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <b>Badehus · Dokumentasjon</b>
+</header>
+<div class="scrim"></div>
+<nav class="sidebar" id="sidemeny" aria-label="Hovedmeny">
+  <a class="brand" href="index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Badehus Booking</b><small>Sameiet Halden Terrasse 14</small></span></a>
+  <div class="search" role="search"><svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9cc3d1" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+    <input id="sok" type="search" placeholder="Søk i dokumentasjonen  ( / )" aria-label="Søk i dokumentasjonen" autocomplete="off">
+    <ul id="sok-resultat" class="search-results" aria-live="polite"></ul>
+  </div>
+  <ul class="nav">
+<li class="nav-label">Start</li>
+<li><a href="index.html"><span class="num">1</span>Oversikt</a></li>
+<li class="nav-label">For alle</li>
+<li><a href="beskrivelse.html"><span class="num">2</span>Overordnet beskrivelse</a></li>
+<li class="nav-label">Teknisk</li>
+<li><a href="hld.html"><span class="num">3</span>HLD – High Level Design</a></li>
+<li><a href="lld.html" aria-current="page"><span class="num">4</span>LLD – Low Level Design</a></li>
+<li class="nav-label">Regler</li>
+<li><a href="regler.html"><span class="num">5</span>Bookingregler</a></li>
+<li class="nav-label">Manualer</li>
+<li><a href="brukermanual.html"><span class="num">6</span>Brukermanual – beboer</a></li>
+<li><a href="adminmanual.html"><span class="num">7</span>Brukermanual – administrator</a></li>
+<li class="nav-label">Styring</li>
+<li><a href="beslutninger.html"><span class="num">8</span>Beslutninger</a></li>
+<li><a href="vedtekter.html"><span class="num">9</span>Forslag til vedtekter</a></li>
+  </ul>
+  <div class="side-foot">
+    <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
+    Planlagt løsning · v0.3 · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
+  </div>
+</nav>
+<main class="main" id="innhold">
+  <div class="content-wrap">
+    <article>
+<section class="hero">
+  <div class="eyebrow">Teknisk · Detaljdesign</div>
+  <h1>LLD – Low Level Design</h1>
+  <p>Detaljert design for utviklere og for den som skal drifte eller videreutvikle løsningen: filer, dataformater, API, regelmotor, statuser og flyt.</p>
+  <div class="meta"><span class="chip draft">v0.3 · 25.10.2026</span><span class="chip ok">Bygger på vedtatt arkitektur</span></div>
+</section>
+
+<div class="callout forslag"><p><span class="badge-forslag">Forslag – detaljdesign</span> Arkitekturen og de ti regelavklaringene er <span class="badge-vedtatt">Vedtatt 25.10.2026</span> (se <a href="hld.html">HLD</a> og <a href="beslutninger.html">Beslutninger</a>). Detaljdesignet på denne siden – filnavn, feltnavn, endepunkter, feilkoder, CSV-oppsett og detaljer i nattlig jobb – er assistentens utdyping og kan justeres ved bygging. Felter som implementerer en vedtatt avklaring er merket med nummeret (f.eks. <b>Å1</b>).</p></div>
+
+<h2 id="filstruktur">Filstruktur</h2>
+<p><span class="badge-forslag">Forslag – detaljdesign</span></p>
+<div class="two">
+<div>
+<h3 id="frontend-fluxreveal-fluxreveal-website">Frontend (FluxReveal/fluxreveal-website)</h3>
+<p style="font-size:.88rem;color:var(--muted)">Ligger i mappen <code>HT14/</code> og publiseres på <b>https://fluxreveal.com/HT14/</b> <span class="badge-vedtatt">Vedtatt 25.10.2026</span></p>
+<pre><code>fluxreveal-website/HT14/  ← offentlig, fluxreveal.com/HT14/
+├── index.html               innlogging
+├── kalender.html            månedskalender + detaljvisning
+├── historikk.html           all historikk (filter/eksport)
+├── statistikk.html          måned / sesong / år
+├── admin.html               kun administratorer
+├── css/
+│   └── style.css            husstandsfarger som CSS-variabler
+├── js/
+│   ├── config.js            Worker-URL (ingen hemmeligheter!)
+│   ├── api.js               fetch-wrapper, token, feil
+│   ├── auth.js              innlogging / utlogging
+│   ├── calendar.js          måned + dagvisning
+│   ├── booking.js           booke, avbestille, sjekke inn
+│   ├── stats.js             perioder per husstand
+│   ├── admin.js             brukere, regler, korrigering
+│   └── rules-engine.js      delt regelmotor (samme kode
+│                            som i Workeren)
+├── worker/
+│   ├── src/index.js         ruter + auth + GitHub API
+│   ├── src/rules-engine.js  → kopi/symlink av js/
+│   └── wrangler.toml        Worker-oppsett (ikke secrets)
+├── tests/
+│   └── rules-engine.test.js
+└── dokumentasjon/           denne nettsiden:
+    ├── index.html …         fluxreveal.com/HT14/dokumentasjon/
+    └── (README, USER_GUIDE, ADMIN_GUIDE,
+         RULES, ARCHITECTURE)</code></pre>
+<div class="callout warn" style="font-size:.88rem"><p>Alt i <code>HT14/</code> er offentlig på fluxreveal.com. Worker-koden og <code>wrangler.toml</code> kan ligge her fordi de <b>ikke</b> inneholder hemmeligheter – token og nøkler finnes kun som Worker-secrets. Dagens <code>HT14/index.html</code> (lenke til dokumentasjonen) erstattes av innloggingssiden når appen bygges.</p></div>
+</div>
+<div>
+<h3 id="data-repo-privat">Data-repo (privat)</h3>
+<pre><code>badehus-data/                ← privat, kun Worker + Actions
+├── users.json               brukere (passord-hash)
+├── rules.json               all regelkonfigurasjon
+├── bookings/
+│   ├── 2026.json
+│   └── 2027.json            én fil per år
+├── audit/
+│   ├── 2026.jsonl
+│   └── 2027.jsonl           én hendelse per linje
+├── archive/
+│   ├── 2026.csv
+│   └── 2027.csv             generert nattlig
+├── scripts/
+│   └── nightly.mjs          frys status + lag CSV
+└── .github/workflows/
+    └── nightly.yml          cron-jobb</code></pre>
+<div class="callout info"><p><b>Separasjon:</b> regler (<code>rules.json</code>), data (<code>users</code>/<code>bookings</code>/<code>audit</code>) og presentasjon (frontend) ligger hver for seg, som kravet sier.</p></div>
+<div class="callout info"><p><b>Hvorfor én fil per år?</b> Historikk skal lagres år for år, filene holdes små, og samtidige skrivinger til ulike år kolliderer ikke.</p></div>
+</div>
+</div>
+
+<h2 id="datamodell">Datamodell</h2>
+<p><span class="badge-forslag">Forslag – detaljdesign</span> Filene <code>users.json</code>, <code>bookings/&lt;år&gt;.json</code>, <code>audit/&lt;år&gt;.jsonl</code> og <code>rules.json</code> er del av vedtatt arkitektur; feltnavnene er detaljdesign.</p>
+<figure>
+<pre class="mermaid">
+erDiagram
+  HOUSEHOLD ||--o{ USER : "har"
+  HOUSEHOLD ||--o{ BOOKING : "eier"
+  USER ||--o{ BOOKING : "oppretter"
+  BOOKING ||--o{ AUDIT_EVENT : "logges i"
+  USER ||--o{ AUDIT_EVENT : "utfører"
+  HOUSEHOLD {
+    string id "A B C D"
+    string name "Halden Terrasse 14A"
+    string color "hex"
+  }
+  USER {
+    string id
+    string name
+    string username
+    string household
+    string role "user eller admin"
+    bool active
+    object pw "hash, salt, iter"
+  }
+  BOOKING {
+    string id
+    date date
+    string period "AM PM FULL"
+    string household
+    string userId
+    string status
+    string source "BOOKING eller CHECKIN"
+    bool quota
+    bool corrected
+  }
+  AUDIT_EVENT {
+    datetime ts
+    string actor
+    string action
+    string target
+    object from
+    object to
+    string comment
+  }
+</pre>
+<figcaption>Logisk datamodell. Husstand er fast (A–D); brukere og bookinger peker til husstand.</figcaption>
+</figure>
+
+<h3 id="users-json">users.json</h3>
+<pre><code>{
+  "schemaVersion": 1,
+  "users": [
+    {
+      "id": "u-per-hansen",
+      "name": "Per Hansen",
+      "username": "per.hansen",
+      "household": "A",
+      "role": "admin",                 // "user" | "admin"
+      "active": true,
+      "mustChangePassword": false,
+      "pw": {
+        "alg": "PBKDF2-SHA256",
+        "iter": 100000,                // maks som WebCrypto i Workers støtter
+        "salt": "b64:Q2hhbmdlTWU…",
+        "hash": "b64:7x1kP0…"
+      },
+      "createdAt": "2027-04-01T19:02:11+02:00",
+      "createdBy": "u-system"
+    },
+    { "id": "u-lise-hansen",  "name": "Lise Hansen",  "username": "lise.hansen",
+      "household": "A", "role": "user", "active": true, "pw": { … } },
+    { "id": "u-ola-nordmann", "name": "Ola Nordmann", "username": "ola.nordmann",
+      "household": "B", "role": "user", "active": true, "pw": { … } }
+  ]
+}</code></pre>
+<div class="table-wrap"><table><thead><tr><th>Felt</th><th>Type</th><th>Regel</th></tr></thead><tbody>
+<tr><td><code>id</code></td><td>string</td><td>Unik, endres aldri (brukes i bookinger og audit).</td></tr>
+<tr><td><code>household</code></td><td>"A"|"B"|"C"|"D"</td><td>Hver bruker tilhører nøyaktig én husstand.</td></tr>
+<tr><td><code>role</code></td><td>"user"|"admin"</td><td>To administratorer: styreleder og nestleder.</td></tr>
+<tr><td><code>active</code></td><td>bool</td><td>Deaktivert bruker kan ikke logge inn, men beholdes i historikken.</td></tr>
+<tr><td><code>pw</code></td><td>objekt</td><td>Aldri klartekst. Salt per bruker.</td></tr>
+<tr><td><code>anonymized</code></td><td>bool (valgfri)</td><td><b>Å9</b> <span class="badge-vedtatt">Vedtatt 25.10.2026</span> navn erstattes med «Tidligere beboer Hus A».</td></tr>
+</tbody></table></div>
+
+<h3 id="bookings-ar-json">bookings/&lt;år&gt;.json</h3>
+<pre><code>{
+  "schemaVersion": 1,
+  "year": 2027,
+  "bookings": [
+    {
+      "id": "b-2027-0042",
+      "date": "2027-07-10",            // lokal dato, Europe/Oslo
+      "period": "AM",                  // "AM" 08–14 | "PM" 14–24 | "FULL" 08–24
+      "household": "A",
+      "userId": "u-per-hansen",
+      "source": "BOOKING",             // "BOOKING" | "CHECKIN" (spontan)
+      "status": "BOOKED",
+      "quota": true,                   // teller mot sommerkvote? (Å1, Å2)
+      "createdAt": "2027-05-02T18:21:04+02:00",
+      "createdBy": "u-per-hansen",
+      "checkedInAt": null,
+      "confirmedAt": null,
+      "confirmedBy": null,
+      "cancelledAt": null,
+      "cancelledBy": null,
+      "override": false,               // admin overstyrte en regel
+      "corrected": false               // Å8: flagg i stedet for egen status
+    },
+    {
+      "id": "b-2027-0043",
+      "date": "2027-07-10",
+      "period": "PM",
+      "household": "C",
+      "userId": "u-eksempel-c",
+      "source": "CHECKIN",
+      "status": "CHECKED_IN",
+      "quota": false,
+      "createdAt": "2027-07-10T14:05:40+02:00",
+      "checkedInAt": "2027-07-10T14:05:40+02:00",
+      …
+    }
+  ]
+}</code></pre>
+<p><b>Aktive</b> bookinger (opptar perioden): <span class="st st-BOOKED">BOOKED</span> <span class="st st-CHECKED_IN">CHECKED_IN</span> <span class="st st-COMPLETED">COMPLETED</span> <span class="st st-NOT_CONFIRMED">NOT_CONFIRMED</span>. <b>Frigjorte</b>: <span class="st st-CANCELLED">CANCELLED</span> <span class="st st-CANCELLED_LATE">CANCELLED_LATE</span>. Ingen booking fjernes fra fila – avbestilte beholdes med status.</p>
+
+<h3 id="audit-ar-jsonl">audit/&lt;år&gt;.jsonl</h3>
+<p>Én JSON-hendelse per linje (append-only). Dekker kravet: opprettet, endret, avbestilt, overstyrt, status korrigert – med <b>hvem, når, fra, til, kommentar</b>.</p>
+<pre><code>{"ts":"2027-05-02T18:21:04+02:00","actor":"u-per-hansen","role":"admin","action":"BOOKING_CREATED","target":"b-2027-0042","from":null,"to":{"status":"BOOKED","date":"2027-07-10","period":"AM"},"comment":null}
+{"ts":"2027-07-10T14:05:40+02:00","actor":"u-eksempel-c","role":"user","action":"CHECKED_IN","target":"b-2027-0043","from":null,"to":{"status":"CHECKED_IN","period":"PM"},"comment":"spontan"}
+{"ts":"2027-07-11T03:15:02+02:00","actor":"system:nightly","role":"system","action":"STATUS_FROZEN","target":"b-2027-0042","from":{"status":"BOOKED"},"to":{"status":"NOT_CONFIRMED"},"comment":null}
+{"ts":"2027-07-12T09:30:00+02:00","actor":"u-lise-hansen","role":"user","action":"USAGE_CONFIRMED","target":"b-2027-0042","from":{"status":"NOT_CONFIRMED"},"to":{"status":"COMPLETED"},"comment":"Vi brukte badehuset"}
+{"ts":"2027-07-20T20:11:45+02:00","actor":"u-per-hansen","role":"admin","action":"STATUS_CORRECTED","target":"b-2027-0050","from":{"status":"COMPLETED"},"to":{"status":"CANCELLED_LATE"},"comment":"Feilregistrert, avtalt med Hus D"}</code></pre>
+<div class="table-wrap"><table><thead><tr><th>action</th><th>Utløses av</th></tr></thead><tbody>
+<tr><td><code>BOOKING_CREATED</code></td><td>Bruker booker</td></tr>
+<tr><td><code>BOOKING_CANCELLED</code></td><td>Avbestilling (til CANCELLED eller CANCELLED_LATE)</td></tr>
+<tr><td><code>CHECKED_IN</code></td><td>Innsjekk (med eller uten booking)</td></tr>
+<tr><td><code>USAGE_CONFIRMED</code></td><td>«Vi brukte badehuset»</td></tr>
+<tr><td><code>STATUS_FROZEN</code></td><td>Nattlig Actions-jobb</td></tr>
+<tr><td><code>ADMIN_OVERRIDE</code></td><td>Admin booker forbi en regel</td></tr>
+<tr><td><code>STATUS_CORRECTED</code></td><td>Admin korrigerer historikk (kommentar påkrevd)</td></tr>
+<tr><td><code>USER_CREATED</code> / <code>USER_DEACTIVATED</code> / <code>USER_ANONYMIZED</code></td><td>Brukeradministrasjon</td></tr>
+<tr><td><code>PASSWORD_RESET</code></td><td>Admin tilbakestiller passord (hash logges aldri)</td></tr>
+<tr><td><code>RULES_CHANGED</code></td><td>Endring i <code>rules.json</code> (fra/til = endrede nøkler)</td></tr>
+<tr><td><code>DATA_IMPORTED</code> / <code>DATA_EXPORTED</code></td><td>Import/eksport</td></tr>
+</tbody></table></div>
+
+<h3 id="rules-json">rules.json</h3>
+<pre><code>{
+  "schemaVersion": 1,
+  "timezone": "Europe/Oslo",
+  "households": {
+    "A": { "name": "Halden Terrasse 14A", "color": "#2563eb", "colorName": "Blå" },
+    "B": { "name": "Halden Terrasse 14B", "color": "#16a34a", "colorName": "Grønn" },
+    "C": { "name": "Halden Terrasse 14C", "color": "#ea580c", "colorName": "Oransje" },
+    "D": { "name": "Halden Terrasse 14D", "color": "#7c3aed", "colorName": "Lilla" }
+  },
+  "periods": {
+    "FULL": { "label": "Heldag",            "start": "08:00", "end": "24:00", "units": 2, "default": true },
+    "AM":   { "label": "Formiddag",         "start": "08:00", "end": "14:00", "units": 1 },
+    "PM":   { "label": "Ettermiddag/kveld", "start": "14:00", "end": "24:00", "units": 1 }
+  },
+  "bookingWindow":   { "months": 3, "mode": "rolling" },          // Å5
+  "summer": {
+    "months": [6, 7, 8],
+    "maxPerWeekdayPerMonth": { "fri": 1, "sat": 1, "sun": 1 },
+    "countBy": "day",                                             // dager, ikke perioder
+    "weekendDays": ["fri", "sat", "sun"],
+    "maxDaysPerWeekend": 1,
+    "quotaMonthBy": "date",                                       // Å3
+    "weekendBy": "weekend"                                        // Å3
+  },
+  "offSeason": { "restrictions": "none" },                        // Å4
+  "liftSummerRulesWhenDaysBefore": 7,                             // færre enn 7 dager
+  "shortNoticeCountsTowardQuota": false,                          // Å1
+  "spontaneousCheckinCountsTowardQuota": false,                   // Å2
+  "lateCancellationDays": 7,                                      // ≤ 7 dager = sen
+  "cancelPermission": "household",                                // Å6
+  "stats": { "notConfirmedAsUsage": false, "cancelledLateAsUsage": false }  // Å7
+}</code></pre>
+<div class="callout warn"><p>JSON støtter ikke kommentarer. Kommentarene (<code>// …</code>) over er kun forklaring i dokumentasjonen og skal <b>ikke</b> stå i den ekte fila. Workeren avviser en <code>rules.json</code> som ikke kan leses (se <a href="#feilhandtering">Feilhåndtering</a>).</p></div>
+
+<h2 id="worker-api">Worker-API</h2>
+<p><span class="badge-forslag">Forslag – detaljdesign</span></p>
+<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> Frontend kjører på <code>https://fluxreveal.com/HT14/</code>. Workeren tillater derfor kun kall fra origin <code>https://fluxreveal.com</code> (CORS).</p></div>
+<pre><code>// CORS i Workeren (utkast)
+const ALLOWED_ORIGIN = "https://fluxreveal.com";
+function cors(req, res) {
+  if (req.headers.get("Origin") === ALLOWED_ORIGIN) {
+    res.headers.set("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
+    res.headers.set("Access-Control-Allow-Headers", "Authorization, Content-Type");
+    res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, OPTIONS");
+    res.headers.set("Vary", "Origin");
+  }
+  return res;          // andre origins får ingen CORS-header → nettleseren blokkerer
+}</code></pre>
+<p>Alle kall går til Workeren over HTTPS med JSON. Unntatt <code>/api/login</code> krever alle kall headeren <code>Authorization: Bearer &lt;token&gt;</code>. Tokenet er kortlevd og signert av Workeren.</p>
+<div class="table-wrap"><table><thead><tr><th>Metode</th><th>Endepunkt</th><th>Rolle</th><th>Beskrivelse</th></tr></thead><tbody>
+<tr><td><b>POST</b></td><td><code>/api/login</code></td><td>alle</td><td>Brukernavn + passord → token, bruker, utløpstid</td></tr>
+<tr><td><b>POST</b></td><td><code>/api/password</code></td><td>bruker</td><td>Bytt eget passord (påkrevd ved <code>mustChangePassword</code>)</td></tr>
+<tr><td>GET</td><td><code>/api/me</code></td><td>bruker</td><td>Innlogget bruker og husstand</td></tr>
+<tr><td>GET</td><td><code>/api/rules</code></td><td>bruker</td><td>Gjeldende regler (for visning og klientsjekk)</td></tr>
+<tr><td>GET</td><td><code>/api/calendar?month=2027-07</code></td><td>bruker</td><td>Bookinger i måneden med beregnet visningsstatus</td></tr>
+<tr><td>GET</td><td><code>/api/bookings/{id}</code></td><td>bruker</td><td>Detaljer + endringshistorikk (audit) for én booking</td></tr>
+<tr><td>GET</td><td><code>/api/history?year=2027</code></td><td>bruker</td><td>All historikk for året</td></tr>
+<tr><td>GET</td><td><code>/api/stats?year=2027&amp;month=7</code></td><td>bruker</td><td>Perioder per husstand: måned, sesong, år</td></tr>
+<tr><td><b>POST</b></td><td><code>/api/bookings</code></td><td>bruker</td><td>Ny booking <code>{date, period}</code></td></tr>
+<tr><td><b>POST</b></td><td><code>/api/bookings/{id}/cancel</code></td><td>bruker</td><td>Avbestill (tidlig/sen avgjøres av Workeren)</td></tr>
+<tr><td><b>POST</b></td><td><code>/api/bookings/{id}/checkin</code></td><td>bruker</td><td>Sjekk inn på egen husstands booking</td></tr>
+<tr><td><b>POST</b></td><td><code>/api/checkin</code></td><td>bruker</td><td>Spontan innsjekk uten reservasjon <code>{period}</code></td></tr>
+<tr><td><b>POST</b></td><td><code>/api/bookings/{id}/confirm</code></td><td>bruker</td><td>«Vi brukte badehuset» (fra NOT_CONFIRMED)</td></tr>
+<tr><td><b>POST</b></td><td><code>/api/admin/users</code></td><td>admin</td><td>Opprett bruker med startpassord</td></tr>
+<tr><td>PATCH</td><td><code>/api/admin/users/{id}</code></td><td>admin</td><td>Endre / deaktivere / anonymisere</td></tr>
+<tr><td><b>POST</b></td><td><code>/api/admin/users/{id}/reset-password</code></td><td>admin</td><td>Sett nytt midlertidig passord</td></tr>
+<tr><td>PUT</td><td><code>/api/admin/rules</code></td><td>admin</td><td>Lagre ny <code>rules.json</code> (valideres først)</td></tr>
+<tr><td><b>POST</b></td><td><code>/api/admin/bookings</code></td><td>admin</td><td>Booking med <code>override: true</code> + påkrevd kommentar</td></tr>
+<tr><td>PATCH</td><td><code>/api/admin/bookings/{id}</code></td><td>admin</td><td>Korriger status/historikk + påkrevd kommentar</td></tr>
+<tr><td>GET</td><td><code>/api/admin/export?year=2027&amp;format=csv</code></td><td>admin</td><td>Eksport (CSV eller JSON)</td></tr>
+<tr><td><b>POST</b></td><td><code>/api/admin/import</code></td><td>admin</td><td>Import av CSV/JSON (tørrkjøring først)</td></tr>
+</tbody></table></div>
+<details><summary>Eksempel: POST /api/bookings</summary>
+<pre><code>// Forespørsel
+POST /api/bookings
+Authorization: Bearer eyJ…
+{ "date": "2027-07-10", "period": "FULL" }
+
+// 201 Created
+{ "booking": { "id": "b-2027-0042", "status": "BOOKED", "household": "A", … } }
+
+// 422 Unprocessable – regelbrudd
+{ "error": "QUOTA_WEEKDAY",
+  "message": "Hus A har allerede en lørdag i juli (3. juli).",
+  "rule": "summer.maxPerWeekdayPerMonth.sat" }</code></pre>
+</details>
+
+<h2 id="regelmotor">Regelmotor</h2>
+<p>Regelmotoren er én ren funksjon uten sideeffekter, slik at nøyaktig samme kode kan kjøres i nettleseren (for å vise feilmelding tidlig) og i Workeren (som er den som bestemmer). Input er forespørselen, eksisterende bookinger, <code>rules.json</code> og «nå» i Europe/Oslo.</p>
+<figure>
+<pre class="mermaid">
+flowchart TD
+  S([Ny booking: dato, periode, husstand]) --> V1{Gyldig dato og periode?}
+  V1 -- nei --> E1[/INVALID_INPUT/]
+  V1 -- ja --> V2{Perioden er ikke passert?}
+  V2 -- nei --> E2[/IN_PAST/]
+  V2 -- ja --> V3{"Innenfor bookingvindu (3 mnd)?"}
+  V3 -- nei --> E3[/OUTSIDE_WINDOW/]
+  V3 -- ja --> V4{Perioden ledig?}
+  V4 -- nei --> E4[/SLOT_TAKEN/]
+  V4 -- ja --> V5{Admin-overstyring?}
+  V5 -- ja --> OKO([OK, override logges])
+  V5 -- nei --> V6{"Færre enn 7 dager til dato?"}
+  V6 -- ja --> OK7([OK – førstemann til mølla])
+  V6 -- nei --> V7{"Sommermåned (jun–aug)?"}
+  V7 -- nei --> OK([OK])
+  V7 -- ja --> V8{Fre, lør eller søn?}
+  V8 -- nei --> OK
+  V8 -- ja --> V9{"Husstanden har allerede denne ukedagen i måneden?"}
+  V9 -- ja --> E5[/QUOTA_WEEKDAY/]
+  V9 -- nei --> V10{"Husstanden har en annen dag i samme helg?"}
+  V10 -- ja --> E6[/WEEKEND_LIMIT/]
+  V10 -- nei --> OK
+  classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d;
+  classDef err fill:#fee2e2,stroke:#dc2626,color:#7f1d1d;
+  class OK,OK7,OKO ok; class E1,E2,E3,E4,E5,E6 err;
+</pre>
+<figcaption>Rekkefølgen på sjekkene. Første regel som feiler gir feilkoden som vises til brukeren.</figcaption>
+</figure>
+
+<h3 id="pseudokode">Pseudokode</h3>
+<pre><code>function validateBooking(req, bookings, rules, now) {
+  // now og alle datoer er i rules.timezone (Europe/Oslo)
+  const today = localDate(now);
+  if (!isDate(req.date) || !(req.period in rules.periods)) return fail("INVALID_INPUT");
+  if (periodEnd(req.date, req.period) &lt;= now)            return fail("IN_PAST");
+  if (req.date &gt; addMonths(today, rules.bookingWindow.months)) return fail("OUTSIDE_WINDOW"); // Å5
+  if (overlapsActive(bookings, req.date, req.period))        return fail("SLOT_TAKEN");
+  //   FULL overlapper AM og PM; AM og PM overlapper ikke hverandre
+  if (req.override &amp;&amp; req.actor.role === "admin")           return ok({ override: true });
+
+  const daysBefore = diffDays(req.date, today);
+  if (daysBefore &lt; rules.liftSummerRulesWhenDaysBefore)
+    return ok({ quota: rules.shortNoticeCountsTowardQuota });  // Å1
+
+  const d = parse(req.date);
+  if (!rules.summer.months.includes(d.month)) return ok({ quota: false }); // Å4
+  const wd = weekday(d);                                       // "fri" | "sat" | "sun" | …
+  if (!rules.summer.weekendDays.includes(wd))  return ok({ quota: false });
+
+  // Kvotetellende = aktive bookinger + CANCELLED_LATE, med quota === true
+  const mine = bookings.filter(b =&gt; b.household === req.household &amp;&amp; countsForQuota(b));
+
+  // 1) Maks 1 av hver ukedag per måned – teller DAGER (distinkte datoer)
+  const sameWd = distinctDates(mine.filter(b =&gt; month(b.date) === d.month   // Å3: datoens måned
+                                            &amp;&amp; weekday(b.date) === wd));
+  if (sameWd.length &gt;= rules.summer.maxPerWeekdayPerMonth[wd]) return fail("QUOTA_WEEKDAY");
+
+  // 2) Maks én helgedag per helg (fre–søn), også over månedsskifte (Å3)
+  const wk = weekendKey(d);                                    // fredagens dato
+  const sameWeekend = distinctDates(mine.filter(b =&gt; weekendKey(b.date) === wk
+                                                  &amp;&amp; b.date !== req.date));
+  if (sameWeekend.length &gt;= rules.summer.maxDaysPerWeekend) return fail("WEEKEND_LIMIT");
+
+  return ok({ quota: true });
+}</code></pre>
+<p>Merk: en ny periode på en dato der husstanden allerede har en booking (f.eks. formiddag + ettermiddag samme fredag) teller ikke som en ny fredag, fordi det er <b>dager</b> som telles.</p>
+
+<h3 id="avbestilling">Avbestilling</h3>
+<pre><code>function cancel(booking, actor, rules, now) {
+  if (!["BOOKED"].includes(booking.status))       return fail("NOT_CANCELLABLE");
+  if (!canCancel(actor, booking, rules))           return fail("FORBIDDEN");  // Å6
+  const daysBefore = diffDays(booking.date, localDate(now));
+  booking.status = daysBefore &gt; rules.lateCancellationDays ? "CANCELLED"       // tidlig: ut av kvote
+                                                            : "CANCELLED_LATE"; // sen: teller fortsatt
+  booking.cancelledAt = now; booking.cancelledBy = actor.id;
+  // bookingen beholdes i fila – ingenting slettes
+}</code></pre>
+
+<h3 id="statistikk">Statistikk</h3>
+<p>Bruk måles i perioder: <code>AM</code> = 1, <code>PM</code> = 1, <code>FULL</code> = 2 (<code>rules.periods[*].units</code>). Tellingen gjøres for inneværende måned, inneværende sesong (jun–aug) og inneværende år, per husstand.</p>
+<div class="callout vedtatt"><p><span class="badge-vedtatt">Vedtatt 25.10.2026</span> <b>Å7:</b> COMPLETED og CHECKED_IN teller som bruk. NOT_CONFIRMED vises separat (ikke bruk før bekreftet). CANCELLED_LATE teller i kvote, ikke som bruk. <b>Å2:</b> spontan innsjekk teller i statistikken, men ikke i kvoten.</p></div>
+
+<h2 id="statusmaskin">Statusmaskin</h2>
+<figure>
+<pre class="mermaid">
+stateDiagram-v2
+  direction LR
+  [*] --> BOOKED: booking opprettet
+  [*] --> CHECKED_IN: spontan innsjekk
+  BOOKED --> CHECKED_IN: sjekk inn
+  BOOKED --> CANCELLED: avbestilt mer enn 7 dager før
+  BOOKED --> CANCELLED_LATE: avbestilt 7 dager eller mindre før
+  BOOKED --> NOT_CONFIRMED: perioden slutter uten innsjekk
+  CHECKED_IN --> COMPLETED: automatisk utsjekk ved periodeslutt
+  NOT_CONFIRMED --> COMPLETED: Vi brukte badehuset
+  COMPLETED --> [*]
+  CANCELLED --> [*]
+  CANCELLED_LATE --> [*]
+  note right of NOT_CONFIRMED
+    Manglende innsjekk betyr
+    ikke nødvendigvis ubrukt
+  end note
+</pre>
+<figcaption>Statuser fra kravspesifikasjonen. Admin kan i tillegg korrigere en status (se under). Overgangen NOT_CONFIRMED → COMPLETED ved bekreftelse er vedtatt 25.10.2026.</figcaption>
+</figure>
+<div class="table-wrap"><table><thead><tr><th>Status</th><th>Betydning</th><th>Opptar perioden?</th><th>Teller i kvote?</th><th>Teller som bruk?</th></tr></thead><tbody>
+<tr><td><span class="st st-BOOKED">BOOKED</span></td><td>Reservert, ikke startet / ikke sjekket inn</td><td class="pill-yes">Ja</td><td class="pill-yes">Ja*</td><td>–</td></tr>
+<tr><td><span class="st st-CHECKED_IN">CHECKED_IN</span></td><td>Sjekket inn, perioden pågår</td><td class="pill-yes">Ja</td><td class="pill-yes">Ja*</td><td class="pill-yes">Ja</td></tr>
+<tr><td><span class="st st-COMPLETED">COMPLETED</span></td><td>Brukt (utsjekket automatisk eller bekreftet)</td><td class="pill-yes">Ja</td><td class="pill-yes">Ja*</td><td class="pill-yes">Ja</td></tr>
+<tr><td><span class="st st-NOT_CONFIRMED">NOT_CONFIRMED</span></td><td>Perioden er over uten innsjekk</td><td class="pill-yes">Ja</td><td class="pill-yes">Ja*</td><td><span class="badge-vedtatt">Å7: separat</span></td></tr>
+<tr><td><span class="st st-CANCELLED">CANCELLED</span></td><td>Tidlig avbestilt (mer enn 7 dager før)</td><td class="pill-no">Nei</td><td class="pill-no">Nei</td><td class="pill-no">Nei</td></tr>
+<tr><td><span class="st st-CANCELLED_LATE">CANCELLED_LATE</span></td><td>Sent avbestilt (7 dager eller mindre før)</td><td class="pill-no">Nei</td><td class="pill-yes">Ja</td><td class="pill-no">Nei <span class="badge-vedtatt">Å7</span></td></tr>
+<tr><td><span class="st st-ADMIN_CORRECTED">ADMIN_CORRECTED</span></td><td>Korrigert av administrator</td><td colspan="3"><span class="badge-vedtatt">Å8 vedtatt</span> Ikke en egen status, men hendelsen <code>STATUS_CORRECTED</code> i audit + <code>corrected: true</code>; status forblir faktisk tilstand.</td></tr>
+</tbody></table></div>
+<p style="font-size:.88rem;color:var(--muted)">* Kun hvis bookingen har <code>quota: true</code>, dvs. sommer, fre/lør/søn og gjort minst 7 dager før (Å1, Å2).</p>
+
+<h3 id="visningsstatus-vs-lagret-status">Visningsstatus vs. lagret status</h3>
+<p>Frontend og Worker beregner «hva er status nå» fra klokka. Eksempel: en <span class="st st-CHECKED_IN">CHECKED_IN</span> formiddag vises som <span class="st st-COMPLETED">COMPLETED</span> fra kl. 14:00 selv om den nattlige jobben ennå ikke har skrevet det til Git.</p>
+<pre><code>function effectiveStatus(b, now) {
+  if (periodEnd(b.date, b.period) &gt; now) return b.status;
+  if (b.status === "CHECKED_IN") return "COMPLETED";      // automatisk utsjekk
+  if (b.status === "BOOKED")     return "NOT_CONFIRMED";  // ingen innsjekk
+  return b.status;
+}</code></pre>
+
+<h2 id="sekvensdiagrammer">Sekvensdiagrammer</h2>
+<h3 id="booking">Booking</h3>
+<figure>
+<pre class="mermaid">
+sequenceDiagram
+  autonumber
+  actor U as Beboer
+  participant F as Frontend (Pages)
+  participant W as Worker
+  participant G as GitHub API (data-repo)
+  U->>F: Velger dato og Heldag, trykker Book
+  F->>F: Klientsjekk med rules-engine.js (rask tilbakemelding)
+  F->>W: POST /api/bookings med Bearer-token
+  W->>W: Verifiser token og rolle
+  W->>G: GET rules.json og bookings/2027.json (med SHA)
+  G-->>W: innhold + sha
+  W->>W: validateBooking (server-side)
+  alt Regelbrudd
+    W-->>F: 422 QUOTA_WEEKDAY / WEEKEND_LIMIT / ...
+    F-->>U: Forklarende feilmelding
+  else OK
+    W->>G: Én commit: bookings/2027.json + audit/2027.jsonl (sjekk mot forrige SHA)
+    G-->>W: 200 ny commit
+    W-->>F: 201 booking
+    F-->>U: Dagen vises i husstandens farge
+  end
+</pre>
+</figure>
+
+<h3 id="avbestilling-x">Avbestilling</h3>
+<figure>
+<pre class="mermaid">
+sequenceDiagram
+  autonumber
+  actor U as Beboer
+  participant F as Frontend
+  participant W as Worker
+  participant G as GitHub API
+  U->>F: Åpner booking, trykker Avbestill
+  F->>F: Viser om dette blir tidlig eller sen avbestilling
+  U->>F: Bekrefter
+  F->>W: POST /api/bookings/id/cancel
+  W->>G: GET bookings/2027.json (sha)
+  W->>W: Sjekk rettighet (Å6) og status BOOKED
+  alt Mer enn 7 dager før
+    W->>W: status = CANCELLED (ut av kvoteregnskap)
+  else 7 dager eller mindre før
+    W->>W: status = CANCELLED_LATE (teller fortsatt i kvote)
+  end
+  W->>G: Én commit: bookings + audit (BOOKING_CANCELLED)
+  W-->>F: 200 oppdatert booking
+  F-->>U: Perioden vises som ledig for alle
+</pre>
+</figure>
+
+<h3 id="innsjekk-med-og-uten-booking">Innsjekk (med og uten booking)</h3>
+<figure>
+<pre class="mermaid">
+sequenceDiagram
+  autonumber
+  actor U as Beboer
+  participant F as Frontend
+  participant W as Worker
+  participant G as GitHub API
+  U->>F: Trykker Sjekk inn
+  alt Husstanden har booking nå
+    F->>W: POST /api/bookings/id/checkin
+    W->>W: BOOKED til CHECKED_IN, checkedInAt = nå
+  else Spontan bruk, perioden er ledig
+    F->>U: Velg Formiddag / Ettermiddag / Hele dagen
+    U->>F: Velger periode
+    F->>W: POST /api/checkin med periode
+    W->>W: Sjekk at perioden er ledig
+    W->>W: Ny booking source CHECKIN, status CHECKED_IN, quota false (Å2)
+  end
+  W->>G: Én commit: bookings + audit (CHECKED_IN med tidspunkt, bruker, husstand)
+  W-->>F: 200
+  F-->>U: Sjekket inn til 14:00 / 00:00
+  Note over F,W: Ved periodens slutt vises COMPLETED automatisk
+</pre>
+</figure>
+
+<h3 id="nattlig-github-actions-jobb">Nattlig GitHub Actions-jobb</h3>
+<p><span class="badge-forslag">Forslag – detaljdesign</span> Selve oppgaven (fryse status, lage CSV-arkiv og backup) er vedtatt; tidspunkt og oppsett er detaljdesign.</p>
+<figure>
+<pre class="mermaid">
+sequenceDiagram
+  autonumber
+  participant C as Cron (UTC)
+  participant A as Actions-runner
+  participant R as Data-repo
+  C->>A: Starter nightly.yml (kan være forsinket)
+  A->>R: checkout
+  A->>A: nightly.mjs: finn bookinger med periodeslutt før nå (Europe/Oslo)
+  loop For hver avsluttet booking
+    alt CHECKED_IN
+      A->>A: status = COMPLETED
+    else BOOKED
+      A->>A: status = NOT_CONFIRMED
+    end
+    A->>A: Legg STATUS_FROZEN i audit
+  end
+  A->>A: Generer archive/2027.csv fra bookings/2027.json
+  A->>R: commit og push (nattlig: status + arkiv)
+  A->>A: Last opp backup som artefakt
+  Note over A,R: Ved push-konflikt med Worker: pull, kjør på nytt, push
+</pre>
+</figure>
+<pre><code># .github/workflows/nightly.yml (utkast)
+name: nightly
+on:
+  schedule:
+    - cron: "15 1 * * *"     # 01:15 UTC ≈ 02:15/03:15 i Oslo
+  workflow_dispatch: {}      # kan kjøres manuelt av admin
+permissions:
+  contents: write
+jobs:
+  freeze-and-archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node scripts/nightly.mjs
+      - run: |
+          git config user.name  "badehus-nightly"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "nattlig: status + arkiv"
+          git push
+      - uses: actions/upload-artifact@v4
+        with: { name: backup, path: ".", retention-days: 90 }</code></pre>
+
+<h2 id="csv-format">CSV-format</h2>
+<p>Filen <code>archive/&lt;år&gt;.csv</code> genereres nattlig og kan også lastes ned fra adminsiden. Én rad per booking (også avbestilte).</p>
+<div class="callout forslag"><p><span class="badge-forslag">Forslag – detaljdesign</span> Semikolon som skilletegn og UTF-8 med BOM, slik at fila åpnes riktig i norsk Excel. Tidspunkter i ISO 8601 med tidssone.</p></div>
+<pre><code>id;dato;ukedag;periode;fra;til;husstand;bruker;status;kilde;kvote;perioder;opprettet;opprettet_av;innsjekket;bekreftet;avbestilt;overstyrt;korrigert
+b-2027-0042;2027-07-10;lørdag;AM;08:00;14:00;A;Per Hansen;COMPLETED;BOOKING;ja;1;2027-05-02T18:21:04+02:00;Per Hansen;;2027-07-12T09:30:00+02:00;;nei;nei
+b-2027-0043;2027-07-10;lørdag;PM;14:00;24:00;C;Eksempel C;COMPLETED;CHECKIN;nei;1;2027-07-10T14:05:40+02:00;Eksempel C;2027-07-10T14:05:40+02:00;;;nei;nei
+b-2027-0051;2027-07-16;fredag;FULL;08:00;24:00;B;Ola Nordmann;CANCELLED_LATE;BOOKING;ja;2;2027-06-01T08:00:00+02:00;Ola Nordmann;;;2027-07-12T10:00:00+02:00;nei;nei</code></pre>
+<div class="table-wrap"><table><thead><tr><th>Kolonne</th><th>Innhold</th></tr></thead><tbody>
+<tr><td><code>periode</code></td><td>AM (08–14), PM (14–24), FULL (08–24)</td></tr>
+<tr><td><code>husstand</code></td><td>A, B, C eller D</td></tr>
+<tr><td><code>kvote</code></td><td>ja/nei – om bookingen teller mot sommerkvote</td></tr>
+<tr><td><code>perioder</code></td><td>Statistikkverdi: AM/PM = 1, FULL = 2</td></tr>
+<tr><td><code>overstyrt</code> / <code>korrigert</code></td><td>Om admin har overstyrt regler / korrigert historikk (detaljer i audit)</td></tr>
+</tbody></table></div>
+
+<h2 id="feilhandtering">Feilhåndtering</h2>
+<p><span class="badge-forslag">Forslag – detaljdesign</span></p>
+<div class="table-wrap"><table><thead><tr><th>HTTP</th><th>Kode</th><th>Når</th><th>Melding til bruker (eksempel)</th></tr></thead><tbody>
+<tr><td>400</td><td><code>INVALID_INPUT</code></td><td>Ugyldig dato/periode/felt</td><td>«Noe gikk galt med valget ditt. Prøv igjen.»</td></tr>
+<tr><td>401</td><td><code>UNAUTHENTICATED</code></td><td>Feil passord, manglende/utløpt token</td><td>«Feil brukernavn eller passord» / «Du er logget ut. Logg inn igjen.»</td></tr>
+<tr><td>403</td><td><code>FORBIDDEN</code></td><td>Ikke admin, eller ikke lov å endre bookingen</td><td>«Du har ikke tilgang til dette.»</td></tr>
+<tr><td>403</td><td><code>USER_INACTIVE</code></td><td>Deaktivert bruker</td><td>«Brukeren er deaktivert. Kontakt styret.»</td></tr>
+<tr><td>404</td><td><code>NOT_FOUND</code></td><td>Booking/bruker finnes ikke</td><td>«Fant ikke bookingen.»</td></tr>
+<tr><td>409</td><td><code>SLOT_TAKEN</code></td><td>Perioden ble tatt (evt. av en annen samtidig)</td><td>«Perioden ble akkurat booket av Hus B.»</td></tr>
+<tr><td>409</td><td><code>CONFLICT_RETRY</code></td><td>SHA-konflikt etter maks antall forsøk</td><td>«Mange endringer akkurat nå – prøv igjen om litt.»</td></tr>
+<tr><td>422</td><td><code>IN_PAST</code></td><td>Perioden er passert</td><td>«Denne perioden er allerede over.»</td></tr>
+<tr><td>422</td><td><code>OUTSIDE_WINDOW</code></td><td>Mer enn 3 måneder frem</td><td>«Du kan booke maks 3 måneder frem i tid.»</td></tr>
+<tr><td>422</td><td><code>QUOTA_WEEKDAY</code></td><td>Sommerkvote brukt</td><td>«Hus A har allerede en lørdag i juli (3. juli).»</td></tr>
+<tr><td>422</td><td><code>WEEKEND_LIMIT</code></td><td>Annen dag samme helg</td><td>«Hus A har allerede fredag denne helgen.»</td></tr>
+<tr><td>422</td><td><code>NOT_CANCELLABLE</code></td><td>Status tillater ikke avbestilling</td><td>«Denne bookingen kan ikke avbestilles.»</td></tr>
+<tr><td>422</td><td><code>COMMENT_REQUIRED</code></td><td>Admin-overstyring/korrigering uten kommentar</td><td>«Skriv en kommentar.»</td></tr>
+<tr><td>429</td><td><code>RATE_LIMITED</code></td><td>For mange innloggingsforsøk</td><td>«For mange forsøk. Vent litt.»</td></tr>
+<tr><td>500</td><td><code>RULES_INVALID</code></td><td><code>rules.json</code> kan ikke leses/valideres</td><td>«Teknisk feil – kontakt styret.»</td></tr>
+<tr><td>502</td><td><code>UPSTREAM_UNAVAILABLE</code></td><td>GitHub API svarer ikke</td><td>«Tjenesten er midlertidig utilgjengelig.»</td></tr>
+</tbody></table></div>
+<ul>
+  <li>Alle feil returneres som <code>{ "error": KODE, "message": tekst, "rule"?: nøkkel }</code>.</li>
+  <li>Frontend viser alltid en forståelig norsk melding – aldri en teknisk stakk.</li>
+  <li>Ved nettverksfeil gjør frontend ingen ny skriving automatisk (unngår dobbel booking); brukeren ser status og kan prøve igjen.</li>
+</ul>
+
+<h2 id="samtidighet-og-optimistisk-lasing">Samtidighet og optimistisk låsing</h2>
+<p>To naboer kan trykke «Book» på samme lørdag i samme sekund. Git har ingen låser, men GitHub API krever at man sender med <b>SHA</b>-en til fila man endrer. Hvis fila er endret siden man leste den, avvises skrivingen – og Workeren leser på nytt og validerer igjen.</p>
+<figure>
+<pre class="mermaid">
+sequenceDiagram
+  autonumber
+  participant A as Worker (Hus A)
+  participant G as GitHub API
+  participant B as Worker (Hus B)
+  A->>G: GET bookings/2027.json
+  G-->>A: sha = s1
+  B->>G: GET bookings/2027.json
+  G-->>B: sha = s1
+  A->>A: Validerer lør 10. juli: ledig
+  B->>B: Validerer lør 10. juli: ledig
+  A->>G: Skriv med sha = s1
+  G-->>A: 200 OK, ny sha = s2
+  B->>G: Skriv med sha = s1
+  G-->>B: 409 Conflict (sha er utdatert)
+  B->>G: GET på nytt
+  G-->>B: sha = s2 (inneholder Hus As booking)
+  B->>B: Validerer på nytt: SLOT_TAKEN
+  B-->>B: Returnerer 409 SLOT_TAKEN til Hus B
+</pre>
+<figcaption>Kun én av to samtidige bookinger kan vinne. Den andre får en tydelig melding i stedet for dobbeltbooking.</figcaption>
+</figure>
+<pre><code>async function commitWithRetry(path, mutate, maxTries = 3) {
+  for (let i = 0; i &lt; maxTries; i++) {
+    const { json, sha } = await gh.read(path);         // innhold + sha
+    const result = mutate(structuredClone(json));      // validering skjer her
+    if (result.error) return result;                   // regelbrudd: ikke prøv igjen
+    const res = await gh.write(path, result.json, sha);
+    if (res.ok) return result;
+    if (res.status !== 409) throw upstream(res);       // annen feil
+    await sleep(150 * (i + 1));                        // kort pause og prøv igjen
+  }
+  return fail("CONFLICT_RETRY");
+}</code></pre>
+<div class="callout info"><p><b>Booking og audit:</b> booking-fila og audit-fila skrives som to filer. For å unngå at de kommer i utakt kan Workeren skrive begge i <b>én commit</b> via GitHub sitt Git Data API (tree + commit + oppdatering av ref med kontroll mot forrige commit). Dette er det anbefalte valget i detaljdesignet (<span class="badge-forslag">Forslag – detaljdesign</span>).</p></div>
+
+<h2 id="testing">Testing</h2>
+<ul>
+  <li><code>tests/rules-engine.test.js</code> dekker alle eksemplene på <a href="regler.html">Regler-siden</a> (kvote, helg, 7-dagersregel, sen avbestilling, månedsskifte, sommertid).</li>
+  <li>Regelmotoren er en ren funksjon, så den kan testes uten nettverk.</li>
+</ul>
+
+<nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="hld.html"><small>← Forrige</small>HLD – High Level Design</a><a class="next" href="regler.html"><small>Neste →</small>Bookingregler</a></nav>
+      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.3 · 25.10.2026). Systemet er ikke bygget ennå. Arkitektur og regelavklaringer er <span class="badge-vedtatt">Vedtatt 25.10.2026</span>. Detaljer merket <span class="badge-forslag">Forslag – detaljdesign</span> er utdypinger som kan justeres ved bygging. Alle navn er eksempler.</p>
+    </article>
+    <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
+  </div>
+</main>
+</body>
+</html>
