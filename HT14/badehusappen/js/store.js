@@ -13,10 +13,12 @@
  *   getBooking(id)              → GET  /api/bookings/{id}
  *   history({year})             → GET  /api/history?year=…
  *   stats({year, month})        → GET  /api/stats?year=…&month=…
- *   createBooking({date, period, household})   → POST /api/bookings
- *   cancelBooking(id, {household})             → POST /api/bookings/{id}/cancel
- *   checkIn(id, {household})                   → POST /api/bookings/{id}/checkin
- *   spontaneousCheckIn({period, household})    → POST /api/checkin
+ *   createBooking({date, periods, household})  → POST /api/bookings
+ *       periods = én eller flere av "AM" (10–14), "MID" (14–17), "PM" (17–24).
+ *       Lagres som én booking per periode (felles groupId), alt eller ingenting.
+ *   cancelBooking(id, {household})             → POST /api/bookings/{id}/cancel   (én periode)
+ *   checkIn(id, {household})                   → POST /api/bookings/{id}/checkin  (+ husets neste perioder i strekk)
+ *   spontaneousCheckIn({periods, household})   → POST /api/checkin
  *   confirmUsage(id, {household})              → POST /api/bookings/{id}/confirm
  *
  * Feil kastes som { error: "KODE", message: "Norsk tekst" }, samme
@@ -34,9 +36,27 @@
 
   const err = (error, message) => { const e = new Error(message); e.error = error; e.message = message; return e; };
   const load = () => {
-    try { return JSON.parse(localStorage.getItem(KEY)) || blank(); } catch (e) { return blank(); }
+    let db;
+    try { db = JSON.parse(localStorage.getItem(KEY)) || blank(); } catch (e) { db = blank(); }
+    return migrate(db);
   };
-  const blank = () => ({ schemaVersion: 1, bookings: [], audit: [], seq: {} });
+  const blank = () => ({ schemaVersion: 2, bookings: [], audit: [], seq: {} });
+  /**
+   * Prøvedata fra før dagen ble delt i tre (08–14 / 14–24 / heldag 08–24):
+   * heldag → tre perioder, gammel formiddag → formiddag, gammel kveld → ettermiddag + kveld.
+   */
+  function migrate(db) {
+    if ((db.schemaVersion || 1) >= 2) return db;
+    const map = { FULL: ["AM", "MID", "PM"], AM: ["AM"], PM: ["MID", "PM"] }, out = [];
+    for (const b of db.bookings || []) {
+      const ps = map[b.period] || [b.period];
+      ps.forEach((p, i) => out.push(Object.assign({}, b, { id: i ? `${b.id}-${p.toLowerCase()}` : b.id, period: p, groupId: b.groupId || b.id })));
+    }
+    db.bookings = out; db.schemaVersion = 2;
+    db.audit = (db.audit || []).concat([{ ts: stamp(), actor: "system", role: "system", action: "MIGRATED_TO_3_PERIODS", target: null, from: 1, to: 2, comment: null }]);
+    save(db);
+    return db;
+  }
   const save = db => localStorage.setItem(KEY, JSON.stringify(db));
   const stamp = () => new Date().toISOString();
   const actor = household => "hus-" + household;      // ingen innlogging ennå: «brukeren» er huset
@@ -81,23 +101,29 @@
     async history({ year } = {}) {
       const now = clock();
       return load().bookings.filter(b => !year || R.yearOf(b.date) === year).map(b => withStatus(b, now))
-        .sort((a, b) => (a.date + a.period).localeCompare(b.date + b.period));
+        .sort((a, b) => a.date.localeCompare(b.date) || R.range(rules, a.period).start - R.range(rules, b.period).start);
     },
     async stats({ year, month }) { return R.stats(load().bookings, rules, clock(), year, month); },
 
-    async createBooking({ date, period, household }) {
+    /** Booker én eller flere perioder samme dag. Returnerer { bookings, periods, fullDay, quota, lifted }. */
+    async createBooking({ date, periods, period, household }) {
       const db = load(), now = clock();
-      const res = need(R.validateBooking({ date, period, household }, db.bookings, rules, now));
-      const b = {
-        id: nextId(db, date), date, period, household, userId: actor(household), source: "BOOKING",
-        status: "BOOKED", quota: !!res.quota, createdAt: stamp(), createdBy: actor(household),
-        checkedInAt: null, confirmedAt: null, confirmedBy: null, cancelledAt: null, cancelledBy: null,
-        override: false, corrected: false
-      };
-      db.bookings.push(b);
-      audit(db, "BOOKING_CREATED", b, null, { status: "BOOKED", date, period }, household);
+      const res = need(R.validateBookingMulti({ date, periods: periods || (period ? [period] : []), household }, db.bookings, rules, now));
+      let groupId = null;
+      const made = res.periods.map(p => {
+        const b = {
+          id: nextId(db, date), groupId: null, date, period: p, household, userId: actor(household), source: "BOOKING",
+          status: "BOOKED", quota: !!res.quota, createdAt: stamp(), createdBy: actor(household),
+          checkedInAt: null, confirmedAt: null, confirmedBy: null, cancelledAt: null, cancelledBy: null,
+          override: false, corrected: false
+        };
+        groupId = groupId || b.id; b.groupId = groupId;
+        db.bookings.push(b);
+        audit(db, "BOOKING_CREATED", b, null, { status: "BOOKED", date, period: p }, household);
+        return b;
+      });
       save(db);
-      return Object.assign(withStatus(b, now), { lifted: !!res.lifted });
+      return { bookings: made.map(b => withStatus(b, now)), periods: res.periods, fullDay: res.fullDay, quota: !!res.quota, lifted: !!res.lifted };
     },
     async cancelBooking(id, { household }) {
       const db = load(), now = clock(), b = find(db, id);
@@ -111,24 +137,33 @@
     async checkIn(id, { household }) {
       const db = load(), now = clock(), b = find(db, id);
       need(R.validateCheckin(b, household, rules, now));
-      b.status = "CHECKED_IN"; b.checkedInAt = stamp();
-      audit(db, "CHECKED_IN", b, { status: "BOOKED" }, { status: "CHECKED_IN" }, household);
+      const chain = R.checkinChain(b, db.bookings, rules);       // f.eks. heldag: sjekket inn til kl. 24
+      for (const x of chain) {
+        x.status = "CHECKED_IN"; x.checkedInAt = stamp();
+        audit(db, "CHECKED_IN", x, { status: "BOOKED" }, { status: "CHECKED_IN" }, household, x === b ? null : "fulgte med innsjekken");
+      }
       save(db);
-      return withStatus(b, now);
+      return Object.assign(withStatus(b, now), { until: rules.periods[chain[chain.length - 1].period].end, count: chain.length });
     },
-    async spontaneousCheckIn({ period, household }) {
+    /** Spontan innsjekk: pågående periode, eventuelt med de neste ledige (til 17 eller 24). */
+    async spontaneousCheckIn({ periods, period, household }) {
       const db = load(), now = clock();
-      const res = need(R.validateSpontaneous({ period, household }, db.bookings, rules, now));
-      const b = {
-        id: nextId(db, now.date), date: now.date, period, household, userId: actor(household), source: "CHECKIN",
-        status: "CHECKED_IN", quota: !!res.quota, createdAt: stamp(), createdBy: actor(household),
-        checkedInAt: stamp(), confirmedAt: null, confirmedBy: null, cancelledAt: null, cancelledBy: null,
-        override: false, corrected: false
-      };
-      db.bookings.push(b);
-      audit(db, "CHECKED_IN", b, null, { status: "CHECKED_IN", period }, household, "spontan");
+      const res = need(R.validateSpontaneous({ periods: periods || [period], household }, db.bookings, rules, now));
+      let groupId = null;
+      const made = res.periods.map(p => {
+        const b = {
+          id: nextId(db, now.date), groupId: null, date: now.date, period: p, household, userId: actor(household), source: "CHECKIN",
+          status: "CHECKED_IN", quota: !!res.quota, createdAt: stamp(), createdBy: actor(household),
+          checkedInAt: stamp(), confirmedAt: null, confirmedBy: null, cancelledAt: null, cancelledBy: null,
+          override: false, corrected: false
+        };
+        groupId = groupId || b.id; b.groupId = groupId;
+        db.bookings.push(b);
+        audit(db, "CHECKED_IN", b, null, { status: "CHECKED_IN", period: p }, household, "spontan");
+        return b;
+      });
       save(db);
-      return withStatus(b, now);
+      return { bookings: made.map(b => withStatus(b, now)), until: rules.periods[res.periods[res.periods.length - 1]].end };
     },
     async confirmUsage(id, { household }) {
       const db = load(), now = clock(), b = find(db, id);

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "timezone": "Europe/Oslo",
   "households": {
     "A": { "name": "Halden Terrasse 14A", "color": "#2563eb", "colorName": "Blå" },
@@ -8,10 +8,12 @@
     "D": { "name": "Halden Terrasse 14D", "color": "#7c3aed", "colorName": "Lilla" }
   },
   "periods": {
-    "FULL": { "label": "Heldag", "start": "08:00", "end": "24:00", "units": 2, "default": true },
-    "AM": { "label": "Formiddag", "start": "08:00", "end": "14:00", "units": 1 },
-    "PM": { "label": "Ettermiddag/kveld", "start": "14:00", "end": "24:00", "units": 1 }
+    "AM": { "label": "Formiddag", "start": "10:00", "end": "14:00", "units": 1 },
+    "MID": { "label": "Ettermiddag", "start": "14:00", "end": "17:00", "units": 1 },
+    "PM": { "label": "Kveld", "start": "17:00", "end": "24:00", "units": 1 }
   },
+  "fullDay": { "label": "Heldag", "periods": ["AM", "MID", "PM"], "default": true, "onlyBeforeStart": true },
+  "multiplePeriods": true,
   "bookingWindow": { "months": 3, "mode": "rolling" },
   "summer": {
     "months": [6, 7, 8],
