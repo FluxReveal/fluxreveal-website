@@ -3,49 +3,43 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Brukermanual – administrator – Badehusappen</title>
+<title>Brukermanual – administrator – Dokumentasjon – Sameiet HT14</title>
 <meta name="description" content="Brukermanual for administratorene: brukere, passord, utlogging av mistet mobil, regler, overstyring, korrigering, import/eksport, årsarkiv, backup, feilsøking, overlevering og oppsett fra start.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css">
-<script src="app.js" defer></script>
+<link rel="stylesheet" href="style.css?v=20261025">
+<script src="app.js?v=20261025" defer></script>
 <script type="module" src="mermaid-init.js"></script>
 </head>
 <body>
 <a href="#innhold" class="chip" style="position:absolute;left:-9999px" onfocus="this.style.left='8px'">Hopp til innhold</a>
 <header class="topbar">
   <button class="hamburger" aria-label="Åpne meny" aria-expanded="false" aria-controls="sidemeny"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-  <b>Badehusappen · Dokumentasjon</b>
+  <a class="topbar-home" href="../index.html"><b>Sameiet HT14</b></a><span class="topbar-sep" aria-hidden="true">›</span><span>Dokumentasjon</span>
+  <a class="topbar-app" href="../badehusappen/">Badehusappen</a>
 </header>
 <div class="scrim"></div>
 <nav class="sidebar" id="sidemeny" aria-label="Hovedmeny">
-  <a class="brand" href="index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Badehusappen</b><small>Sameiet Halden Terrasse 14</small></span></a>
+  <a class="brand" href="../index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Sameiet HT14</b><small>Halden Terrasse 14</small></span></a>
   <div class="search" role="search"><svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9cc3d1" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
     <input id="sok" type="search" placeholder="Søk i dokumentasjonen  ( / )" aria-label="Søk i dokumentasjonen" autocomplete="off">
     <ul id="sok-resultat" class="search-results" aria-live="polite"></ul>
   </div>
   <ul class="nav">
-<li class="nav-label">Sameiet</li>
-<li><a href="../index.html#arshjul"><span class="num">⌂</span>Sameiets årshjul</a></li>
-<li class="nav-label">Start</li>
-<li><a href="index.html"><span class="num">1</span>Oversikt</a></li>
-<li class="nav-label">For alle</li>
-<li><a href="beskrivelse.html"><span class="num">2</span>Overordnet beskrivelse</a></li>
-<li class="nav-label">Teknisk</li>
-<li><a href="hld.html"><span class="num">3</span>HLD – High Level Design</a></li>
-<li><a href="lld.html"><span class="num">4</span>LLD – Low Level Design</a></li>
-<li class="nav-label">Regler</li>
-<li><a href="regler.html"><span class="num">5</span>Bookingregler</a></li>
-<li class="nav-label">Manualer</li>
-<li><a href="brukermanual.html"><span class="num">6</span>Brukermanual – beboer</a></li>
-<li><a href="adminmanual.html" aria-current="page"><span class="num">7</span>Brukermanual – administrator</a></li>
-<li class="nav-label">Styring</li>
-<li><a href="beslutninger.html"><span class="num">8</span>Hva må godkjennes?</a></li>
-<li><a href="vedtekter.html"><span class="num">9</span>Forslag til vedtekter</a></li>
+<li class="nav-label">Sameiet HT14</li>
+<li><a href="../index.html"><span class="num">⌂</span>Hjem <small>årshjul og nytt</small></a></li>
+<li><a href="../badehusappen/"><span class="num">📱</span>Badehusappen <small>prøveversjon</small></a></li>
+<li class="nav-label">Dokumentasjon</li>
+<li><a href="index.html" data-sok><span class="num">1</span>Oversikt</a></li>
+<li><a href="om-losningen.html" data-sok><span class="num">2</span>Slik fungerer Badehusappen</a></li>
+<li><a href="regler.html" data-sok><span class="num">3</span>Bookingregler</a></li>
+<li><a href="brukermanual.html" data-sok><span class="num">4</span>Brukermanual – beboer</a></li>
+<li><a href="adminmanual.html" data-sok aria-current="page"><span class="num">5</span>Brukermanual – administrator</a></li>
+<li><a href="vedtekter.html" data-sok><span class="num">6</span>Forslag til vedtekter</a></li>
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
-    Laget av Thomas for oss i HT14.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
+    Laget av Thomas for oss i HT14.
   </div>
 </nav>
 <main class="main" id="innhold">
@@ -58,7 +52,7 @@
   <div class="meta"><span class="chip">⏱ Ca. 22 min lesetid</span><span class="chip">2 administratorer</span><span class="chip">Alle adminhandlinger logges</span></div>
 </section>
 
-<div class="callout info"><p>Manualen beskriver den <b>planlagte</b> Badehusappen med arkitekturen Thomas har valgt (Badehusappen i én Cloudflare Worker på <code>badehusappen.fluxreveal.workers.dev</code> + privat data-repo + GitHub Actions; startsiden og dokumentasjonen på GitHub Pages). Skjermbildene er skisser. Detaljer om filer og felt står i <a href="lld.html">LLD</a>. Skal Badehusappen settes opp for første gang, se <a href="#slik-setter-vi-opp-badehusappen-fra-start">Slik setter vi opp Badehusappen fra start</a>.</p></div>
+<div class="callout info"><p>Manualen beskriver den <b>planlagte</b> Badehusappen med arkitekturen Thomas har valgt (Badehusappen i én Cloudflare Worker på <code>badehusappen.fluxreveal.workers.dev</code> + privat data-repo + GitHub Actions; startsiden og dokumentasjonen på GitHub Pages). Skjermbildene er skisser. Detaljer om filer og felt står i <a href="om-losningen.html#lld">LLD</a>. Skal Badehusappen settes opp for første gang, se <a href="#slik-setter-vi-opp-badehusappen-fra-start">Slik setter vi opp Badehusappen fra start</a>.</p></div>
 
 <h2 id="roller-og-ansvar">Roller og ansvar</h2>
 <div class="grid c2">
@@ -170,7 +164,7 @@
 <tr><td>Endre helgebegrensningen</td><td><code>summer.maxDaysPerWeekend</code></td><td><code>1</code></td></tr>
 <tr><td>Endre 7-dagersgrensen</td><td><code>liftSummerRulesWhenDaysBefore</code></td><td><code>7</code></td></tr>
 <tr><td>Endre grensen for sen avbestilling</td><td><code>lateCancellationDays</code></td><td><code>7</code></td></tr>
-<tr><td>Endre tidspunkter for perioder</td><td><code>periods.AM / PM / FULL</code></td><td><code>"start": "08:00"</code></td></tr>
+<tr><td>Endre tidspunkter for perioder</td><td><code>periods.AM / MID / PM</code></td><td><code>"start": "10:00"</code> (heldag = <code>fullDay.periods</code>)</td></tr>
 <tr><td>Endre husstandsfarge</td><td><code>households.A.color</code></td><td><code>"#2563eb"</code> (bør ikke endres – fargene skal være faste)</td></tr>
 </tbody></table></div>
 <h3 id="to-mater-a-endre-pa">To måter å endre på</h3>
@@ -180,7 +174,7 @@
 </div>
 <div class="callout warn"><p><b>Viktig:</b> En feil i <code>rules.json</code> (f.eks. et manglende komma) gjør at Workeren avviser alle bookinger med feilen <code>RULES_INVALID</code>. Ved direkte redigering: bruk en JSON-validator før du lagrer, og angre ved å gå tilbake til forrige versjon i GitHub (se <a href="#nar-noe-feiler">Når noe feiler</a>).</p></div>
 <p class="note">Reglene bak nøklene <code>shortNoticeCountsTowardQuota</code>, <code>quotaMonthBy</code>, <code>cancelPermission</code>, <code>offSeason</code> m.fl. er Thomas sitt forslag. Selve nøkkelnavnene er .</p>
-<div class="callout info"><p><b>Når kan reglene endres?</b> Bare når sameiet har bestemt det – se <a href="regler.html#slik-endrer-vi-reglene">Slik endrer vi reglene</a>. Administrator legger da endringen inn i <code>rules.json</code>, oppdaterer dokumentasjonen og fører det i <a href="beslutninger.html#logg">loggen</a>.</p></div>
+<div class="callout info"><p><b>Når kan reglene endres?</b> Bare når sameiet har bestemt det – se <a href="regler.html#slik-endrer-vi-reglene">Slik endrer vi reglene</a>. Administrator legger da endringen inn i <code>rules.json</code>, oppdaterer dokumentasjonen og skriver en kort linje under «Hva er nytt» på <a href="../index.html#hva-er-nytt">startsiden</a>.</p></div>
 
 <h2 id="overstyre-begrensninger">Overstyre begrensninger</h2>
 <div class="two">
@@ -197,7 +191,7 @@
 <div class="device">
   <div class="mock-bar" style="background:#7e22ce"><span>✕</span><span>Overstyr regel</span><span></span></div>
   <div class="mock-body">
-    <div class="mock-label">Dato og periode</div><div class="mock-field">Lør 24. juli 2027 · Heldag</div>
+    <div class="mock-label">Dato og periode</div><div class="mock-field">Lør 24. juli 2027 · Heldag 10–24</div>
     <div class="mock-label">Husstand</div><div class="mock-field"><span class="hus d">Hus D</span></div>
     <div class="callout forslag" style="font-size:.76rem;padding:8px 10px 8px 40px"><p>Regel som overstyres: <b>QUOTA_WEEKDAY</b> – Hus D har allerede en lørdag i juli.</p></div>
     <div class="mock-label">Kommentar (påkrevd)</div><div class="mock-field" style="height:54px">Avtalt med naboene …</div>
@@ -218,7 +212,7 @@
 
 <h2 id="import-og-eksport">Import og eksport</h2>
 <div class="grid c2">
-  <div class="card"><h4>⬇️ Eksport</h4><p>Adminsiden → Eksport → velg år → CSV (for Excel) eller JSON (komplett). Alle data kan eksporteres til CSV. Logges som <code>DATA_EXPORTED</code>.</p><p style="margin:0;color:var(--muted);font-size:.9rem">Format: se <a href="lld.html#csv-format">CSV-format i LLD</a>.</p></div>
+  <div class="card"><h4>⬇️ Eksport</h4><p>Adminsiden → Eksport → velg år → CSV (for Excel) eller JSON (komplett). Alle data kan eksporteres til CSV. Logges som <code>DATA_EXPORTED</code>.</p><p style="margin:0;color:var(--muted);font-size:.9rem">Format: se <a href="om-losningen.html#csv-format">CSV-format i LLD</a>.</p></div>
   <div class="card"><h4>⬆️ Import</h4><p>Adminsiden → Import → last opp fil → <b>tørrkjøring</b> viser hva som vil endres og eventuelle feil → bekreft. Logges som <code>DATA_IMPORTED</code>.</p><p style="margin:0;color:var(--muted);font-size:.9rem">Brukes f.eks. for å legge inn historikk fra før systemet ble tatt i bruk.</p></div>
 </div>
 
@@ -317,7 +311,7 @@ flowchart LR
   <li><b>Flytt Cloudflare Worker og secrets til ny konto</b>Opprett Workeren på sameiets Cloudflare-konto med samme kode (fra <code>HT14/badehusappen/</code>). Hemmeligheter kan ikke leses ut og kopieres – de må legges inn på nytt i den nye kontoen (se neste steg). Den nye kontoen får sin egen workers.dev-adresse: oppdater <code>APP_ORIGIN</code> i Worker-koden og knappen på startsiden til den nye adressen. Slett den gamle Workeren når den nye er testet.</li>
   <li><b>Roter tokens</b>Lag et nytt fine-grained GitHub-token fra sameiets konto med tilgang kun til data-repoet, og legg det inn som Worker-secret. Lag også en ny «pepper» for økt-nøkler (alle blir logget ut én gang og må logge inn igjen – mobilen husker passordet). Øktlisten i Workers KV flyttes ikke, den lages på nytt. Slett de gamle tokenene fra FluxReveal-kontoen.</li>
   <li><b>Oppdater admin-kontakter</b>Sett riktige administratorer i Badehusappen (rolle <code>admin</code>), riktige medlemmer/eiere i GitHub og Cloudflare, og kontaktinformasjon for brukerstøtte. Fjern tilganger som ikke lenger trengs.</li>
-  <li><b>Test og loggfør</b>Logg inn, book og avbestill en testdato, sjekk historikk og eksport, og før overføringen inn i <a href="beslutninger.html#logg">beslutningsloggen</a>.</li>
+  <li><b>Test og loggfør</b>Logg inn, book og avbestill en testdato, sjekk historikk og eksport, og skriv en kort linje om overføringen under «Hva er nytt» på <a href="../index.html#hva-er-nytt">startsiden</a>.</li>
 </ol>
 <div class="callout info"><p>Ved overføring får Badehusappen en ny adresse (i dag <code>badehusappen.fluxreveal.workers.dev</code>, på sameiets egen Cloudflare-konto blir det en annen). Gi beboerne den nye adressen, be dem legge den til på Hjem-skjermen på nytt, og la gjerne <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a> lenke videre en periode.</p></div>
 
@@ -367,7 +361,7 @@ flowchart TD
 ├── rules.json          (kopier eksempelet fra LLD-en og juster)
 ├── bookings/2026.json  {"schemaVersion": 1, "year": 2026, "bookings": []}
 └── audit/2026.jsonl    (tom fil – én hendelse per linje kommer senere)</code></pre>
-<p class="note">Feltene i filene er beskrevet i <a href="lld.html">LLD</a>. Første bruker legges inn i steg 7. Nye år (<code>bookings/2027.json</code> osv.) lager Workeren selv når noen booker for et nytt år.</p>
+<p class="note">Feltene i filene er beskrevet i <a href="om-losningen.html#lld">LLD</a>. Første bruker legges inn i steg 7. Nye år (<code>bookings/2027.json</code> osv.) lager Workeren selv når noen booker for et nytt år.</p>
 
 <h3 id="steg-3-github-token-som-bare-nar-data-repoet">Steg 3 – GitHub-token som bare når data-repoet</h3>
 <p><b>Hvem:</b> Thomas. Tokenet er nøkkelen Workeren bruker for å lagre bookinger, så det skal bare finnes i Cloudflare (steg 5) – aldri i kode, i et repo eller i en chat.</p>
@@ -496,7 +490,7 @@ jobs:
 <tr><td>☐</td><td>Resten av beboerne lagt inn og fått beskjed</td><td>Administratorene</td></tr>
 </tbody></table></div>
 
-<nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="brukermanual.html"><small>← Forrige</small>Brukermanual – beboer</a><a class="next" href="beslutninger.html"><small>Neste →</small>Hva må godkjennes?</a></nav>
+<nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="brukermanual.html"><small>← Forrige</small>Brukermanual – beboer</a><a class="next" href="vedtekter.html"><small>Neste →</small>Forslag til vedtekter</a></nav>
       <p class="footer">Badehusappen – dokumentasjon av bookingløsningen for badehuset vårt. Den er ikke bygget ennå, og alle navn i eksemplene er oppdiktet. Spørsmål eller ideer? Si fra til Thomas.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
