@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Åpne beslutninger – Badehus Booking System</title>
+<meta name="description" content="Åpne beslutninger og beslutningslogg for Badehus Booking System, med foreslåtte standardsvar som ikke er vedtatt.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+<script type="module" src="mermaid-init.js"></script>
+</head>
+<body>
+<a href="#innhold" class="chip" style="position:absolute;left:-9999px" onfocus="this.style.left='8px'">Hopp til innhold</a>
+<header class="topbar">
+  <button class="hamburger" aria-label="Åpne meny" aria-expanded="false" aria-controls="sidemeny"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <b>Badehus · Dokumentasjon</b>
+</header>
+<div class="scrim"></div>
+<nav class="sidebar" id="sidemeny" aria-label="Hovedmeny">
+  <a class="brand" href="index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Badehus Booking</b><small>Sameiet Halden Terrasse 14</small></span></a>
+  <div class="search" role="search"><svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9cc3d1" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+    <input id="sok" type="search" placeholder="Søk i dokumentasjonen  ( / )" aria-label="Søk i dokumentasjonen" autocomplete="off">
+    <ul id="sok-resultat" class="search-results" aria-live="polite"></ul>
+  </div>
+  <ul class="nav">
+<li class="nav-label">Start</li>
+<li><a href="index.html"><span class="num">1</span>Oversikt</a></li>
+<li class="nav-label">For alle</li>
+<li><a href="beskrivelse.html"><span class="num">2</span>Overordnet beskrivelse</a></li>
+<li class="nav-label">Teknisk</li>
+<li><a href="hld.html"><span class="num">3</span>HLD – High Level Design</a></li>
+<li><a href="lld.html"><span class="num">4</span>LLD – Low Level Design</a></li>
+<li class="nav-label">Regler</li>
+<li><a href="regler.html"><span class="num">5</span>Bookingregler</a></li>
+<li class="nav-label">Manualer</li>
+<li><a href="brukermanual.html"><span class="num">6</span>Brukermanual – beboer</a></li>
+<li><a href="adminmanual.html"><span class="num">7</span>Brukermanual – administrator</a></li>
+<li class="nav-label">Styring</li>
+<li><a href="beslutninger.html" aria-current="page"><span class="num">8</span>Åpne beslutninger</a></li>
+  </ul>
+  <div class="side-foot">
+    <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
+    Planlagt løsning · v0.2 utkast · 25.10.2026<br><a href="../index.html" style="color:#9cd3e2">← Badehus-prosjektet</a>
+  </div>
+</nav>
+<main class="main" id="innhold">
+  <div class="content-wrap">
+    <article>
+<section class="hero">
+  <div class="eyebrow">Styring · Beslutninger</div>
+  <h1>Åpne beslutninger og beslutningslogg</h1>
+  <p>Ti spørsmål må avklares av oppdragsgiver før løsningen bygges. For hvert spørsmål finnes et foreslått standardsvar – men <b>ingen av dem er vedtatt</b>.</p>
+  <div class="meta"><span class="chip draft">Utkast v0.2 · 25.10.2026</span><span class="chip">10 åpne · 0 besluttet</span></div>
+</section>
+
+<div class="grid c4">
+  <div class="card"><div class="stat" style="color:var(--warn)">10</div>åpne spørsmål</div>
+  <div class="card"><div class="stat" style="color:var(--ok)">0</div>besluttet</div>
+  <div class="card"><div class="stat">1</div>arkitektur anbefalt, ikke godkjent</div>
+  <div class="card"><div class="stat">v2</div>varsler (e-post/SMS) – kandidat</div>
+</div>
+
+<h2 id="slik-behandles-et-apent-sporsmal">Slik behandles et åpent spørsmål</h2>
+<figure>
+<pre class="mermaid">
+flowchart LR
+  A["Åpent spørsmål<br/>med forslag"] --> B{"Oppdragsgiver<br/>tar stilling"}
+  B -- Godtar forslag --> C["Vedtatt<br/>som foreslått"]
+  B -- Annet svar --> D["Vedtatt<br/>med endring"]
+  C --> E["Oppdater rules.json,<br/>dokumentasjon og tester"]
+  D --> E
+  E --> F["Før inn i<br/>beslutningsloggen"]
+  classDef open fill:#fffbeb,stroke:#f59e0b,color:#78350f;
+  classDef done fill:#dcfce7,stroke:#16a34a,color:#14532d;
+  class A open; class C,D,F done;
+</pre>
+</figure>
+
+<h2 id="de-ti-apne-sporsmalene">De ti åpne spørsmålene</h2>
+<p>Alle forslag under er merket <span class="badge-forslag">Forslag – ikke vedtatt</span> og er assistentens forslag til standard. Thomas har ikke besvart dem ennå.</p>
+
+<div class="card" style="margin:14px 0;border-left:6px solid var(--warn)">
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å1 · 7-dagersregel vs. kvote</b><span><span class="badge">Status: Åpen</span> <span class="badge-forslag">Forslag – ikke vedtatt</span></span></div>
+  <p style="margin:.5rem 0"><b>Spørsmål:</b> Teller en booking gjort mindre enn 7 dager før mot sommerkvoten? Gjelder helgebegrensningen da?</p>
+  <p style="margin:.5rem 0"><b>Forslag:</b> Booking gjort &lt; 7 dager før teller <b>ikke</b> mot kvote; helgebegrensning oppheves også.</p>
+  <p style="margin:0;color:var(--muted);font-size:.9rem">Påvirker: <code>shortNoticeCountsTowardQuota</code>, regelmotor · <a href="regler.html#regel-5">Regler ⑤</a></p>
+</div>
+
+<div class="card" style="margin:14px 0;border-left:6px solid var(--warn)">
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å2 · Spontan innsjekk</b><span><span class="badge">Status: Åpen</span> <span class="badge-forslag">Forslag – ikke vedtatt</span></span></div>
+  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvordan telles spontan innsjekk uten reservasjon?</p>
+  <p style="margin:.5rem 0"><b>Forslag:</b> Teller i statistikk (bruk), ikke i kvote (skjer alltid &lt; 7 dager før).</p>
+  <p style="margin:0;color:var(--muted);font-size:.9rem">Påvirker: <code>spontaneousCheckinCountsTowardQuota</code>, statistikk · <a href="regler.html#innsjekk-utsjekk-og-bekreftelse">Regler: innsjekk</a></p>
+</div>
+
+<div class="card" style="margin:14px 0;border-left:6px solid var(--warn)">
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å3 · Helg over to måneder</b><span><span class="badge">Status: Åpen</span> <span class="badge-forslag">Forslag – ikke vedtatt</span></span></div>
+  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvordan telles en helg som går over månedsskiftet (f.eks. fre 31. juli + lør 1. aug)?</p>
+  <p style="margin:.5rem 0"><b>Forslag:</b> Kvoten følger datoens måned; helgeregelen følger helgen (fre–søn).</p>
+  <p style="margin:0;color:var(--muted);font-size:.9rem">Påvirker: <code>summer.quotaMonthBy</code>, <code>summer.weekendBy</code> · <a href="regler.html#helg-over-to-maneder">Regler: spesialtilfeller</a></p>
+</div>
+
+<div class="card" style="margin:14px 0;border-left:6px solid var(--warn)">
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å4 · Utenfor sommer (sep–mai)</b><span><span class="badge">Status: Åpen</span> <span class="badge-forslag">Forslag – ikke vedtatt</span></span></div>
+  <p style="margin:.5rem 0"><b>Spørsmål:</b> Gjelder noen begrensninger utenfor juni–august?</p>
+  <p style="margin:.5rem 0"><b>Forslag:</b> Ingen begrensninger utover 3-måneders bookingvindu.</p>
+  <p style="margin:0;color:var(--muted);font-size:.9rem">Påvirker: <code>offSeason</code></p>
+</div>
+
+<div class="card" style="margin:14px 0;border-left:6px solid var(--warn)">
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å5 · 3-måneders vindu</b><span><span class="badge">Status: Åpen</span> <span class="badge-forslag">Forslag – ikke vedtatt</span></span></div>
+  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvordan regnes «maks 3 måneder frem i tid»?</p>
+  <p style="margin:.5rem 0"><b>Forslag:</b> Rullerende: i dag + 3 kalendermåneder, samme dato.</p>
+  <p style="margin:0;color:var(--muted);font-size:.9rem">Påvirker: <code>bookingWindow.mode</code> · <a href="regler.html#regel-2">Regler ②</a></p>
+</div>
+
+<div class="card" style="margin:14px 0;border-left:6px solid var(--warn)">
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å6 · Avbestillingsrett</b><span><span class="badge">Status: Åpen</span> <span class="badge-forslag">Forslag – ikke vedtatt</span></span></div>
+  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvem kan avbestille en booking?</p>
+  <p style="margin:.5rem 0"><b>Forslag:</b> Alle brukere i samme husstand kan avbestille husstandens bookinger.</p>
+  <p style="margin:0;color:var(--muted);font-size:.9rem">Påvirker: <code>cancelPermission</code>, Worker-tilgangskontroll</p>
+</div>
+
+<div class="card" style="margin:14px 0;border-left:6px solid var(--warn)">
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å7 · Statistikk</b><span><span class="badge">Status: Åpen</span> <span class="badge-forslag">Forslag – ikke vedtatt</span></span></div>
+  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvordan telles NOT_CONFIRMED og CANCELLED_LATE i statistikken?</p>
+  <p style="margin:.5rem 0"><b>Forslag:</b> NOT_CONFIRMED vises separat (ikke regnet som bruk før bekreftet); CANCELLED_LATE teller i kvote, men ikke som bruk.</p>
+  <p style="margin:0;color:var(--muted);font-size:.9rem">Påvirker: <code>stats.*</code>, statistikkpanel</p>
+</div>
+
+<div class="card" style="margin:14px 0;border-left:6px solid var(--warn)">
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å8 · ADMIN_CORRECTED</b><span><span class="badge">Status: Åpen</span> <span class="badge-forslag">Forslag – ikke vedtatt</span></span></div>
+  <p style="margin:.5rem 0"><b>Spørsmål:</b> Skal ADMIN_CORRECTED være en egen status?</p>
+  <p style="margin:.5rem 0"><b>Forslag:</b> Ikke en status, men en hendelse i audit-loggen + flagg <code>corrected: true</code>; statusen forblir den faktiske tilstanden.</p>
+  <p style="margin:0;color:var(--muted);font-size:.9rem">Påvirker: statusmaskin, datamodell · <a href="lld.html#statusmaskin">LLD: statusmaskin</a></p>
+</div>
+
+<div class="card" style="margin:14px 0;border-left:6px solid var(--warn)">
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å9 · Personvern / GDPR</b><span><span class="badge">Status: Åpen</span> <span class="badge-forslag">Forslag – ikke vedtatt</span></span></div>
+  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvordan forenes «ingen data slettes» med personvern når noen flytter?</p>
+  <p style="margin:.5rem 0"><b>Forslag:</b> «Ingen sletting» gjelder bookinger. Utflyttede brukere deaktiveres og kan anonymiseres (navn → «Tidligere beboer Hus A»); husstanden beholdes.</p>
+  <p style="margin:0;color:var(--muted);font-size:.9rem">Påvirker: <code>users.json</code> (<code>anonymized</code>), adminfunksjoner · <a href="hld.html#personvern">HLD: personvern</a></p>
+</div>
+
+<div class="card" style="margin:14px 0;border-left:6px solid var(--warn)">
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å10 · Tid</b><span><span class="badge">Status: Åpen</span> <span class="badge-forslag">Forslag – ikke vedtatt</span></span></div>
+  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hva betyr 00:00, og hvilken tidssone gjelder?</p>
+  <p style="margin:.5rem 0"><b>Forslag:</b> 00:00 = slutten av dagen (24:00) i Europe/Oslo, inkludert sommertid.</p>
+  <p style="margin:0;color:var(--muted);font-size:.9rem">Påvirker: <code>timezone</code>, <code>periods</code>, statusberegning · <a href="hld.html#tid-og-status">HLD: tid og status</a></p>
+</div>
+
+<h2 id="andre-uavklarte-forhold">Andre uavklarte forhold</h2>
+<div class="table-wrap"><table><thead><tr><th>Forhold</th><th>Status</th></tr></thead><tbody>
+<tr><td>Anbefalt arkitektur (Pages + Cloudflare Worker + privat data-repo + Actions)</td><td><span class="badge-forslag">Forslag – ikke vedtatt</span> Anbefalt av assistenten, ikke endelig godkjent.</td></tr>
+<tr><td>Detaljdesign i LLD (filnavn, felt, endepunkter, feilkoder)</td><td><span class="badge-forslag">Forslag – ikke vedtatt</span> Utkast.</td></tr>
+<tr><td>Sameiets vedtekter</td><td>Ikke tilgjengelige ennå – ikke tatt hensyn til.</td></tr>
+<tr><td>Varsler (e-post/SMS)</td><td>Ikke med i v1 – kandidat for v2.</td></tr>
+</tbody></table></div>
+
+<h2 id="beslutningslogg">Beslutningslogg</h2>
+<p>Her føres alle beslutninger når de tas – med dato, hvem som besluttet og hva.</p>
+<div class="table-wrap"><table><thead><tr><th>Dato</th><th>Hva</th><th>Hvem</th><th>Type</th></tr></thead><tbody>
+<tr><td>25.10.2026</td><td>Originalkrav for Badehus Booking System levert (bakgrunn, roller, kalender, bookingtyper, statuser, sommerregler, avbestilling, statistikk, backup, dokumentasjon, kvalitet).</td><td>Thomas Gude Svensrud</td><td><span class="badge" style="background:#dcfce7;color:#166534;border-color:#bbf7d0">Krav</span></td></tr>
+<tr><td>25.10.2026</td><td>Ønsket teknologi: GitHub Pages, GitHub Actions, HTML, CSS, JavaScript, JSON, CSV. Ingen database, ingen server, ingen løpende kostnader.</td><td>Thomas Gude Svensrud</td><td><span class="badge" style="background:#dcfce7;color:#166534;border-color:#bbf7d0">Krav</span></td></tr>
+<tr><td>25.10.2026</td><td>Arkitekturanbefaling med Cloudflare Worker og privat data-repo fremlagt. Alternativet «100 % GitHub med Issues/konto per bruker» vurdert og anbefalt forkastet.</td><td>Assistent</td><td><span class="badge-forslag">Forslag – ikke vedtatt</span></td></tr>
+<tr><td>25.10.2026</td><td>Ti åpne spørsmål med foreslåtte standardsvar fremlagt.</td><td>Assistent</td><td><span class="badge-forslag">Forslag – ikke vedtatt</span></td></tr>
+<tr><td>25.10.2026</td><td>Dokumentasjonsside v0.2 utkast publisert.</td><td>–</td><td><span class="badge">Dokumentasjon</span></td></tr>
+<tr><td style="color:var(--muted)">–</td><td style="color:var(--muted)"><i>Neste beslutning føres her …</i></td><td></td><td></td></tr>
+</tbody></table></div>
+
+<h3 id="mal-for-ny-beslutning">Mal for ny beslutning</h3>
+<pre><code>Dato:        DD.MM.ÅÅÅÅ
+Spørsmål:    Å#  (eller ny sak)
+Beslutning:  Forslag godtatt / Endret til: …
+Besluttet av: navn, rolle
+Konsekvens:  rules.json-nøkler, sider i dokumentasjonen, tester som må oppdateres</code></pre>
+
+<nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="adminmanual.html"><small>← Forrige</small>Brukermanual – administrator</a><span></span></nav>
+      <p class="footer">Badehus Booking System – dokumentasjon av <b>planlagt</b> løsning (v0.2 utkast · 25.10.2026). Systemet er ikke bygget ennå. Punkter merket <span class="badge-forslag">Forslag – ikke vedtatt</span> er ikke besluttet. Alle navn er eksempler.</p>
+    </article>
+    <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
+  </div>
+</main>
+</body>
+</html>
