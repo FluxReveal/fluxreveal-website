@@ -279,3 +279,30 @@ pre.mermaid{background:transparent;color:var(--ink);box-shadow:none;padding:0;ma
 .plain-list{padding-left:1.2rem}
 .plain-list li{margin:.55rem 0}
 .plain-list small{color:var(--muted)}
+
+/* ---------- Felles meny for Sameiet HT14 (Hjem / Badehusappen / Dokumentasjon) ---------- */
+.nav a small{margin-left:auto;font-size:.72rem;color:#8fb9c9;font-weight:400}
+.nav a[aria-current="page"] small{color:var(--muted)}
+.topbar a{color:#fff;text-decoration:none}
+.topbar .topbar-home b{font-size:.98rem}
+.topbar .topbar-sep{opacity:.6}
+.topbar .topbar-app{margin-left:auto;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:6px 12px;font-size:.88rem;font-weight:600;white-space:nowrap;min-height:36px;display:inline-flex;align-items:center}
+@media (max-width:380px){ .topbar .topbar-sep,.topbar .topbar-sep + span{display:none} }
+
+/* ---------- Samlet dokument: del 1–3 ---------- */
+.part-toc{margin:1.2rem 0 2rem}
+.part-toc .toc-title{margin-top:0}
+.part-toc .card h3{margin:0 0 .4rem;font-size:1rem}
+.part-toc .card h3 a{text-decoration:none}
+.part-toc ol{margin:0;padding-left:1.2rem;font-size:.92rem;line-height:1.6}
+h2.part-title{font-size:1.65rem;margin-top:3rem;padding-top:1.2rem;border-top:3px solid var(--brand-2);display:flex;align-items:center;gap:.6rem}
+h2.part-title:first-of-type{margin-top:2rem}
+.part-num{display:inline-grid;place-items:center;flex:none;width:2.1rem;height:2.1rem;border-radius:10px;background:var(--brand);color:#fff;font-size:1.1rem}
+.part-lead{color:var(--muted);font-size:1.02rem;margin-top:-.2rem}
+article h4[id]{scroll-margin-top:70px}
+
+/* Ingen sidelengs rulling på små skjermer: lange ord og kodelinjer brekkes, kolonner kan krympe */
+article :is(div,section,li,figure,td){min-width:0}
+article :is(p,li,td,th,h2,h3,h4,b,a,.callout) {overflow-wrap:anywhere}
+article :not(pre)>code{overflow-wrap:anywhere;word-break:break-word}
+article pre{max-width:100%;overflow-x:auto}

@@ -2,7 +2,7 @@
    Badehus-dokumentasjon – felles skript
    - Hamburgermeny på mobil
    - Automatisk innholdsfortegnelse (h2/h3) + ankerlenker
-   - Enkelt søk på tvers av alle sider (indeks bygges i nettleseren)
+   - Enkelt søk på tvers av alle dokumentasjonssidene (indeks bygges i nettleseren)
    Ingen avhengigheter, ingen byggesteg.
    ========================================================== */
 (function () {
@@ -20,19 +20,6 @@
   });
   if (scrim) scrim.addEventListener("click", function () { setNav(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setNav(false); });
-
-  /* ---------- Menypunkt for nye sider ----------
-     Reserve: dersom en side mangler «Forslag til vedtekter» i
-     menyen, legges punktet til her. Alle sider har det nå statisk, så dette gjør normalt ingenting. */
-  var navList = document.querySelector(".nav");
-  if (navList && !navList.querySelector('a[href="vedtekter.html"]')) {
-    var after = navList.querySelector('a[href="beslutninger.html"]');
-    if (after) {
-      var li = document.createElement("li");
-      li.innerHTML = '<a href="vedtekter.html"><span class="num">9</span>Forslag til vedtekter</a>';
-      after.parentNode.parentNode.insertBefore(li, after.parentNode.nextSibling);
-    }
-  }
 
   /* ---------- Ankerlenker + innholdsfortegnelse ---------- */
   function slug(t) {
@@ -98,7 +85,7 @@
   }
   function buildIndex() {
     if (loading) return loading;
-    var links = Array.prototype.slice.call(document.querySelectorAll(".nav a[href]"));
+    var links = Array.prototype.slice.call(document.querySelectorAll(".nav a[data-sok]"));   // bare dokumentasjonssidene
     loading = Promise.all(links.map(function (a) {
       var url = a.getAttribute("href"), title = a.textContent.replace(/^\d+/, "").trim();
       return fetch(url).then(function (r) { return r.text(); }).then(function (html) {
@@ -107,10 +94,10 @@
         if (!art) return entries;
         art.querySelectorAll(".pagenav, .footer").forEach(function (n) { n.remove(); });
         Array.prototype.forEach.call(art.children, function walk(el) {
-          if (/^H[23]$/.test(el.tagName) && el.id) {
+          if (/^H[234]$/.test(el.tagName) && el.id) {
             entries.push(cur);
             cur = { u: url + "#" + el.id, p: title, h: clean(el.cloneNode(true)), t: "" };
-          } else if (el.querySelector && el.querySelector("h2[id], h3[id]") && !el.matches(".hero, .card, .device, figure")) {
+          } else if (el.querySelector && el.querySelector("h2[id], h3[id], h4[id]") && !el.matches(".hero, .card, .device, figure, .part-toc")) {
             Array.prototype.forEach.call(el.children, walk);
           } else {
             cur.t += " " + clean(el.cloneNode(true));

@@ -3,17 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sameiet Halden Terrasse 14 – årshjul og badehuset</title>
+<title>Sameiet HT14 – årshjul, nytt og badehuset</title>
 <meta name="description" content="Startside for Sameiet Halden Terrasse 14: årshjul med dugnader, badehuset, møter og regninger – og dokumentasjonen for Badehusappen.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="dokumentasjon/style.css">
+<link rel="stylesheet" href="dokumentasjon/style.css?v=20261025">
 <style>
   body{display:block;background:radial-gradient(1100px 480px at 0% 0%,#cffafe,transparent 60%),radial-gradient(900px 420px at 100% 0%,#fef3c7,transparent 55%),var(--bg);margin:0}
   .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 60px}
-  .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-  .brandline{font-weight:800;color:var(--brand);letter-spacing:.02em}
-  .toplinks a{margin-left:14px;font-weight:600}
+  .sitebar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+  .sitebar-in{max-width:1080px;margin:0 auto;padding:6px max(20px,env(safe-area-inset-right)) 6px max(20px,env(safe-area-inset-left));display:flex;align-items:center;justify-content:space-between;gap:4px 12px;flex-wrap:wrap}
+  .site-brand{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--ink);text-decoration:none;min-height:44px;font-size:1.05rem}
+  .site-brand svg{width:30px;height:30px}
+  .sitenav{display:flex;gap:4px;flex-wrap:wrap}
+  .sitenav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:10px;font-weight:600;text-decoration:none;color:var(--ink-2)}
+  .sitenav a:hover{background:var(--brand-bg)}
+  .sitenav a[aria-current="page"]{color:var(--brand);box-shadow:inset 0 -3px 0 var(--brand-2)}
+  .nytt{background:#fff;border:1px solid var(--line);border-radius:18px;padding:6px 20px 12px;box-shadow:var(--shadow)}
+  .nytt-dag h3{font-size:1rem;margin:14px 0 6px;color:var(--brand)}
+  .nytt-dag ul{margin:0;padding-left:1.1rem;display:grid;gap:6px}
+  .nytt-dag li{color:var(--ink-2)}
+  .nytt-dag li b{color:var(--ink)}
   .hero2{background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:var(--shadow)}
   .hero2 h1{font-size:clamp(1.8rem,4vw,2.6rem);margin:.2rem 0 .5rem}
   .hero2 p{font-size:1.06rem;color:var(--ink-2);max-width:760px}
@@ -65,15 +75,18 @@
   .avklares h3{margin:0 0 .3rem}
   table.kilder td,table.kilder th{font-size:.92rem;vertical-align:top}
   footer.fot{margin-top:36px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
-  @media (max-width:860px){ .hjul-grid{grid-template-columns:1fr} .hjul-boks{position:static} .hero2{padding:22px} .toplinks a{margin:0 12px 0 0} }
+  @media (max-width:860px){ .hjul-grid{grid-template-columns:1fr} .hjul-boks{position:static} .hero2{padding:22px} }
+  @media (max-width:520px){ .sitebar-in{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))} .sitenav a{padding:0 9px} .wrap{padding:18px 14px 50px} }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="top">
-    <div class="brandline">Sameiet Halden Terrasse 14</div>
-    <nav class="toplinks" aria-label="Snarveier"><a href="#arshjul">Årshjul</a><a href="dokumentasjon/index.html">Badehusappen</a><a href="dokumentasjon/vedtekter.html">Forslag til vedtekter</a></nav>
+<header class="sitebar">
+  <div class="sitebar-in">
+    <a class="site-brand" href="./" aria-label="Sameiet HT14 – hjem"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span>Sameiet HT14</span></a>
+    <nav class="sitenav" aria-label="Sameiet HT14"><a href="./" aria-current="page">Hjem</a><a href="badehusappen/">Badehusappen</a><a href="dokumentasjon/index.html">Dokumentasjon</a></nav>
   </div>
+</header>
+<div class="wrap">
 
   <header class="hero2">
     <div class="eyebrow">Hei, nabo! 👋</div>
@@ -86,9 +99,15 @@
   <div class="cards">
     <a href="badehusappen/"><div class="ico">🛁</div><b>Åpne Badehusappen (prøveversjon)</b><span>Prøv å booke badehuset. Bookingene lagres bare på din egen telefon foreløpig.</span></a>
     <a href="#arshjul"><div class="ico">🗓️</div><b>Sameiets årshjul</b><span>Hva skjer når i løpet av året?</span></a>
-    <a href="dokumentasjon/index.html"><div class="ico">🏖️</div><b>Badehusappen</b><span>Slik skal vi booke badehuset – dokumentasjon og regler.</span></a>
+    <a href="#hva-er-nytt"><div class="ico">✨</div><b>Hva er nytt</b><span>Det siste som er lagt til eller endret.</span></a>
+    <a href="dokumentasjon/index.html"><div class="ico">🏖️</div><b>Dokumentasjon</b><span>Slik skal vi booke badehuset – regler, manualer og hvordan det er bygget.</span></a>
     <a href="dokumentasjon/vedtekter.html"><div class="ico">📜</div><b>Forslag til vedtekter</b><span>§ 10 og reglene for badehuset – tar vi på sameiemøtet.</span></a>
     <a href="dokumentasjon/regler.html#slik-endrer-vi-reglene"><div class="ico">🔁</div><b>Slik endrer vi reglene</b><span>Forslag til en enkel prosess, en gang i året.</span></a>
+  </div>
+
+  <h2 class="sek" id="hva-er-nytt">Hva er nytt</h2>
+  <div class="nytt">
+<div class="nytt-dag"><h3><time datetime="2026-10-25">25. oktober 2026</time></h3><ul><li><b>Felles meny for hele HT14</b> – Hjem, Badehusappen og Dokumentasjon henger nå sammen, med «Sameiet HT14» øverst – så det er lett å finne fram og tilbake.</li><li><b>Samlet dokumentasjon</b> – Overordnet beskrivelse, HLD og LLD er slått sammen til ett dokument: «Slik fungerer Badehusappen». Gamle lenker virker fortsatt. <a href="dokumentasjon/om-losningen.html">Se her</a></li><li><b>Ny inndeling av dagen</b> – Formiddag 10–14, ettermiddag 14–17 og kveld 17–24. Du kan booke én eller flere perioder – heldag er alle tre og er fortsatt standard. Dette er en del av forslaget til sameiemøtet. <a href="dokumentasjon/regler.html#regel-1">Se her</a></li><li><b>Badehusappen på alle skjermer</b> – Fungerer fint på iPhone, Android, nettbrett og PC – også med stor tekst og mørk modus. <a href="badehusappen/">Se her</a></li><li><b>Enklere booking</b> – Velg hus og tid rett under datoen, trykk rett på en ledig tid i uka, og «Book»-knappen er alltid synlig nederst. <a href="badehusappen/">Se her</a></li><li><b>Badehusappen – prøveversjon</b> – Prøv å booke badehuset på mobilen. Ingen innlogging ennå – du velger bare huset ditt, og bookingene lagres på din egen telefon. <a href="badehusappen/">Se her</a></li><li><b>Dokumentasjon for Badehusappen</b> – Bookingregler, brukermanualer, forslag til vedtekter og hvordan løsningen er bygget. <a href="dokumentasjon/index.html">Se her</a></li><li><b>Sameiets årshjul</b> – Dugnader, badesesongen, møter og regninger gjennom året – samlet på denne siden. <a href="#arshjul">Se her</a></li></ul></div>
   </div>
 
   <h2 class="sek" id="arshjul">Sameiets årshjul</h2>
@@ -211,7 +230,7 @@
 
   <footer class="fot">
     <p>Laget av Thomas Gude Svensrud for oss i HT14. Har du rettelser eller ideer til årshjulet? Si fra til Thomas eller ta det opp på neste møte.</p>
-    <p><a href="dokumentasjon/index.html">Badehusappen</a> · <a href="dokumentasjon/vedtekter.html">Forslag til vedtekter</a> · <a href="dokumentasjon/beslutninger.html">Hva må godkjennes?</a></p>
+    <p><a href="./">Hjem</a> · <a href="badehusappen/">Badehusappen</a> · <a href="dokumentasjon/index.html">Dokumentasjon</a> · <a href="dokumentasjon/vedtekter.html">Forslag til vedtekter</a></p>
   </footer>
 </div>
 <script>
