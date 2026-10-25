@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sameiet Halden Terrasse 14 – årshjul og badehuset</title>
-<meta name="description" content="Startside for Sameiet Halden Terrasse 14: årshjul med dugnader, badehuset, møter og regninger – og dokumentasjonen for bookingløsningen til badehuset.">
+<meta name="description" content="Startside for Sameiet Halden Terrasse 14: årshjul med dugnader, badehuset, møter og regninger – og dokumentasjonen for Badehusappen.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="dokumentasjon/style.css">
@@ -47,9 +47,9 @@
   .ev-item .cat{font-size:.78rem;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:.04em}
   .nr{flex:none;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--c);color:#fff;font-weight:800;font-size:.85rem}
   .er-forslag .nr{background:#fff;color:var(--c);border:2px dashed var(--c)}
-  .tag{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:4px}
-  .tag.kilde{background:var(--ok-bg);color:var(--ok);border:1px solid #bbf7d0}
-  .tag.forslag{background:#fff7ed;color:#c2410c;border:1px dashed #fb923c}
+  .tag{display:inline;font-size:.8rem;font-style:italic;font-weight:500;margin-left:4px;color:var(--muted)}
+  .tag::before{content:"· "}
+  .tag.forslag{color:#b45309}
   .mnd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
   .mnd-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px}
   .mnd-card.naa{border:2px solid var(--brand);box-shadow:0 0 0 4px var(--brand-bg)}
@@ -72,21 +72,21 @@
 <div class="wrap">
   <div class="top">
     <div class="brandline">Sameiet Halden Terrasse 14</div>
-    <nav class="toplinks" aria-label="Snarveier"><a href="#arshjul">Årshjul</a><a href="dokumentasjon/index.html">Badehuset</a><a href="dokumentasjon/vedtekter.html">Forslag til vedtekter</a></nav>
+    <nav class="toplinks" aria-label="Snarveier"><a href="#arshjul">Årshjul</a><a href="dokumentasjon/index.html">Badehusappen</a><a href="dokumentasjon/vedtekter.html">Forslag til vedtekter</a></nav>
   </div>
 
   <header class="hero2">
     <div class="eyebrow">Hei, nabo! 👋</div>
     <h1>Velkommen til HT14</h1>
-    <p>Vi er fire hus og gode naboer, med felles uteområder og et felles badehus. Her samler vi det som skjer i løpet av året – dugnader, badesesongen, møter og regninger – og forslaget til en enkel bookingløsning for badehuset.</p>
+    <p>Vi er fire hus og gode naboer, med felles uteområder og et felles badehus. Her samler vi det som skjer i løpet av året – dugnader, badesesongen, møter og regninger – og Badehusappen, som skal gjøre det enkelt å booke badehuset.</p>
     <div class="husrad"><span class="hus a">Hus A</span><span class="hus b">Hus B</span><span class="hus c">Hus C</span><span class="hus d">Hus D</span></div>
-    <div class="callout status" style="margin-bottom:0"><p><b>Status:</b> Thomas Gude Svensrud lager dette på oppdrag fra sameiet. <b>Ingenting er godkjent av sameiet ennå.</b> Det eneste sameiet må godkjenne, er vedtektene (§ 10) og reglene for bruk av badehuset (vedlegg 1). Årshjulet viser hva vi har gjort før, og forslag til hva vi kan gjøre fast.</p></div>
+    <p>Thomas lager dette på oppdrag fra sameiet. Ingenting her er bestemt ennå – vi tar det sammen på sameiemøtet.</p>
   </header>
 
   <div class="cards">
     <a href="#arshjul"><div class="ico">🗓️</div><b>Sameiets årshjul</b><span>Hva skjer når i løpet av året?</span></a>
-    <a href="dokumentasjon/index.html"><div class="ico">🏖️</div><b>Badehuset – booking</b><span>Dokumentasjonen for den planlagte bookingløsningen.</span></a>
-    <a href="dokumentasjon/vedtekter.html"><div class="ico">📜</div><b>Forslag til vedtekter</b><span>§ 10 og reglene for badehuset – ikke godkjent ennå.</span></a>
+    <a href="dokumentasjon/index.html"><div class="ico">🏖️</div><b>Badehusappen</b><span>Slik skal vi booke badehuset – på mobilen.</span></a>
+    <a href="dokumentasjon/vedtekter.html"><div class="ico">📜</div><b>Forslag til vedtekter</b><span>§ 10 og reglene for badehuset – tar vi på sameiemøtet.</span></a>
     <a href="dokumentasjon/regler.html#slik-endrer-vi-reglene"><div class="ico">🔁</div><b>Slik endrer vi reglene</b><span>Forslag til en enkel prosess, en gang i året.</span></a>
   </div>
 
@@ -169,17 +169,17 @@
 </svg>
       <ul class="legend"><li><span class="sw" style="background:#16a34a"></span>Dugnad og nabofest</li><li><span class="sw" style="background:#0891b2"></span>Badehuset</li><li><span class="sw" style="background:#7c3aed"></span>Møter i sameiet</li><li><span class="sw" style="background:#d97706"></span>Regninger</li><li><span class="sw solid"></span>Heltrukket = kjent fra tidligere år</li><li><span class="sw dashed"></span>Stiplet = forslag – avklares</li></ul>
     </div>
-    <ol class="evlist" aria-label="Aktiviteter i årshjulet"><li class="ev-item" style="--c:#0891b2;--bg:#cffafe"><span class="nr">1</span><div><b>Vi booker badehuset for sommeren</b> <span class="when">januar–februar</span><br><span class="cat">Badehuset</span> <span class="tag kilde">Kjent fra tidligere år</span><p>Sommerbookingene har tidligere blitt lagt inn i januar–februar. Med de foreslåtte reglene kan man booke tre måneder frem, altså juni fra 1. mars.</p></div></li><li class="ev-item er-forslag" style="--c:#7c3aed;--bg:#ede9fe"><span class="nr">2</span><div><b>Kort vårmøte: planlegge dugnad og badesesong</b> <span class="when">mars</span><br><span class="cat">Møter i sameiet</span> <span class="tag forslag">Forslag – avklares</span><p>Forslag – avklares. Et kort møte før våren, gjerne sammen med planleggingen av dugnaden.</p></div></li><li class="ev-item" style="--c:#16a34a;--bg:#dcfce7"><span class="nr">3</span><div><b>Vårdugnad med grilling</b> <span class="when">slutten av april – mai</span><br><span class="cat">Dugnad og nabofest</span> <span class="tag kilde">Kjent fra tidligere år</span><p>Vi tar dugnad og rydder ute, og avslutter med grilling sammen. Dato avtales hvert år.</p></div></li><li class="ev-item" style="--c:#0891b2;--bg:#cffafe"><span class="nr">4</span><div><b>Badehuset gjøres klart og åpner for sesongen</b> <span class="when">april–mai</span><br><span class="cat">Badehuset</span> <span class="tag kilde">Kjent fra tidligere år</span><p>Badehuset vaskes og gjøres klart, gjerne på vårdugnaden. Første bookinger har vært i slutten av april / starten av mai. Fast åpningsdag: forslag – avklares.</p></div></li><li class="ev-item er-forslag" style="--c:#d97706;--bg:#fef3c7"><span class="nr">5</span><div><b>Oppgjør av utlegg etter dugnaden</b> <span class="when">mai</span><br><span class="cat">Regninger</span> <span class="tag forslag">Forslag – avklares</span><p>Forslag – avklares. Den som har lagt ut for noe til dugnaden, får pengene tilbake og utgiftene deles.</p></div></li><li class="ev-item er-forslag" style="--c:#0891b2;--bg:#cffafe"><span class="nr">6</span><div><b>Sommerregler for booking</b> <span class="when">juni–august</span><br><span class="cat">Badehuset</span> <span class="tag forslag">Forslag – avklares</span><p>Forslag – ikke godkjent av sameiet: maks én fredag, én lørdag og én søndag per hus per måned, og bare én av dagene i samme helg (vedlegg 1 punkt 6–7).</p></div></li><li class="ev-item er-forslag" style="--c:#0891b2;--bg:#cffafe"><span class="nr">7</span><div><b>Badehuset stenges for vinteren</b> <span class="when">september</span><br><span class="cat">Badehuset</span> <span class="tag forslag">Forslag – avklares</span><p>Forslag – avklares. Badesesongen har vart fra mai til ut i september. Ingen fast stengedato er avtalt.</p></div></li><li class="ev-item er-forslag" style="--c:#16a34a;--bg:#dcfce7"><span class="nr">8</span><div><b>Høstdugnad med nabofest</b> <span class="when">september–oktober</span><br><span class="cat">Dugnad og nabofest</span> <span class="tag forslag">Forslag – avklares</span><p>Forslag – avklares. Rydde før vinteren og avslutte sesongen med en nabofest.</p></div></li><li class="ev-item er-forslag" style="--c:#7c3aed;--bg:#ede9fe"><span class="nr">9</span><div><b>Sameiemøte etter sommeren</b> <span class="when">oktober–november</span><br><span class="cat">Møter i sameiet</span> <span class="tag forslag">Forslag – avklares</span><p>Forslag – avklares: minst ett møte i året etter sommeren, med fast punkt «Badehuset – regler og erfaringer». Neste møte er foreslått torsdag 12. november 2026 (ikke bekreftet).</p></div></li><li class="ev-item" style="--c:#d97706;--bg:#fef3c7"><span class="nr">10</span><div><b>Regning for snømåking for vinteren</b> <span class="when">oktober</span><br><span class="cat">Regninger</span> <span class="tag kilde">Kjent fra tidligere år</span><p>Regningen for snømåking for sesongen har kommet i oktober, og deles på husene.</p></div></li></ol>
+    <ol class="evlist" aria-label="Aktiviteter i årshjulet"><li class="ev-item" style="--c:#0891b2;--bg:#cffafe"><span class="nr">1</span><div><b>Vi booker badehuset for sommeren</b> <span class="when">januar–februar</span><br><span class="cat">Badehuset</span> <span class="tag kilde">kjent fra tidligere år</span><p>Sommerbookingene har tidligere blitt lagt inn i januar–februar. Med de foreslåtte reglene kan man booke tre måneder frem, altså juni fra 1. mars.</p></div></li><li class="ev-item er-forslag" style="--c:#7c3aed;--bg:#ede9fe"><span class="nr">2</span><div><b>Kort vårmøte: planlegge dugnad og badesesong</b> <span class="when">mars</span><br><span class="cat">Møter i sameiet</span> <span class="tag forslag">forslag – avklares</span><p>Forslag – avklares. Et kort møte før våren, gjerne sammen med planleggingen av dugnaden.</p></div></li><li class="ev-item" style="--c:#16a34a;--bg:#dcfce7"><span class="nr">3</span><div><b>Vårdugnad med grilling</b> <span class="when">slutten av april – mai</span><br><span class="cat">Dugnad og nabofest</span> <span class="tag kilde">kjent fra tidligere år</span><p>Vi tar dugnad og rydder ute, og avslutter med grilling sammen. Dato avtales hvert år.</p></div></li><li class="ev-item" style="--c:#0891b2;--bg:#cffafe"><span class="nr">4</span><div><b>Badehuset gjøres klart og åpner for sesongen</b> <span class="when">april–mai</span><br><span class="cat">Badehuset</span> <span class="tag kilde">kjent fra tidligere år</span><p>Badehuset vaskes og gjøres klart, gjerne på vårdugnaden. Første bookinger har vært i slutten av april / starten av mai. Fast åpningsdag: forslag – avklares.</p></div></li><li class="ev-item er-forslag" style="--c:#d97706;--bg:#fef3c7"><span class="nr">5</span><div><b>Oppgjør av utlegg etter dugnaden</b> <span class="when">mai</span><br><span class="cat">Regninger</span> <span class="tag forslag">forslag – avklares</span><p>Forslag – avklares. Den som har lagt ut for noe til dugnaden, får pengene tilbake og utgiftene deles.</p></div></li><li class="ev-item er-forslag" style="--c:#0891b2;--bg:#cffafe"><span class="nr">6</span><div><b>Sommerregler for booking</b> <span class="when">juni–august</span><br><span class="cat">Badehuset</span> <span class="tag forslag">forslag – avklares</span><p>Forslag: maks én fredag, én lørdag og én søndag per hus per måned, og bare én av dagene i samme helg (vedlegg 1 punkt 6–7).</p></div></li><li class="ev-item er-forslag" style="--c:#0891b2;--bg:#cffafe"><span class="nr">7</span><div><b>Badehuset stenges for vinteren</b> <span class="when">september</span><br><span class="cat">Badehuset</span> <span class="tag forslag">forslag – avklares</span><p>Forslag – avklares. Badesesongen har vart fra mai til ut i september. Ingen fast stengedato er avtalt.</p></div></li><li class="ev-item er-forslag" style="--c:#16a34a;--bg:#dcfce7"><span class="nr">8</span><div><b>Høstdugnad med nabofest</b> <span class="when">september–oktober</span><br><span class="cat">Dugnad og nabofest</span> <span class="tag forslag">forslag – avklares</span><p>Forslag – avklares. Rydde før vinteren og avslutte sesongen med en nabofest.</p></div></li><li class="ev-item er-forslag" style="--c:#7c3aed;--bg:#ede9fe"><span class="nr">9</span><div><b>Sameiemøte etter sommeren</b> <span class="when">oktober–november</span><br><span class="cat">Møter i sameiet</span> <span class="tag forslag">forslag – avklares</span><p>Forslag – avklares: minst ett møte i året etter sommeren, med fast punkt «Badehuset – regler og erfaringer». Neste møte er foreslått torsdag 12. november 2026 (ikke bekreftet).</p></div></li><li class="ev-item" style="--c:#d97706;--bg:#fef3c7"><span class="nr">10</span><div><b>Regning for snømåking for vinteren</b> <span class="when">oktober</span><br><span class="cat">Regninger</span> <span class="tag kilde">kjent fra tidligere år</span><p>Regningen for snømåking for sesongen har kommet i oktober, og deles på husene.</p></div></li></ol>
   </div>
 
   <div class="agenda">
-    <h3>📌 Fast punkt på møtene: «Badehuset – regler og erfaringer» <span class="tag forslag">Forslag</span></h3>
+    <h3>📌 Forslag til fast punkt på møtene: «Badehuset – regler og erfaringer»</h3>
     <p style="margin:0">Minst én gang i året – gjerne etter sommeren – snakker vi om hvordan badehuset har fungert. Alle kan foreslå endringer når som helst; Thomas eller en administrator samler forslagene til møtet. Endringer i reglene bestemmes med vanlig flertall. Neste møte er foreslått <b>torsdag 12. november 2026</b> (ikke bekreftet). Les mer i <a href="dokumentasjon/regler.html#slik-endrer-vi-reglene">Slik endrer vi reglene</a>.</p>
   </div>
 
   <div class="avklares">
     <h3>❔ Tidspunkt avklares</h3>
-    <p style="margin:0">Noen ting vet vi ikke tidspunktet for ennå, og de står derfor ikke i hjulet: <b>forsikring</b> for sameiet og badehuset, og eventuelle <b>andre faste regninger</b>. Når vi vet når de kommer, legger vi dem inn. <span class="tag forslag">Forslag – avklares</span></p>
+    <p style="margin:0">Noen ting vet vi ikke tidspunktet for ennå, og de står derfor ikke i hjulet: <b>forsikring</b> for sameiet og badehuset, og eventuelle <b>andre faste regninger</b>. Når vi vet når de kommer, legger vi dem inn.</p>
   </div>
 
   <h2 class="sek">Måned for måned</h2>
@@ -209,8 +209,8 @@
   </tbody></table></div>
 
   <footer class="fot">
-    <p>Laget av Thomas Gude Svensrud på oppdrag fra sameiet – <b>ingenting er godkjent ennå</b>. Har du rettelser eller ideer til årshjulet? Si fra til Thomas eller ta det opp på neste møte.</p>
-    <p><a href="dokumentasjon/index.html">Dokumentasjon for badehuset</a> · <a href="dokumentasjon/vedtekter.html">Forslag til vedtekter</a> · <a href="dokumentasjon/beslutninger.html">Hva må godkjennes?</a></p>
+    <p>Laget av Thomas Gude Svensrud for oss i HT14. Har du rettelser eller ideer til årshjulet? Si fra til Thomas eller ta det opp på neste møte.</p>
+    <p><a href="dokumentasjon/index.html">Badehusappen</a> · <a href="dokumentasjon/vedtekter.html">Forslag til vedtekter</a> · <a href="dokumentasjon/beslutninger.html">Hva må godkjennes?</a></p>
   </footer>
 </div>
 <script>

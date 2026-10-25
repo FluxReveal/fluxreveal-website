@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hva må godkjennes? – Badehus Booking System</title>
-<meta name="description" content="Hva sameiet må godkjenne (bare vedtektene § 10 og reglene for badehuset) og hvilke praktiske og tekniske valg Thomas gjør på oppdrag fra sameiet – med logg.">
+<title>Hva må godkjennes? – Badehusappen</title>
+<meta name="description" content="Hva sameiet må godkjenne (bare vedtektene § 10 og reglene for badehuset) og hvilke praktiske og tekniske valg Thomas gjør for Badehusappen – med logg.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
@@ -15,11 +15,11 @@
 <a href="#innhold" class="chip" style="position:absolute;left:-9999px" onfocus="this.style.left='8px'">Hopp til innhold</a>
 <header class="topbar">
   <button class="hamburger" aria-label="Åpne meny" aria-expanded="false" aria-controls="sidemeny"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-  <b>Badehus · Dokumentasjon</b>
+  <b>Badehusappen · Dokumentasjon</b>
 </header>
 <div class="scrim"></div>
 <nav class="sidebar" id="sidemeny" aria-label="Hovedmeny">
-  <a class="brand" href="index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Badehus Booking</b><small>Sameiet Halden Terrasse 14</small></span></a>
+  <a class="brand" href="index.html"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#0891b2"/><path d="M10 25 24 13l14 12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="24" width="18" height="12" rx="2" fill="#fff"/><path d="M8 40c3-2 5-2 8 0s5 2 8 0 5-2 8 0 5 2 8 0" fill="none" stroke="#a5f3fc" stroke-width="2.4" stroke-linecap="round"/><circle cx="20" cy="30" r="2" fill="#2563eb"/><circle cx="28" cy="30" r="2" fill="#16a34a"/></svg><span><b>Badehusappen</b><small>Sameiet Halden Terrasse 14</small></span></a>
   <div class="search" role="search"><svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9cc3d1" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
     <input id="sok" type="search" placeholder="Søk i dokumentasjonen  ( / )" aria-label="Søk i dokumentasjonen" autocomplete="off">
     <ul id="sok-resultat" class="search-results" aria-live="polite"></ul>
@@ -45,7 +45,7 @@
   </ul>
   <div class="side-foot">
     <div class="legend-mini"><span style="background:var(--hus-a)">A</span><span style="background:var(--hus-b)">B</span><span style="background:var(--hus-c)">C</span><span style="background:var(--hus-d)">D</span></div>
-    Planlagt løsning · v0.4 · 25.10.2026<br>Laget av Thomas på oppdrag fra sameiet – ingenting er godkjent ennå.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
+    Laget av Thomas for oss i HT14.<br><a href="../index.html" style="color:#9cd3e2">← Startsiden for HT14</a>
   </div>
 </nav>
 <main class="main" id="innhold">
@@ -54,16 +54,11 @@
 <section class="hero">
   <div class="eyebrow">Styring · Hva må godkjennes?</div>
   <h1>Hva må godkjennes – og hva er bare valgt?</h1>
-  <p>Thomas Gude Svensrud lager bookingløsningen på oppdrag fra sameiet. <b>Ingenting er godkjent av sameiet ennå.</b> Det er bare to ting sameiet må godkjenne: <b>vedtektene (§ 10)</b> og <b>reglene for bruk av badehuset (vedlegg 1)</b>. Det tekniske og praktiske ordner Thomas.</p>
-  <div class="meta"><span class="chip draft">v0.4 · 25.10.2026</span><span class="chip regel">Ingenting er godkjent av sameiet ennå</span><span class="chip teknisk">Tekniske valg: Thomas</span></div>
+  <p>Thomas lager Badehusappen på oppdrag fra oss i sameiet. Det er bare to ting vi må bli enige om sammen: <b>vedtektene (§ 10)</b> og <b>reglene for bruk av badehuset (vedlegg 1)</b>. Det tekniske og praktiske ordner Thomas, og skriver det ned her så alle kan se det.</p>
+  <div class="meta"><span class="chip">⏱ Ca. 7 min lesetid</span></div>
 </section>
 
-<div class="grid c4">
-  <div class="card"><div class="stat" style="color:#ea580c">2</div>ting trenger godkjenning: § 10 og vedlegg 1</div>
-  <div class="card"><div class="stat" style="color:#ea580c">0</div>er godkjent av sameiet ennå</div>
-  <div class="card"><div class="stat" style="color:#0284c7">⚙</div>tekniske og praktiske valg gjør Thomas</div>
-  <div class="card"><div class="stat" style="font-size:1.25rem">12.11.2026</div>neste møte – <i>foreslått</i>, se <a href="../index.html#arshjul">årshjulet</a></div>
-</div>
+<p>Kort fortalt: to ting skal opp på sameiemøtet, og ingen av dem er bestemt ennå. Neste møte er foreslått <b>torsdag 12. november 2026</b> (se <a href="../index.html#arshjul">årshjulet</a>).</p>
 
 <h2 id="trenger-dette-godkjenning">Trenger dette godkjenning?</h2>
 <figure>
@@ -85,119 +80,56 @@ flowchart TD
 <figcaption>Bare vedtektene og reglene for badehuset må opp i sameiet. Hvordan reglene endres senere: se <a href="regler.html#slik-endrer-vi-reglene">Slik endrer vi reglene</a>.</figcaption>
 </figure>
 
-<h2 id="trenger-godkjenning-av-sameiet">Trenger godkjenning av sameiet</h2>
-<div class="grid c2">
-  <a class="card" href="vedtekter.html#paragraf-10" style="border-top:6px solid #ea580c"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Vedtektene § 10 – Bruk av badehuset</b><span><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></span></div><p>Den nye paragrafen i vedtektene. Endringer i vedtektene krever 3 av 4 stemmer (§ 13).</p><span class="go">Les forslaget →</span></a>
-  <a class="card" href="vedtekter.html#vedlegg-1" style="border-top:6px solid #ea580c"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Vedlegg 1 – Regler for bruk av badehuset</b><span><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></span></div><p>Reglene for booking, sommerkvoter, avbestilling, innsjekk, statistikk og personvern. Bestemmes og endres med vanlig flertall (§ 6).</p><span class="go">Les forslaget →</span></a>
-</div>
+<h2 id="dette-tar-vi-sammen-pa-sameiemotet">Dette tar vi sammen på sameiemøtet</h2>
+<ul>
+  <li><a href="vedtekter.html#paragraf-10"><b>Vedtektene § 10 – Bruk av badehuset</b></a>: den nye paragrafen i vedtektene. Endringer i vedtektene krever 3 av 4 stemmer (§ 13).</li>
+  <li><a href="vedtekter.html#vedlegg-1"><b>Vedlegg 1 – Regler for bruk av badehuset</b></a>: booking, sommerkvoter, avbestilling, innsjekk, statistikk og personvern. Bestemmes og endres med vanlig flertall (§ 6).</li>
+</ul>
 
 <h3 id="regelsporsmalene-thomas-sine-forslag">Regelspørsmålene – Thomas sine forslag</h3>
-<p>Da reglene ble skrevet, dukket det opp noen spørsmål. Her er forslagene til svar. De er tatt inn i forslaget til vedlegg 1, og sameiet bestemmer.</p>
+<p>Da reglene ble skrevet, dukket det opp noen spørsmål. Her er forslagene til svar. De står i forslaget til vedlegg 1, og vi bestemmer dem sammen.</p>
+<ul class="plain-list">
+  <li><b>Å1 · 7-dagersregel og kvote.</b> Teller en booking gjort mindre enn 7 dager før i sommerkvoten, og gjelder helgeregelen da? <i>Forslag:</i> Nei – en booking gjort &lt; 7 dager før teller <b>ikke</b> i kvoten, og helgeregelen gjelder heller ikke. <small>(Vedlegg 1 punkt 7 · <code>shortNoticeCountsTowardQuota</code> · <a href="regler.html#regel-5">Regler ⑤</a>)</small></li>
+  <li><b>Å2 · Innsjekk uten reservasjon.</b> Hvordan telles det når noen bare går ned og sjekker inn? <i>Forslag:</i> Det teller som bruk i statistikken, men ikke i kvoten (det skjer jo alltid &lt; 7 dager før). <small>(Vedlegg 1 punkt 4 · <code>spontaneousCheckinCountsTowardQuota</code> · <a href="regler.html#innsjekk-utsjekk-og-bekreftelse">Regler: innsjekk</a>)</small></li>
+  <li><b>Å3 · Helg over to måneder.</b> Hvordan telles en helg som går over månedsskiftet (f.eks. fre 31. juli + lør 1. aug)? <i>Forslag:</i> Kvoten følger måneden datoen hører til; helgeregelen følger helgen (fre–søn). <small>(Vedlegg 1 punkt 6 · <code>summer.quotaMonthBy</code>, <code>summer.weekendBy</code> · <a href="regler.html#helg-over-to-maneder">Regler: spesialtilfeller</a>)</small></li>
+  <li><b>Å4 · Utenom sommeren (sep–mai).</b> Gjelder det noen begrensninger utenom juni–august? <i>Forslag:</i> Nei, bare at man kan booke maks 3 måneder frem. <small>(Vedlegg 1 punkt 5 · <code>offSeason</code>)</small></li>
+  <li><b>Å5 · 3 måneder frem.</b> Hvordan regnes «maks 3 måneder frem i tid»? <i>Forslag:</i> Fra i dag til samme dato tre måneder senere (15. april → 15. juli). <small>(Vedlegg 1 punkt 5 · <code>bookingWindow.mode</code> · <a href="regler.html#regel-2">Regler ②</a>)</small></li>
+  <li><b>Å6 · Hvem kan avbestille?</b> <i>Forslag:</i> Alle i samme hus kan avbestille husets bookinger. <small>(Vedlegg 1 punkt 2 · <code>cancelPermission</code>)</small></li>
+  <li><b>Å7 · Statistikk.</b> Hvordan telles «ikke bekreftet» og sen avbestilling? <i>Forslag:</i> «Ikke bekreftet» vises for seg og regnes ikke som bruk før noen bekrefter. Sen avbestilling teller i kvoten, men ikke som bruk. Når noen trykker «Vi brukte badehuset», regnes bookingen som gjennomført. <small>(Vedlegg 1 punkt 8–10 · <code>stats.*</code> · <a href="lld.html#statusmaskin">LLD: statusmaskin</a>)</small></li>
+  <li><b>Å9 · Personvern når noen flytter.</b> Hvordan passer «ingenting slettes» med personvern? <i>Forslag:</i> Bookinger slettes ikke. Brukeren som flytter, deaktiveres, og navnet kan byttes til f.eks. «Tidligere beboer Hus A». Huset beholdes i historikken. <small>(Vedlegg 1 punkt 11 · <code>users.json</code> (<code>anonymized</code>) · <a href="hld.html#personvern">HLD: personvern</a>)</small></li>
+  <li><b>Å10 · Klokkeslett.</b> Hva betyr 00:00, og hvilken tid gjelder? <i>Forslag:</i> 00:00 er slutten av dagen (24:00), norsk tid – også om sommeren. <small>(Vedlegg 1 punkt 1 · <code>timezone</code>, <code>periods</code> · <a href="hld.html#tid-og-status">HLD: tid og status</a>)</small></li>
+</ul>
 
-<div class="card" style="margin:14px 0;border-left:6px solid #ea580c">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å1 · 7-dagersregel og kvote</b><span><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></span></div>
-  <p style="margin:.5rem 0"><b>Spørsmål:</b> Teller en booking gjort mindre enn 7 dager før i sommerkvoten? Gjelder helgeregelen da?</p>
-  <p style="margin:.5rem 0"><b>Forslag:</b> Nei – en booking gjort &lt; 7 dager før teller <b>ikke</b> i kvoten, og helgeregelen gjelder heller ikke.</p>
-  <p style="margin:0;color:var(--muted);font-size:.9rem">Vedlegg 1 punkt 7 · <code>shortNoticeCountsTowardQuota</code> · <a href="regler.html#regel-5">Regler ⑤</a></p>
-</div>
-
-<div class="card" style="margin:14px 0;border-left:6px solid #ea580c">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å2 · Innsjekk uten reservasjon</b><span><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></span></div>
-  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvordan telles det når noen bare går ned og sjekker inn?</p>
-  <p style="margin:.5rem 0"><b>Forslag:</b> Det teller som bruk i statistikken, men ikke i kvoten (det skjer jo alltid &lt; 7 dager før).</p>
-  <p style="margin:0;color:var(--muted);font-size:.9rem">Vedlegg 1 punkt 4 · <code>spontaneousCheckinCountsTowardQuota</code> · <a href="regler.html#innsjekk-utsjekk-og-bekreftelse">Regler: innsjekk</a></p>
-</div>
-
-<div class="card" style="margin:14px 0;border-left:6px solid #ea580c">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å3 · Helg over to måneder</b><span><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></span></div>
-  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvordan telles en helg som går over månedsskiftet (f.eks. fre 31. juli + lør 1. aug)?</p>
-  <p style="margin:.5rem 0"><b>Forslag:</b> Kvoten følger måneden datoen hører til; helgeregelen følger helgen (fre–søn).</p>
-  <p style="margin:0;color:var(--muted);font-size:.9rem">Vedlegg 1 punkt 6 · <code>summer.quotaMonthBy</code>, <code>summer.weekendBy</code> · <a href="regler.html#helg-over-to-maneder">Regler: spesialtilfeller</a></p>
-</div>
-
-<div class="card" style="margin:14px 0;border-left:6px solid #ea580c">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å4 · Utenom sommeren (sep–mai)</b><span><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></span></div>
-  <p style="margin:.5rem 0"><b>Spørsmål:</b> Gjelder det noen begrensninger utenom juni–august?</p>
-  <p style="margin:.5rem 0"><b>Forslag:</b> Nei, bare at man kan booke maks 3 måneder frem.</p>
-  <p style="margin:0;color:var(--muted);font-size:.9rem">Vedlegg 1 punkt 5 · <code>offSeason</code></p>
-</div>
-
-<div class="card" style="margin:14px 0;border-left:6px solid #ea580c">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å5 · 3 måneder frem</b><span><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></span></div>
-  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvordan regnes «maks 3 måneder frem i tid»?</p>
-  <p style="margin:.5rem 0"><b>Forslag:</b> Fra i dag til samme dato tre måneder senere (15. april → 15. juli).</p>
-  <p style="margin:0;color:var(--muted);font-size:.9rem">Vedlegg 1 punkt 5 · <code>bookingWindow.mode</code> · <a href="regler.html#regel-2">Regler ②</a></p>
-</div>
-
-<div class="card" style="margin:14px 0;border-left:6px solid #ea580c">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å6 · Hvem kan avbestille?</b><span><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></span></div>
-  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvem kan avbestille en booking?</p>
-  <p style="margin:.5rem 0"><b>Forslag:</b> Alle i samme hus kan avbestille husets bookinger.</p>
-  <p style="margin:0;color:var(--muted);font-size:.9rem">Vedlegg 1 punkt 2 · <code>cancelPermission</code></p>
-</div>
-
-<div class="card" style="margin:14px 0;border-left:6px solid #ea580c">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å7 · Statistikk</b><span><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></span></div>
-  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvordan telles «ikke bekreftet» og sen avbestilling i statistikken?</p>
-  <p style="margin:.5rem 0"><b>Forslag:</b> «Ikke bekreftet» vises for seg og regnes ikke som bruk før noen bekrefter. Sen avbestilling teller i kvoten, men ikke som bruk. Når noen trykker «Vi brukte badehuset», regnes bookingen som gjennomført.</p>
-  <p style="margin:0;color:var(--muted);font-size:.9rem">Vedlegg 1 punkt 8–10 · <code>stats.*</code> · <a href="lld.html#statusmaskin">LLD: statusmaskin</a></p>
-</div>
-
-<div class="card" style="margin:14px 0;border-left:6px solid #ea580c">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å9 · Personvern når noen flytter</b><span><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></span></div>
-  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hvordan passer «ingenting slettes» med personvern når noen flytter?</p>
-  <p style="margin:.5rem 0"><b>Forslag:</b> Bookinger slettes ikke. Brukeren som flytter, deaktiveres, og navnet kan byttes til f.eks. «Tidligere beboer Hus A». Huset beholdes i historikken.</p>
-  <p style="margin:0;color:var(--muted);font-size:.9rem">Vedlegg 1 punkt 11 · <code>users.json</code> (<code>anonymized</code>) · <a href="hld.html#personvern">HLD: personvern</a></p>
-</div>
-
-<div class="card" style="margin:14px 0;border-left:6px solid #ea580c">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å10 · Klokkeslett</b><span><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></span></div>
-  <p style="margin:.5rem 0"><b>Spørsmål:</b> Hva betyr 00:00, og hvilken tid gjelder?</p>
-  <p style="margin:.5rem 0"><b>Forslag:</b> 00:00 er slutten av dagen (24:00), norsk tid – også om sommeren.</p>
-  <p style="margin:0;color:var(--muted);font-size:.9rem">Vedlegg 1 punkt 1 · <code>timezone</code>, <code>periods</code> · <a href="hld.html#tid-og-status">HLD: tid og status</a></p>
-</div>
-
-<h2 id="praktiske-og-tekniske-valg-thomas-pa-oppdrag">Praktiske og tekniske valg (Thomas, på oppdrag)</h2>
-<p>Dette trenger ikke godkjenning av sameiet. Thomas velger det som er enklest og billigst, og skriver det ned her så alle kan se det – og så andre kan ta over senere.</p>
-<div class="card" style="margin:14px 0;border-left:6px solid #0284c7">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Arkitektur</b><span><span class="badge-teknisk">Teknisk valg (Thomas)</span></span></div>
-  <p style="margin:.5rem 0">GitHub Pages (nettsiden) + én Cloudflare Worker (innlogging, regelsjekk og lagring) + et privat GitHub-lager for dataene (JSON/CSV, med Git som historikk) + GitHub Actions (nattlig arkiv og backup). Alternativet «alt i GitHub, med egen GitHub-konto for hver nabo» er valgt bort.</p>
-  <p style="margin:0;color:var(--muted);font-size:.9rem">Se <a href="hld.html">HLD</a>.</p>
-</div>
-<div class="card" style="margin:14px 0;border-left:6px solid #0284c7">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Hvem eier kontoene</b><span><span class="badge-teknisk">Teknisk valg (Thomas)</span></span></div>
-  <p style="margin:.5rem 0">Thomas eier GitHub- og Cloudflare-kontoene via FluxReveal-kontoene sine. Dataene tilhører sameiet, og alt kan flyttes til sameiet ved behov – se <a href="adminmanual.html#overforing-til-sameiet-ved-behov">Overføring til sameiet ved behov</a>.</p>
-</div>
-<div class="card" style="margin:14px 0;border-left:6px solid #0284c7">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Adresse</b><span><span class="badge-teknisk">Teknisk valg (Thomas)</span></span></div>
-  <p style="margin:.5rem 0"><a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a> (dokumentasjonen på <a href="https://fluxreveal.com/HT14/dokumentasjon/">fluxreveal.com/HT14/dokumentasjon/</a>). Workeren tar bare imot kall fra <code>https://fluxreveal.com</code>.</p>
-</div>
-<div class="card" style="margin:14px 0;border-left:6px solid #0284c7">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Å8 · Retting gjøres som merke, ikke egen status</b><span><span class="badge-teknisk">Teknisk valg (Thomas)</span></span></div>
-  <p style="margin:.5rem 0">Når en administrator retter noe, lagres det som en hendelse i loggen og et merke (<code>corrected: true</code>). Statusen viser det som faktisk skjedde.</p>
-  <p style="margin:0;color:var(--muted);font-size:.9rem"><a href="lld.html#statusmaskin">LLD: statusmaskin</a></p>
-</div>
-<div class="card" style="margin:14px 0;border-left:6px solid #f59e0b">
-  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>Detaljdesign</b><span><span class="badge-forslag">Forslag – detaljdesign</span></span></div>
-  <p style="margin:.5rem 0">Filnavn, feltnavn, endepunkter, feilmeldinger, CSV-oppsett og den nattlige jobben i <a href="lld.html">LLD</a> kan justeres når løsningen bygges. Varsler på e-post/SMS er ikke med i første versjon.</p>
-</div>
+<h2 id="praktiske-og-tekniske-valg-thomas">Praktiske og tekniske valg (Thomas)</h2>
+<p>Dette trenger ikke godkjenning av sameiet. Thomas velger det som er enklest, tryggest og billigst, og skriver det ned her så alle kan se det – og så andre kan ta over senere.</p>
+<ul class="plain-list">
+  <li><b>Arkitektur.</b> GitHub Pages (nettsiden) + én Cloudflare Worker (innlogging, regelsjekk og lagring) + et privat GitHub-lager for dataene (JSON/CSV, med Git som historikk) + GitHub Actions (nattlig arkiv og backup). Alternativet «alt i GitHub, med egen GitHub-konto for hver nabo» er valgt bort. Se <a href="hld.html">HLD</a>.</li>
+  <li id="innlogging"><b>Innlogging: egen innlogging med e-post og passord.</b> Workeren sjekker passordet (lagret som PBKDF2-hash i det private data-lageret). Cloudflare Access er valgt bort fordi en Access-innlogging varer maks 30 dager, og fordi den bruker engangskoder på e-post – de kan ikke lagres på mobilen, så man må hente en ny kode hver gang. Med vanlig e-post og passord kan iPhone og Android huske passordet og fylle det inn med Face ID eller fingeravtrykk. Se <a href="hld.html#innlogging-og-okter">HLD: innlogging</a> og <a href="lld.html#innlogging-okter-og-pwa">LLD</a>.</li>
+  <li><b>Lang innlogging på mobilen.</b> Man holder seg innlogget i omtrent ett år (365 dager), og fristen fornyes når man bruker Badehusappen. En administrator kan logge ut en mistet mobil. Etter flere feil passord i strekk blir det en kort pause før man kan prøve igjen.</li>
+  <li><b>Badehusappen på Hjem-skjermen.</b> Badehusappen kan legges på Hjem-skjermen og åpner da rett i kalenderen, uten adressefelt – som en vanlig app. Kalenderen er laget for mobil først: ukevisning, store knapper og trykk på en dag for å booke.</li>
+  <li><b>Senere idé: passkeys.</b> På sikt kan de som vil, slå på passkey (logge inn med Face ID uten passord). Det er ikke med nå.</li>
+  <li><b>Hvem eier kontoene.</b> Thomas eier GitHub- og Cloudflare-kontoene via FluxReveal-kontoene sine. Dataene tilhører sameiet, og alt kan flyttes til sameiet ved behov – se <a href="adminmanual.html#overforing-til-sameiet-ved-behov">Overføring til sameiet ved behov</a>.</li>
+  <li><b>Adresse.</b> <a href="https://fluxreveal.com/HT14/">fluxreveal.com/HT14/</a> (dokumentasjonen på <a href="https://fluxreveal.com/HT14/dokumentasjon/">fluxreveal.com/HT14/dokumentasjon/</a>). Workeren tar bare imot kall fra <code>https://fluxreveal.com</code>.</li>
+  <li><b>Navnet.</b> Bookingløsningen for badehuset heter <b>Badehusappen</b>.</li>
+  <li><b>Å8 · Retting gjøres som merke, ikke egen status.</b> Når en administrator retter noe, lagres det som en hendelse i loggen og et merke (<code>corrected: true</code>). Statusen viser det som faktisk skjedde. <small>(<a href="lld.html#statusmaskin">LLD: statusmaskin</a>)</small></li>
+  <li><b>Detaljdesign.</b> Filnavn, feltnavn, endepunkter, feilmeldinger, CSV-oppsett og den nattlige jobben i <a href="lld.html">LLD</a> kan justeres når Badehusappen bygges. Varsler på e-post/SMS er ikke med i starten.</li>
+</ul>
 
 <h2 id="logg">Logg</h2>
-<p>Her skriver vi ned hva som er bestemt eller valgt – med dato, hvem og hva slags beslutning det er. Når sameiet har godkjent noe, føres det her med dato og hvordan det ble bestemt.</p>
-<div class="table-wrap"><table><thead><tr><th>Dato</th><th>Hva</th><th>Hvem</th><th>Type</th></tr></thead><tbody>
-<tr><td>25.10.2026</td><td>Ønsker og krav til bookingløsningen skrevet ned (roller, kalender, bookingtyper, statuser, sommerregler, avbestilling, statistikk, backup, dokumentasjon).</td><td>Thomas Gude Svensrud</td><td><span class="badge">Utgangspunkt</span></td></tr>
-<tr><td>25.10.2026</td><td>Ønsket teknologi: GitHub Pages, GitHub Actions, HTML, CSS, JavaScript, JSON, CSV. Ingen database, ingen server, ingen løpende kostnader.</td><td>Thomas Gude Svensrud</td><td><span class="badge-teknisk">Teknisk valg (Thomas)</span></td></tr>
-<tr><td>25.10.2026</td><td>Forslag til arkitektur (med Cloudflare Worker og privat datalager) og ti åpne regelspørsmål med forslag til svar.</td><td>Assistent</td><td><span class="badge">Forslag</span></td></tr>
-<tr><td>25.10.2026</td><td>Dokumentasjonen v0.2 publisert.</td><td>–</td><td><span class="badge">Dokumentasjon</span></td></tr>
-<tr><td>25.10.2026</td><td>Arkitekturen valgt.</td><td>Thomas Gude Svensrud</td><td><span class="badge-teknisk">Teknisk valg (Thomas)</span></td></tr>
-<tr><td>25.10.2026</td><td>Thomas sine svar på de ti regelspørsmålene lagt inn som forslag (og at «ikke bekreftet» blir «gjennomført» når noen bekrefter). <i>Tidligere merket «vedtatt» – det var Thomas sitt valg, ikke en godkjenning i sameiet.</i></td><td>Thomas Gude Svensrud</td><td><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></td></tr>
-<tr><td>25.10.2026</td><td>Kontoer: Thomas eier GitHub- og Cloudflare-kontoene via FluxReveal-kontoene sine. (Overføring til sameiet ved behov: se <a href="adminmanual.html#overforing-til-sameiet-ved-behov">administratormanualen</a>.)</td><td>Thomas Gude Svensrud</td><td><span class="badge-teknisk">Teknisk valg (Thomas)</span></td></tr>
-<tr><td>25.10.2026</td><td>Adresse: løsningen skulle ligge på fluxreveal.com/Badehus/ (dokumentasjonen på fluxreveal.com/Badehus/dokumentasjon/). <i>Senere endret til /HT14/, se under.</i> Workerens CORS-origin er https://fluxreveal.com.</td><td>Thomas Gude Svensrud</td><td><span class="badge-teknisk">Teknisk valg (Thomas)</span></td></tr>
-<tr><td>25.10.2026</td><td>Dokumentasjonen v0.3 publisert.</td><td>–</td><td><span class="badge">Dokumentasjon</span></td></tr>
-<tr><td>25.10.2026</td><td>Forslag til ny § 10 og vedlegg 1 (regler for badehuset) lagt frem til drøfting med naboene. Se <a href="vedtekter.html">Forslag til vedtekter</a>.</td><td>Thomas Gude Svensrud</td><td><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></td></tr>
-<tr><td>25.10.2026</td><td>Mappen og adressen endret fra /Badehus/ til /HT14/ (fluxreveal.com/HT14/). Dokumentasjonen ligger nå på fluxreveal.com/HT14/dokumentasjon/.</td><td>Thomas Gude Svensrud</td><td><span class="badge-teknisk">Teknisk valg (Thomas)</span></td></tr>
-<tr><td>25.10.2026</td><td>Dokumentasjonen v0.4: vennligere språk, tydelig status (ingenting er godkjent; bare vedtektene og reglene trenger godkjenning), merkene «vedtatt» byttet ut, enklere språk i forslaget til § 10 og vedlegg 1 (samme innhold), og årshjul på startsiden.</td><td>Thomas Gude Svensrud</td><td><span class="badge">Dokumentasjon</span></td></tr>
-<tr><td>25.10.2026</td><td>Forslag til hvordan vi endrer reglene, med et fast punkt «Badehuset – regler og erfaringer» på sameiets møter minst én gang i året. Se <a href="regler.html#slik-endrer-vi-reglene">Slik endrer vi reglene</a>.</td><td>Thomas Gude Svensrud</td><td><span class="badge-regel">Forslag – ikke godkjent av sameiet</span></td></tr>
+<p>Her skriver vi ned hva som er valgt eller foreslått, med dato og hvem. Når vi har bestemt noe på sameiemøtet, føres det her med dato og hvordan det ble bestemt.</p>
+<div class="table-wrap"><table><thead><tr><th>Dato</th><th>Hva</th><th>Hvem</th><th>Hva slags</th></tr></thead><tbody>
+<tr><td>25.10.2026</td><td>Ønsker og krav til Badehusappen skrevet ned (roller, kalender, bookingtyper, statuser, sommerregler, avbestilling, statistikk, backup, dokumentasjon).</td><td>Thomas Gude Svensrud</td><td>Utgangspunkt</td></tr>
+<tr><td>25.10.2026</td><td>Ønsket teknologi: GitHub Pages, GitHub Actions, HTML, CSS, JavaScript, JSON, CSV. Ingen database, ingen server, ingen løpende kostnader.</td><td>Thomas Gude Svensrud</td><td>Teknisk valg</td></tr>
+<tr><td>25.10.2026</td><td>Forslag til arkitektur (med Cloudflare Worker og privat datalager) og ti åpne regelspørsmål med forslag til svar.</td><td>Assistent</td><td>Forslag</td></tr>
+<tr><td>25.10.2026</td><td>Arkitekturen valgt.</td><td>Thomas Gude Svensrud</td><td>Teknisk valg</td></tr>
+<tr><td>25.10.2026</td><td>Thomas sine svar på de ti regelspørsmålene lagt inn som forslag (og at «ikke bekreftet» blir «gjennomført» når noen bekrefter).</td><td>Thomas Gude Svensrud</td><td>Forslag til sameiet</td></tr>
+<tr><td>25.10.2026</td><td>Kontoer: Thomas eier GitHub- og Cloudflare-kontoene via FluxReveal-kontoene sine. (Overføring til sameiet ved behov: se <a href="adminmanual.html#overforing-til-sameiet-ved-behov">administratormanualen</a>.)</td><td>Thomas Gude Svensrud</td><td>Teknisk valg</td></tr>
+<tr><td>25.10.2026</td><td>Forslag til ny § 10 og vedlegg 1 (regler for badehuset) lagt frem til drøfting med naboene. Se <a href="vedtekter.html">Forslag til vedtekter</a>.</td><td>Thomas Gude Svensrud</td><td>Forslag til sameiet</td></tr>
+<tr><td>25.10.2026</td><td>Adressen er fluxreveal.com/HT14/, og dokumentasjonen ligger på fluxreveal.com/HT14/dokumentasjon/. Workerens CORS-origin er https://fluxreveal.com.</td><td>Thomas Gude Svensrud</td><td>Teknisk valg</td></tr>
+<tr><td>25.10.2026</td><td>Dokumentasjonen fikk vennligere språk, enklere språk i forslaget til § 10 og vedlegg 1 (samme innhold), og et årshjul på startsiden.</td><td>Thomas Gude Svensrud</td><td>Dokumentasjon</td></tr>
+<tr><td>25.10.2026</td><td>Forslag til hvordan vi endrer reglene, med et fast punkt «Badehuset – regler og erfaringer» på sameiets møter minst én gang i året. Se <a href="regler.html#slik-endrer-vi-reglene">Slik endrer vi reglene</a>.</td><td>Thomas Gude Svensrud</td><td>Forslag til sameiet</td></tr>
+<tr><td>25.10.2026</td><td>Innlogging: egen innlogging med e-post og passord i Workeren (ikke Cloudflare Access), laget for passordhåndtering på mobilen, innlogging som varer omtrent ett år, utlogging av mistet mobil, pause etter mange feil forsøk, Hjem-skjerm som åpner kalenderen, og mobilvennlig ukekalender. Passkeys er en mulig senere idé. Se <a href="#innlogging">over</a>.</td><td>Thomas Gude Svensrud</td><td>Teknisk valg</td></tr>
+<tr><td>25.10.2026</td><td>Bookingløsningen heter <b>Badehusappen</b>. Dokumentasjonen er ryddet for versjons- og godkjenningsmerker.</td><td>Thomas Gude Svensrud</td><td>Teknisk valg</td></tr>
 <tr><td style="color:var(--muted)">–</td><td style="color:var(--muted)"><i>Neste beslutning føres her …</i></td><td></td><td></td></tr>
 </tbody></table></div>
 
@@ -205,13 +137,13 @@ flowchart TD
 <pre><code>Dato:        DD.MM.ÅÅÅÅ
 Hva:         Kort om hva som ble bestemt
 Hvem:        Sameiet (møte DD.MM) / Thomas (teknisk valg)
-Type:        Godkjent av sameiet – vanlig flertall (vedlegg 1)
-             Godkjent av sameiet – 3 av 4 (vedtektene § 10)
+Hva slags:   Bestemt av sameiet – vanlig flertall (vedlegg 1)
+             Bestemt av sameiet – 3 av 4 (vedtektene § 10)
              Teknisk valg (Thomas)
 Følger:      rules.json, sider i dokumentasjonen, beskjed til naboene</code></pre>
 
 <nav class="pagenav" aria-label="Forrige og neste side"><a class="prev" href="adminmanual.html"><small>← Forrige</small>Brukermanual – administrator</a><a class="next" href="vedtekter.html"><small>Neste →</small>Forslag til vedtekter</a></nav>
-      <p class="footer">Badehus Booking System – dokumentasjon av en <b>planlagt</b> løsning (v0.4 · 25.10.2026). Den er ikke bygget ennå. Thomas Gude Svensrud lager den på oppdrag fra sameiet, og <b>ingenting er godkjent av sameiet ennå</b>. Merkene betyr: <span class="badge-regel">Forslag – ikke godkjent av sameiet</span> = regler som sameiet skal ta stilling til · <span class="badge-teknisk">Teknisk valg (Thomas)</span> = praktiske og tekniske valg som ikke trenger godkjenning · <span class="badge-forslag">Forslag – detaljdesign</span> = detaljer som kan justeres når løsningen bygges. Alle navn er eksempler.</p>
+      <p class="footer">Badehusappen – dokumentasjon av bookingløsningen for badehuset vårt. Den er ikke bygget ennå, og alle navn i eksemplene er oppdiktet. Spørsmål eller ideer? Si fra til Thomas.</p>
     </article>
     <aside class="toc" aria-label="Innhold på denne siden"><h4>På denne siden</h4><ol></ol></aside>
   </div>
