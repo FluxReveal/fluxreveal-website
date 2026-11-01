@@ -31,6 +31,8 @@
   .pinned-tag { display: inline-block; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; color: #0f172a; background: #22d3ee; padding: 0.22rem 0.5rem; border-radius: 999px; margin-bottom: 0.5rem; }
   .post.pinned pre { color: #ffffff; border-color: rgba(34, 211, 238, 0.25); }
   .post.pinned pre .pinned-about { display: block; font-size: 0.8rem; color: var(--muted); }
+  .help { background: rgba(34, 211, 238, 0.08); border: 1px solid rgba(34, 211, 238, 0.35); border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.88rem; margin-bottom: 1.25rem; }
+  .copy-note { display: inline-block; margin-left: 0.6rem; font-size: 0.8rem; color: var(--green); }
   button.btn { border: none; cursor: pointer; font-family: inherit; line-height: inherit; margin-right: 0.4rem; }
 </style>
 </head>
@@ -38,6 +40,7 @@
 <div class="container">
   <h1>TechSignalSix – Weekly Plan</h1>
   <div class="meta" id="meta">Loading signals…</div>
+  <div class="help">Manual fallback: log in to X as @TechSignalSix, press Post to X on today's card, check the text, then Post. Pin only the Sunday roundup.</div>
   <div id="pinned" class="pinned-section"></div>
   <div id="content"></div>
 </div>
@@ -54,7 +57,9 @@ const ACCOUNT = 'TechSignalSix';
 //     Rule: no score numbers, score changes or momentum direction.
 //  3. Rewrite `why` (one short paragraph tying the week together).
 //  4. `about` is generic and can stay the same for several weeks.
-//  5. Also update DAILY_POSTS below (Monday–Friday = top 5, Saturday = light post) for the same week.
+//  5. Also update DAILY_POSTS below (Monday–Friday = top 5, Saturday = long-form big-lines post) for the same week.
+//  6. Do NOT touch postToXHtml()/buildIntent()/withFooter()/withFirstLineTag(): they guarantee the
+//     Post to X button gives the composer exactly the planned text (no "via" or extra hashtag parameters).
 //  Do not use em-dashes in the post text.
 const PINNED_POST = {
   week: '2026-W43',
@@ -103,9 +108,10 @@ function renderPinned() {
       <h2>Weekly pinned post for @${ACCOUNT}</h2>
       <pre>${escPinned(main)}${about ? `\n\n<span class="pinned-about">${escPinned(about)}</span>` : ''}</pre>
       <button type="button" class="btn" id="pinned-copy">Copy</button>
-      <a class="btn" href="${buildIntent(text)}" target="_blank" rel="noopener">Open in X</a>
-      ${counterHtml(text)}
+      ${postToXHtml(text)}
+      ${counterHtml(text, true)}
     </div>`;
+  wirePostToX(el);
   const btn = document.getElementById('pinned-copy');
   btn.addEventListener('click', async () => {
     try {
@@ -119,10 +125,43 @@ function renderPinned() {
 }
 // =================== END PINNED POST ===================
 
+// ===================== POST TO X (manual fallback) =====================
+// The intent URL carries ONLY the exact final text: no "via", "related" or "hashtags" parameters,
+// so X adds nothing (the "via" parameter is what appended "via @TechSignalSix" to W43 posts).
+const INTENT_BASE = 'https://x.com/intent/post?text=';
+const COMPOSE_URL = 'https://x.com/compose/post';
+// Above this encoded length the prefill is not considered reliable: the button then opens an
+// empty composer and relies on the clipboard copy instead.
+const MAX_INTENT_URL = 8000;
 function buildIntent(text) {
-  const params = new URLSearchParams({ text, via: ACCOUNT });
-  return `https://x.com/intent/tweet?${params.toString()}`;
+  return INTENT_BASE + encodeURIComponent(text);
 }
+function postToXHref(text) {
+  const url = buildIntent(text);
+  return url.length <= MAX_INTENT_URL ? url : COMPOSE_URL;
+}
+// Post to X: a normal link (works without JS), and on click it ALSO copies the full text
+// to the clipboard, so pasting is a fallback if the composer is empty or cut off.
+function postToXHtml(text) {
+  return `<a class="btn post-to-x" href="${escPinned(postToXHref(text))}" target="_blank" rel="noopener" data-text="${escPinned(encodeURIComponent(text))}">Post to X</a><span class="copy-note" hidden>Text copied — paste into the composer if it is empty or cut off</span>`;
+}
+function wirePostToX(root) {
+  root.querySelectorAll('a.post-to-x').forEach(a => {
+    a.addEventListener('click', () => {
+      const text = decodeURIComponent(a.dataset.text);
+      const note = a.nextElementSibling;
+      const show = msg => { if (note) { note.textContent = msg; note.hidden = false; } };
+      try {
+        navigator.clipboard.writeText(text).then(
+          () => show('Text copied — paste into the composer if it is empty or cut off'),
+          () => show('Could not copy — use the Copy button if the composer is empty'));
+      } catch (e) {
+        show('Could not copy — use the Copy button if the composer is empty');
+      }
+    });
+  });
+}
+// =================== END POST TO X ===================
 
 // X counts every URL as 23 characters
 function xLength(text) {
@@ -140,8 +179,19 @@ function counterHtml(text, longform = false) {
 // Fixed footer appended to every daily draft (Monday–Saturday)
 const DRAFT_ABOUT = 'Weekly radar of what developers actually adopt — not what gets hyped.';
 const DRAFT_HASHTAG = '#SixTraction';
+const FOOTER = `\n\n${DRAFT_ABOUT}\n${DRAFT_HASHTAG}`;
+// Adds the footer exactly once (no-op if the text already ends with it).
 function withFooter(text) {
-  return `${text}\n\n${DRAFT_ABOUT}\n${DRAFT_HASHTAG}`;
+  const t = String(text).replace(/\s+$/, '');
+  return t.endsWith(FOOTER) ? t : `${t}${FOOTER}`;
+}
+// Rule for long-form daily posts: the first line ends with " #SixTraction" (added if missing).
+function withFirstLineTag(text) {
+  const t = String(text);
+  const i = t.indexOf('\n');
+  const first = i === -1 ? t : t.slice(0, i);
+  const rest = i === -1 ? '' : t.slice(i);
+  return first.trimEnd().endsWith(DRAFT_HASHTAG) ? t : `${first.trimEnd()} ${DRAFT_HASHTAG}${rest}`;
 }
 
 // ===================== DAILY POSTS (weekly, hard-coded) =====================
@@ -149,6 +199,8 @@ function withFooter(text) {
 // Monday–Friday are long-form (X Premium, longform: true): full `text` without the footer; withFooter() adds it once.
 // Saturday = one long-form post (X Premium, longform: true) on the big lines across all themes; uses `text` instead of lead/why.
 // Each post: lead (rank + theme), a short "Why it matters", the theme link, then the fixed footer.
+// Long-form `text`: write it WITHOUT the footer; generatePosts() adds " #SixTraction" to the first line if missing
+// and withFooter() adds the footer exactly once. Every card gets Copy + Post to X (exact text, nothing added by X).
 // Rules: English, no score changes / rises / falls / week-over-week movement, no invented facts.
 // Must stay under 280 characters as X counts them (URL = 23), or 25,000 for longform posts. The counter flags overruns.
 // The theme link is taken from signals.json (absoluteUrl) when available.
@@ -179,7 +231,9 @@ function generatePosts(data = {}) {
     day: d.day,
     title: d.title,
     longform: !!d.longform,
-    text: d.text ? withFooter(d.text) : withFooter(`${d.lead}\n\n${d.why}\n\n${themeUrl(d.id, signals)}`)
+    // Long-form: first line ends with #SixTraction, footer once. Short posts: lead/why/link + footer.
+    text: d.text ? withFooter(d.longform ? withFirstLineTag(d.text) : d.text)
+                 : withFooter(`${d.lead}\n\n${d.why}\n\n${themeUrl(d.id, signals)}`)
   }));
 }
 // =================== END DAILY SPOTLIGHTS ===================
@@ -190,8 +244,8 @@ function renderPosts(posts) {
         <div class="day">${p.day}${p.longform ? ' <span class="pinned-tag" style="margin:0 0 0 0.4rem;padding:0.1rem 0.45rem;font-size:0.62rem;">Long-form</span>' : ''}</div>
         <h2>${escPinned(p.title)}</h2>
         <pre>${escPinned(p.text)}</pre>
-        ${p.longform ? `<button type="button" class="btn post-copy" data-idx="${i}">Copy</button>` : ''}
-        <a class="btn" href="${buildIntent(p.text)}" target="_blank" rel="noopener">Open in X</a>
+        <button type="button" class="btn post-copy" data-idx="${i}">Copy</button>
+        ${postToXHtml(p.text)}
         ${counterHtml(p.text, p.longform)}
       </div>`).join('');
 }
@@ -214,6 +268,7 @@ async function load() {
   content.innerHTML =
     (stale ? `<div class="error">Heads-up: signals.json is ${escPinned(data.week)}, but the prepared posts are for ${escPinned(PINNED_POST.week)}. Update PINNED_POST and DAILY_POSTS in this file.</div>` : '') +
     renderPosts(posts);
+  wirePostToX(content);
   content.querySelectorAll('button.post-copy').forEach(btn => {
     btn.addEventListener('click', async () => {
       try {
