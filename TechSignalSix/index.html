@@ -93,7 +93,11 @@ function buildPinnedText(p = PINNED_POST) {
 }
 
 function escPinned(str) {
-  return String(str).replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"');
+  // Entities are built from AMP so this source never contains literal entity text
+  // (the GitHub commit tool decodes literal entities, which silently broke this function before).
+  const AMP = String.fromCharCode(38);
+  const map = { '&': AMP + 'amp;', '<': AMP + 'lt;', '>': AMP + 'gt;', '"': AMP + 'quot;' };
+  return String(str).replace(/[&<>"]/g, c => map[c]);
 }
 
 function renderPinned() {
